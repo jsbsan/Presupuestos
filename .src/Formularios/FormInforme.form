@@ -1,7 +1,7 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,69,46)
+  MoveScaled(0,0,69,57)
   Icon = Picture["icon:/22/pdf"]
   Resizable = False
   { RadioButtonCalculado RadioButton
@@ -17,18 +17,13 @@
     MoveScaled(32,9,29,4)
     Text = ("Asignado Manualmente")
   }
-  { CheckBoxMediciones CheckBox
-    MoveScaled(2,28,65,4)
-    Text = ("Imprimir listado de mediciones")
-    Value = CheckBox.True
-  }
   { CheckBoxTextosDescriptivos CheckBox
-    MoveScaled(2,18,65,4)
+    MoveScaled(3,22,65,4)
     Text = ("Imprimir textos largos de labores (definidos en la base de datos)")
     Value = CheckBox.True
   }
   { CheckBoxComentariosLabores CheckBox
-    MoveScaled(2,33,65,4)
+    MoveScaled(3,43,65,4)
     Text = ("comentarios de labores (definidos en cada presupuesto)")
     Value = CheckBox.True
   }
@@ -39,23 +34,40 @@
     Alignment = Align.Center
   }
   { ButtonHtml Button
-    MoveScaled(15,39,36,6)
+    MoveScaled(14,50,36,6)
     Text = ("Generar informe")
     Picture = Picture["icon:/22/pdf"]
   }
   { ButtongenerarPDF Button
-    MoveScaled(61,39,8,6)
+    MoveScaled(60,50,8,6)
     Visible = False
     Picture = Picture["icon:/22/pdf"]
   }
   { CheckBoxResumenMedicionPrecioTotal CheckBox
-    MoveScaled(2,24,61,2)
-    Text = ("imprimir resumen de medicion, precio y total")
-    Value = CheckBox.True
+    MoveScaled(3,40,61,2)
+    Text = ("imprimir resumen de medicion, precio y total en cada labor")
   }
   { CheckBoxCategoriySubcategoria CheckBox
-    MoveScaled(2,14,61,3)
+    MoveScaled(3,14,61,3)
     Text = ("Imprimir categoria y subcategoria de la labor")
     Value = CheckBox.True
+  }
+  { CheckBoxContadores CheckBox
+    MoveScaled(12,18,51,3)
+    Text = ("Numerar Categorias, Subcategorias y Labores")
+    Value = CheckBox.True
+  }
+  { Panel1 Frame
+    MoveScaled(4,27,66,10)
+    Text = ("Listado Mediciones")
+    { CheckBoxMedicionesValoradas RadioButton
+      MoveScaled(6,6,52,4)
+      Text = ("Imprimir listado de mediciones con valoración y total.")
+      Value = True
+    }
+    { CheckBoxMediciones RadioButton
+      MoveScaled(6,2,42,4)
+      Text = ("Imprimir listado de mediciones")
+    }
   }
 }

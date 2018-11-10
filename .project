@@ -1,9 +1,8 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.5.4
 Title=Presupuestos
 Startup=FMainListaPresupuestos
 Icon=imagenes/pintor.jpg
-Version=0.1.18
+Version=0.1.19
 Component=gb.image
 Component=gb.qt4
 Component=gb.form
@@ -20,12 +19,11 @@ Authors="Julio Sánchez Berro"
 TabSize=2
 Translate=1
 Language=es
-ExecPath=/home/minino/propuestapintura.gambas
 Maintainer=julio sanchez berro
 Address=jusabejusabe@gmail.com
 Url=http://jsbsan.blogspot.com.es/
 License=General Public License
-PackageName=propuestapintura-0.1.18
+PackageName=propuestapintura-0.1.19
 CreateEachDirectory=1
 Packager=1
 Systems=debian

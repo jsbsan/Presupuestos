@@ -79,14 +79,14 @@
       Picture = Picture["imagenes/cascopeque.png"]
     }
     { ButtonBaseDedatosMateriales Button
-      MoveScaled(53,0,16,4)
+      MoveScaled(53,0,16,5)
       Font = Font["Arial,-2"]
       Text = ("Materiales")
       Picture = Picture["imagenes/bote-de-pinturapeque.png"]
     }
   }
   { VSplit1 VSplit
-    MoveScaled(4,10,69,58)
+    MoveScaled(4,10,91,58)
     Expand = True
     { TabStripLaboralesMateriales TabStrip
       MoveScaled(4,2,66,25)
@@ -97,6 +97,7 @@
       Picture = Picture["imagenes/casco.png"]
       { GridViewLabores GridView
         MoveScaled(1,2,57,13)
+        ToolTip = ("Haga Click Con el Boton Izquierdo para Seleccionar una Unidad\nHaga Click con el Boton Derecho para Mostar Menu de Opciones")
         Expand = True
         PopupMenu = "MenuDescompuestoLabores"
       }
@@ -105,18 +106,26 @@
       Picture = Picture["imagenes/bote-de-pintura.png"]
       { GridViewMateriales GridView
         MoveScaled(1,2,37,17)
+        ToolTip = ("Haga Click con el Boton Derecho para Mostar Menu de Opciones")
         Expand = True
         PopupMenu = "MenuDescompuestoMateriales"
       }
       Index = 0
     }
     { VBox1 VBox
-      MoveScaled(2,28,60,20)
-      { LabelUnidadSeleccinada Label
-        MoveScaled(3,0,54,4)
-        Font = Font["Arial,Bold"]
-        AutoResize = True
-        Alignment = Align.Center
+      MoveScaled(0,29,86,20)
+      { HBox2 HBox
+        MoveScaled(6,0,57,6)
+        { Label1 Label
+          MoveScaled(3,0,22,4)
+          Text = ("Unidad Seleccionada:")
+        }
+        { LabelUnidadSeleccinada Label
+          MoveScaled(19,0,39,4)
+          Font = Font["Arial,Bold"]
+          AutoResize = True
+          Alignment = Align.Center
+        }
       }
       { TabStripMedicionComentario TabStrip
         MoveScaled(3,7,63,25)
@@ -127,7 +136,8 @@
         Text = ("Medicion")
         Picture = Picture["icon:/22/calculator"]
         { GridViewMedicion GridView
-          MoveScaled(2,4,58,8)
+          MoveScaled(2,2,58,8)
+          ToolTip = ("Haga Click con el boton Derecho para mostar Menu de Mediciones")
           Expand = True
           PopupMenu = "MenuMedicion"
         }
@@ -137,6 +147,7 @@
         { TextLabelComentario TextLabel
           MoveScaled(6,3,22,7)
           Background = &HFFFFFF&
+          ToolTip = ("Haga Click con el boton Izquierdo para editar el texto del comentario")
           Border = Border.Plain
         }
         Index = 0

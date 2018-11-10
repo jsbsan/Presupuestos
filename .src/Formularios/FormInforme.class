@@ -11,7 +11,7 @@ Private formatoSalida As String
 
 Public Sub Form_Open()
 
-  moneda = Settings["Moneda"]
+  moneda = Settings["Moneda", "$"]
   Me.Center()
 
 End
@@ -147,7 +147,21 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
   Dim datoDescompuestosLaboral As DescompuestolaboresVO
 
   Dim subcategoriaActual As String
-  Dim categoriaActual As String
+  Dim CapituloActual As Integer
+
+  Dim ContadorCategoria As Integer
+  Dim ContadorSubcategoria As Integer
+  Dim ContadorUnidades As Integer
+  Dim contadores As String
+  Dim SumaParcialCapitulo As Float = 0
+
+  Dim FormatoContadores As String = "#" ' a javier el gusta mas. A mi me gusta "0#", para que salga 01.01.
+
+  If Settings["formadoSimpleCero", True] = True Then
+    FormatoContadores = "#"
+  Else
+    FormatoContadores = "0#"
+  Endif
 
   'Imprimo las labores segun el orden indicado en el descompuesto.
   misql = "select * from Descompuestolabores where idpresupuesto=" & idpresupuesto & " order by idorden"
@@ -174,24 +188,67 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
           Print "Error en informe al intentar ver una subcategoria"
         Else
           'textos de categoria y subcategoria
-          If categoriaActual = datoSubcategoria.IDCAPITULO Then
-            'solo tengo que escribir el texto de la subcategoria, estoy en el mismo capitulo
-            documento &= "<b>" & ("Subcategoria: ") & datoSubcategoria.TEXTOSUBCATEGORIA & "</b>" & fl
-          Else
-            'tengo que escribir, categoria, subcategoria
-            datoCategoria = manejadorCategoria.ExtraerRegistro("idcategoria", datoSubcategoria.IDCAPITULO)
-            documento &= "<b>" & ("Categoria ") & ("(Category)") & (": ") & datoCategoria.TEXTOCAPITULO & "</b>" & fl
-            documento &= "<b>" & ("Subcategoria ") & ("(Subcategory)") & (": ") & datoSubcategoria.TEXTOSUBCATEGORIA & "</b>" & fl
-            subcategoriaActual = datotmpLabor.IDSUBCATEGORIA
-          Endif
+          If CapituloActual <> datoSubcategoria.IDCAPITULO Then
+            'salto a un nuevo capitulo / categoria
+            If CapituloActual <> 0 Then
+              'es distinto a la 1º partida
+              'poner sumas parciales
 
+              documento &= "<table>"
+              documento &= "<tr>"
+              documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+
+              documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+              documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+              documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+              documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+              documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+              documento &= "<td><u>" & "Suma Capitulo (" & moneda & "): " & "</u></td>"
+              documento &= "<td>" & Formato(SumaParcialCapitulo, ",#.#0") & "</td>"
+
+              documento &= "</tr>"
+              documento &= "</table>"
+              documento &= "<br>"
+              documento &= "<br>"
+              SumaParcialCapitulo = 0
+            Endif
+
+            ContadorSubcategoria = 1
+            ContadorUnidades = 0
+            contadorCategoria += 1
+            datoCategoria = manejadorCategoria.ExtraerRegistro("idcategoria", datoSubcategoria.IDCAPITULO)
+
+            documento &= "<b>" & IIf(CheckBoxContadores.value = True, Format(ContadorCategoria, FormatoContadores) & ". ", ("Categoria ") & ("(Category)") & (": ")) & datoCategoria.TEXTOCAPITULO & "</b>" & fl
+
+            documento &= "<b>" & IIf(CheckBoxContadores.value = True, Format(ContadorCategoria, FormatoContadores) & "." & Format(ContadorSubcategoria, FormatoContadores) & ". ", ("Subcategoria: ")) & datoSubcategoria.TEXTOSUBCATEGORIA & "</b>" & fl
+
+            CapituloActual = datoSubcategoria.IDCAPITULO
+            subcategoriaActual = datotmpLabor.IDSUBCATEGORIA
+
+          Else If subcategoriaActual <> datotmpLabor.IDSUBCATEGORIA Then
+            'salto de categoria
+            ' 'tengo que escribir, categoria, subcategoria
+            ' datoCategoria = manejadorCategoria.ExtraerRegistro("idcategoria", datoSubcategoria.IDCAPITULO)
+            ' ''TODO: colocar numerador de Categoria
+            ContadorSubcategoria += 1
+
+            ContadorUnidades = 0
+            ' documento &= "<b>" & IIf(CheckBoxContadores.value = True, Format(ContadorCategoria, "0#") & " ", ("Categoria ") & ("(Category)") & (": ")) & datoCategoria.TEXTOCAPITULO & "</b>" & fl
+
+            documento &= "<b>" & IIf(CheckBoxContadores.value = True, Format(ContadorCategoria, FormatoContadores) & "." & Format(ContadorSubcategoria, FormatoContadores) & ". ", ("Subcategoria ") & ("(Subcategory)") & (": ")) & datoSubcategoria.TEXTOSUBCATEGORIA & "</b>" & fl
+            subcategoriaActual = datotmpLabor.IDSUBCATEGORIA
+            CapituloActual = datoSubcategoria.IDCAPITULO
+          Endif
         Endif
 
       Endif
 
     Endif
+    ''poner numero en la  labor dentro de subcategoria y dentro de categoria
+    ContadorUnidades += 1
+    contadores = IIf(CheckBoxContadores.value = True, Format(ContadorCategoria, FormatoContadores) & "." & Format(ContadorSubcategoria, FormatoContadores) & "." & Format(ContadorUnidades, FormatoContadores) & ". ", "")
 
-    documento &= "<b>" & datotmpLabor.textocorto & "</b>" & fl
+    documento &= "<b>" & contadores & datotmpLabor.textocorto & "</b>" & fl
 
     If CheckBoxTextosDescriptivos.value = True Then
       documento &= Replace(datotmpLabor.descripcion, "\n", "<br>") & fl
@@ -205,8 +262,12 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
       Endif
     Endif
 
-    If CheckBoxTextosDescriptivos.value = True Then
+    If CheckBoxMediciones.value = True Then
       documento &= GeneraMedicion(datoDescompuestosLaboral.iddescompuesto)
+    Endif
+
+    If CheckBoxMedicionesValoradas.value = True Then
+      documento &= GeneraMedicionValoradas(datoDescompuestosLaboral.iddescompuesto, datoDescompuestosLaboral)
     Endif
 
     If CheckBoxResumenMedicionPrecioTotal.value = True Then
@@ -214,8 +275,34 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
       documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosLaboral.precio, ",#.#0") & fl
       documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosLaboral.total, ",#.#0") & fl
     Endif
+
+    SumaParcialCapitulo += datoDescompuestosLaboral.total
+
     documento &= "<br>"
   Next
+
+  If SumaParcialCapitulo <> 0 Then
+    'es distinto a la 1º partida
+    'poner sumas parciales
+
+    documento &= "<table>"
+    documento &= "<tr>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+
+    documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
+    documento &= "<td><u>" & "Suma Capitulo (" & moneda & "): " & "</u></td>"
+    documento &= "<td>" & Formato(SumaParcialCapitulo, ",#.#0") & "</td>"
+
+    documento &= "</tr>"
+    documento &= "</table>"
+    documento &= "<br>"
+    documento &= "<br>"
+    SumaParcialCapitulo = 0
+  Endif
 
   Return documento
 
@@ -263,6 +350,69 @@ Public Function GeneraMedicion(iddescompuesto As Integer) As String
     documentoDesgloce &= "</tr>"
 
   Next
+  If documentoDesgloce = "" Then Return "" 'no hay desgloce de medicion
+  documento &= documentoDesgloce & "</table>"
+  Return documento
+
+End
+
+Public Function GeneraMedicionValoradas(iddescompuesto As Integer, datoDescompuestosLaboral As DescompuestolaboresVO) As String
+
+  Dim documento As String
+
+  Dim misql As String
+  Dim miresultado As Result
+  Dim miconexion As New Conexion
+
+  Dim manejadorMedicionDAO As New MedicionDAO
+  Dim ArrayDatosMedicion As MedicionVO[]
+  Dim datosmedicion As MedicionVO
+  Dim fl As String = "<br>"
+
+  Dim documentoDesgloce As String
+
+  misql = "select * from medicion where iddescompuesto='" & iddescompuesto & "'"
+
+  ArrayDatosMedicion = manejadorMedicionDAO.ConvertirResult(manejadorMedicionDAO.sql(misql))
+
+  documento = "<table>"
+  documento &= "<tr>"
+  documento &= "<td> <u>" & ("Comentario") & "</u></td>"
+
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Número") & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Largo") & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Ancho") & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Alto") & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Parcial") & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Medición") & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Precio") & "(" & moneda & ")" & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Total") & "(" & moneda & ")" & "</u></td>"
+  documento &= "</tr>"
+
+  For Each datosmedicion In ArrayDatosMedicion
+
+    documentoDesgloce &= "<tr>"
+    documentoDesgloce &= "<td> " & datosmedicion.descripcion & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.numeroveces, ",#.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.largo, ",#.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.ancho, ",#.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.alto, ",#.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.total, ",#.#0") & "</td>"
+    documentoDesgloce &= "</tr>"
+
+  Next
+  documentoDesgloce &= "<tr>"
+  documentoDesgloce &= "<td> " & "</td>"
+  documentoDesgloce &= "<td>" & "</td>"
+  documentoDesgloce &= "<td>" & "</td>"
+  documentoDesgloce &= "<td>" & "</td>"
+  documentoDesgloce &= "<td>" & "</td>"
+  documentoDesgloce &= "<td>" & "</td>"
+  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.medicion, ",#.#0") & "</td>"
+  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.precio, ",#.#0") & "</td>"
+  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.total, ",#.#0") & "</td>"
+  documentoDesgloce &= "</tr>"
+
   If documentoDesgloce = "" Then Return "" 'no hay desgloce de medicion
   documento &= documentoDesgloce & "</table>"
   Return documento

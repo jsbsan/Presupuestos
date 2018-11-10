@@ -19,6 +19,9 @@ Public Sub Form_Open()
   ' ValueBoxMemoriaMB.Value = Settings["EspacioRamDisk"]
 
   TextBoxMoneda.Text = Settings["Moneda", "$"]
+  RadioButtonFormatoSimpleCero.value = Settings["formadoSimpleCero", True]
+  RadioButtonFormatoDobleCero.value = Settings["formadoDobleCero", False]
+
   Me.center
 
 End
@@ -31,6 +34,9 @@ Public Sub ButtonGuardarDatosEmpresa_Click()
   settings["Email"] = textboxEmail.text
   settings["TextoFinal"] = textboxTextoFinal.text
   Settings["Moneda"] = TextBoxMoneda.Text
+
+  Settings["formadoSimpleCero"] = RadioButtonFormatoSimpleCero.value
+  Settings["formadoDobleCero"] = RadioButtonFormatoDobleCero.value
 
 End
 

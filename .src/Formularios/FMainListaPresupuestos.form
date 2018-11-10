@@ -109,6 +109,7 @@
     { ButtonLabores Button
       MoveScaled(64,1,17,3)
       Font = Font["-2"]
+      ToolTip = ("Acceder al listado de labores disponibles")
       Expand = True
       AutoResize = True
       Text = ("Labores")
@@ -117,6 +118,7 @@
     { ButtonMateriales Button
       MoveScaled(82,0,22,4)
       Font = Font["-2"]
+      ToolTip = ("Acceder listado de materiales")
       Expand = True
       AutoResize = True
       Text = ("Materiales")
@@ -129,7 +131,7 @@
     { Label1 Label
       MoveScaled(1,0,33,3)
       AutoResize = True
-      Text = ("Calculando presupuesto...")
+      Text = ("Calculando presupuesto") & "..."
     }
     { ProgressBarCalculoPresupuesto ProgressBar
       MoveScaled(32,0,25,3)
@@ -141,9 +143,16 @@
     }
   }
   { GridViewPresupuesto GridView
-    MoveScaled(3,12,57,23)
-    ToolTip = ("Doble click para abrir descompuesto")
+    MoveScaled(3,11,57,23)
+    ToolTip = ("Ayuda:\nHaga Click con el boton Derecho del Ratón para acceder al menu de Opciones De Presupuestos.\nHaga Click con el Boton Izquierdo del Ratón para seleccionar el presupuesto.\nHaga Doble Click con el Boton Izquierdo del Ratón para entrar en el descompuesto del presupuesto.")
     Expand = True
     PopupMenu = "MenuPresupuesto"
+  }
+  { TextArea1 TextArea
+    MoveScaled(2,35,93,11)
+    Visible = False
+    Background = &HFFFF00&
+    Text = ("Ayuda:\nHaga Click con el boton Derecho del Ratón para acceder al menu de Opciones De Presupuestos.\nHaga Click con el Boton Izquierdo del Ratón para seleccionar el presupuesto.\nHaga Doble Click con el Boton Izquierdo del Ratón para entrar en el descompuesto del presupuesto.")
+    ReadOnly = True
   }
 }
