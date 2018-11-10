@@ -1,0 +1,87 @@
+' Gambas class file
+
+Private manejadorCliente As New AdaptadoClienteDAO
+
+Public Sub Form_Open()
+
+  manejadorCliente.MostrarGridView(GridViewCliente)
+
+  coloresGrid(manejadorCliente)
+  rellenarGrid()
+  Me.Title = ("Clientes")
+  Me.center
+
+End
+
+Public Sub coloresGrid(obj As Object)
+
+  obj.ColorFilaImPar = Color.cyan
+  obj.ColorFilaPar = Color.White
+
+End
+
+Public Sub addcliente_Click()
+
+  manejadorCliente.FormularioRegistrar(1)
+  rellenarGrid()
+
+End
+
+Public Sub MenuEditar_Click()
+
+  Dim tmpVO As New ClienteVO
+
+  tmpVO = manejadorCliente.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+
+    manejadorCliente.FormularioModificarRegistroIdcliente(tmpVO.idcliente, tmpVO, 1)
+
+    rellenarGrid()
+  Endif
+
+End
+
+Public Sub MenuBorrado_Click()
+
+  Message.Info(("Si un presupuesto esta usando un cliente, no se puede borrar"))
+
+End
+
+Public Sub TextBoxFiltroClientes_KeyPress()
+
+  If Len(TextBoxFiltroClientes.text) > 1 Then
+
+    If IsLetter(Key.text) Then
+      cargaRegillaFiltrada(TextBoxFiltroClientes.text & Key.Text)
+    Else
+
+      If Key.code = 16777219 Then
+        'pulsado la tecla de suprimir
+        cargaRegillaFiltrada(Mid$(TextBoxFiltroClientes.text, 1, Len(TextBoxFiltroClientes.text) - 1))
+      Endif
+    Endif
+  Else
+    rellenarGrid()
+  Endif
+
+End
+
+Public Sub ButtonFiltro_Click()
+
+  TextBoxFiltroClientes.text = ""
+  rellenarGrid()
+
+End
+
+Public Sub rellenarGrid()
+
+  manejadorCliente.MostrarGridView(GridViewCliente)
+
+End
+
+Public Sub cargaRegillaFiltrada(cadena As String)
+
+  manejadorCliente.MostrarGridView(GridViewCliente, "Select * from cliente where (nombre like '%" & cadena & "%' or comentario like '%" & cadena & "%')")
+
+End

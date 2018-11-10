@@ -1,0 +1,35 @@
+' Gambas class file
+
+Inherits ConexionMapBDvistas
+
+Public Function conexion()
+  ' hace la conexion a la base de datos
+
+  Dim comandoArray As String[]
+  Dim comando As String
+  Dim rutabd As String
+  Dim contenido As String
+
+  rutabd = File.Dir(User.home & Replace(Me.NombreBaseDatos, User.home, ""))
+  'comprueba que exista ruta
+  If Not Exist(rutabd) Then
+    Mkdir rutabd
+  Endif
+  'comprueba que exista fichero de bd
+  If Not Exist(rutabd &/ file.name(Me.NombreBaseDatos)) Then
+    application.busy = 1
+    Try Copy "PresupuestosPintura.tar.gz" To rutabd &/ "PresupuestosPintura.tar.gz"
+    Shell "cd " & rutabd & ";tar xzvf " & rutabd &/ "PresupuestosPintura.tar.gz"
+    Wait 2
+    Try Kill rutabd &/ "PresupuestosPintura.tar.gz"
+    application.busy = 0
+  Endif
+  Me.hconn.Name = user.home & "/PresupuestosTrabajosPinturas/PresupuestosPintura.sqlite"
+  Me.hconn.host = user.home & "/PresupuestosTrabajosPinturas/PresupuestosPintura.sqlite"
+  Me.hconn.Type = "Sqlite3"
+  Me.hconn.open
+  ' Endif
+
+  Return
+
+End

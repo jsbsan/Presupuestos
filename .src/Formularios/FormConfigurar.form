@@ -1,0 +1,131 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,85,49)
+  Visible = False
+  Icon = Picture["imagenes/configurar.png"]
+  Resizable = False
+  Arrangement = Arrange.Fill
+  { IconPanel1 IconPanel
+    MoveScaled(1,1,83,47)
+    Expand = True
+    Count = 3
+    Border = True
+    Index = 0
+    Text = ("Acerca de...")
+    { PictureBox1 PictureBox
+      MoveScaled(1,1,16,17)
+      Picture = Picture["imagenes/pintor.jpg"]
+      Stretch = True
+    }
+    { TextLabel1 TextLabel
+      MoveScaled(20,1,35,6)
+      Font = Font["Arial,Italic,+4"]
+      Text = ("Presupuestos")
+      Alignment = Align.Center
+    }
+    { TextLabelVersion TextLabel
+      MoveScaled(17,6,40,5)
+      Text = ("Version")
+      Alignment = Align.Center
+    }
+    { !Label1 Label
+      MoveScaled(18,10,40,5)
+      #Public = True
+      Text = ("Autor: Julio Sánchez Berro")
+      Alignment = Align.Center
+    }
+    { ButtonUpdate Button
+      MoveScaled(10,39,45,7)
+      Text = ("Update: Comprobar si existe nueva versión")
+      Picture = Picture["imagenes/gambasupdate.png"]
+    }
+    { TextLabel2 TextLabel
+      MoveScaled(4,19,53,13)
+      Text = ("Softwarelibre para creación de presupuestos <br>de diversos tipos de trabajos (pintura, reparaciónes, etc).<br> Realizado en gambas3<br>\nLicencia GPL 2.0")
+      Alignment = Align.Center
+    }
+    { LabelPaginaWebDelProyecto Label
+      MoveScaled(10,33,46,5)
+      Font = Font["Underline"]
+      Foreground = &H0000FF&
+      Text = ("www.presupuestosobras.blogspot.com.es")
+      Alignment = Align.Center
+    }
+    Index = 1
+    Text = ("Datos Empresas")
+    { Label2 Label
+      MoveScaled(2.1429,4,18,4)
+      Text = ("Nombre Empresa:")
+      Alignment = Align.Right
+    }
+    { Label3 Label
+      MoveScaled(2,8.8571,18,4)
+      Text = ("Dirección:")
+      Alignment = Align.Right
+    }
+    { Label4 Label
+      MoveScaled(2,13.8571,18,4)
+      Text = ("Teléfono:")
+      Alignment = Align.Right
+    }
+    { Label5 Label
+      MoveScaled(2,18.8571,18,4)
+      Text = ("Email:")
+      Alignment = Align.Right
+    }
+    { TextBoxEmail TextBox
+      MoveScaled(22,19,35,4)
+    }
+    { TextBoxTelefono TextBox
+      MoveScaled(22,13.8571,35,4)
+    }
+    { TextBoxDireccion TextBox
+      MoveScaled(22,8.8571,35,4)
+    }
+    { TextBoxEmpresa TextBox
+      MoveScaled(22,4,35,4)
+    }
+    { ButtonGuardarDatosEmpresa Button
+      MoveScaled(45,42,16,4)
+      Text = ("Guardar")
+      Picture = Picture["icon:/22/save"]
+    }
+    { TextLabel5 TextLabel
+      MoveScaled(3,0,54,5)
+      Font = Font["Bold,+2"]
+      Text = ("Datos Empresas")
+      Alignment = Align.Center
+    }
+    { textboxTextoFinal TextArea
+      MoveScaled(2,31,58,10)
+      Font = Font["Arial,-2"]
+      Wrap = True
+    }
+    { Label6 Label
+      MoveScaled(2,28,36,3)
+      Text = ("Texto Final en Presupuesto:")
+    }
+    { TextBoxMoneda TextBox
+      MoveScaled(22,24,35,4)
+    }
+    { Label11 Label
+      MoveScaled(2,24,18,4)
+      Text = ("Moneda:")
+      Alignment = Align.Right
+    }
+    Index = 2
+    Text = ("Copia de Seguridad")
+    { ButtonRealizarCopiaSeguridad Button
+      MoveScaled(5,4,50,16)
+      Text = ("Realizar Copia de Seguridad")
+      Picture = Picture["imagenes/c2.png"]
+    }
+    { ButtonRestaurarCopiaSeguridad Button
+      MoveScaled(5,26,51,16)
+      Text = ("Restaurar Copia de Seguridad")
+      Picture = Picture["imagenes/c1.png"]
+    }
+    Index = 0
+  }
+}

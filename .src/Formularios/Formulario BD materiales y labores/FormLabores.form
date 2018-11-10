@@ -1,0 +1,180 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,89,48)
+  Expand = True
+  Icon = Picture["imagenes/casco.png"]
+  Arrangement = Arrange.Vertical
+  { MenuCategoria Menu
+    Text = ("MenuCategoria")
+    Visible = False
+    { MenC Menu
+      Text = ("Menu Categoria")
+    }
+    { Menu3c Menu
+    }
+    { addCategoria Menu
+      Text = ("Agregar")
+      Picture = Picture["icon:/22/add"]
+    }
+    { EditarCategoria Menu
+      Text = ("Editar")
+      Picture = Picture["icon:/22/edit"]
+    }
+    { menu1 Menu
+    }
+    { BorrarCategoria Menu
+      Text = ("Borrar")
+      Picture = Picture["icon:/22/erase"]
+    }
+  }
+  { MenuSubcategoria Menu
+    Text = ("MenuSubcategoria")
+    Visible = False
+    { Menu4 Menu
+      Text = ("Menu Subcategoria")
+    }
+    { Menu2 Menu
+    }
+    { AgregarSubcategoria Menu
+      Text = ("Agregar")
+      Picture = Picture["icon:/22/add"]
+    }
+    { EditarSubcategoria Menu
+      Text = ("Editar")
+      Picture = Picture["icon:/22/edit"]
+    }
+    { Menu3 Menu
+    }
+    { BorrarSubcategoria Menu
+      Text = ("Borrar")
+      Picture = Picture["icon:/22/erase"]
+    }
+  }
+  { MenuLabores Menu
+    Text = ("MenuLabores")
+    Visible = False
+    { Menu5 Menu
+      Text = ("Menu Labores")
+    }
+    { Menu6 Menu
+    }
+    { AgregarLabor Menu
+      Text = ("Agregar")
+      Picture = Picture["icon:/22/add"]
+    }
+    { EditarLabor Menu
+      Text = ("Editar")
+      Picture = Picture["icon:/22/edit"]
+    }
+    { Menu7 Menu
+    }
+    { BorrarLabor Menu
+      Text = ("Borrar")
+      Picture = Picture["icon:/22/erase"]
+    }
+  }
+  { EditarBusquedaGeneral Menu
+    Text = ("EditarBusquedaGeneral")
+    Visible = False
+    { EditarBusqueda Menu
+      Text = ("Edita")
+      Picture = Picture["icon:/22/edit"]
+    }
+  }
+  { TabStrip1 TabStrip
+    MoveScaled(4,3,82,37)
+    Expand = True
+    Arrangement = Arrange.Vertical
+    Count = 4
+    Index = 0
+    Text = ("Categoria")
+    { GridViewCategoria GridView
+      MoveScaled(6,3,61,27)
+      Expand = True
+      PopupMenu = "MenuCategoria"
+    }
+    Index = 1
+    Text = ("SubCategoria")
+    { Panel2 Panel
+      MoveScaled(0,0,77,5)
+      { Label3 Label
+        MoveScaled(0,0,14,5)
+        Text = ("Categoria:")
+        Alignment = Align.Right
+      }
+      { ButtonBuscar Button
+        MoveScaled(60,0,8,5)
+        Visible = False
+        Picture = Picture["icon:/22/filter"]
+      }
+      { ComboBoxCategoria ComboBox
+        MoveScaled(15,0,42,5)
+        ReadOnly = True
+      }
+    }
+    { GridViewSubcategoria GridView
+      MoveScaled(3,9,64,20)
+      Expand = True
+      PopupMenu = "MenuSubcategoria"
+    }
+    Index = 2
+    Text = ("Labores")
+    { Panel1 Panel
+      MoveScaled(1,0,79,10)
+      { ComboBoxLaboresCategoria ComboBox
+        MoveScaled(16,1,38,4)
+        ReadOnly = True
+        Text = ("ComboBox1")
+      }
+      { Label1 Label
+        MoveScaled(1,1,13,4)
+        Text = ("Categoria:")
+        Alignment = Align.Right
+      }
+      { Label2 Label
+        MoveScaled(2,5,14,4)
+        Text = ("Subcategoria:")
+      }
+      { ComboBoxLaboresSubcategoria ComboBox
+        MoveScaled(16,5,38,4)
+        ReadOnly = True
+        Text = ("ComboBox2")
+      }
+      { ButtonBuscarLaborCategoria Button
+        MoveScaled(59,1,8,4)
+        Visible = False
+        Picture = Picture["icon:/22/filter"]
+      }
+      { ButtonBuscarLaborSubCategoria2 Button
+        MoveScaled(59,5,8,4)
+        Visible = False
+        Picture = Picture["icon:/22/filter"]
+      }
+    }
+    { GridViewLabores GridView
+      MoveScaled(1,11,77,21)
+      Expand = True
+      PopupMenu = "MenuLabores"
+    }
+    Index = 3
+    Text = ("Búsqueda de Labores")
+    { HBox2 HBox
+      MoveScaled(4,2,70,4)
+      { Label4 Label
+        MoveScaled(2,0,22,4)
+        Text = ("Filtrar Por Contenido:")
+        Alignment = Align.Right
+      }
+      { TextBoxBusquedaContenido TextBox
+        MoveScaled(26,0,31,4)
+      }
+    }
+    { GridViewBusquedaContenido GridView
+      MoveScaled(4,9,64,17)
+      Expand = True
+      PopupMenu = "EditarBusquedaGeneral"
+    }
+    Index = 0
+  }
+}

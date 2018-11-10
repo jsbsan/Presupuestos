@@ -1,0 +1,105 @@
+' Gambas class file
+
+Inherits VistaPresupuestoDAO
+
+Public Sub Observar_Data(row As Integer, column As Integer)
+
+  Dim estado As ClassEstadosYTiposPrecios
+
+  Dim f As New Font
+  Dim datocontenido As Variant
+
+  f.name = "Sans"
+  f.size = Me.sizefont
+
+  '-------------------------------------------
+  'colores....filas impar / par ge regillas
+  '-------------------------------------------
+  If row Mod 2 = 0 Then
+    Me.gridviewPropio.Data.Background = Me.ColorFilaImPar
+  Else
+    Me.gridviewPropio.Data.Background = Me.ColorFilaPar
+  Endif
+
+  Me.hresultadoNuevo.MoveTo(row)
+  'comprobar si hay datos en TAG
+  If IsNull(Me.gridviewPropio.tag) Then
+    Try datocontenido = Me.hresultadoNuevo[Replace(Me.gridviewPropio.columns[column].text, "_", ".")]
+    If Error Then
+      Print "warning !!: nombre de campo que no encuentro " & Me.GridViewPropio.tag[column] & " en la tabla/vista"
+    Endif
+
+    If IsDate(Str$(datocontenido)) Then
+      Me.gridviewPropio.Data.text = Format(Date(datocontenido), Me.formatofecha)
+    Else
+      If IsBoolean(Str$(datocontenido)) Then
+        If datocontenido Then
+          Me.gridviewPropio.data.picture = picture[Me.iconoTrue]
+        Else
+          Me.gridviewPropio.data.picture = picture[Me.iconoFalse]
+        Endif
+      Else
+        'añadido para escribir las columnas que contengan números  y que no sea tipo Id el campo
+        If IsNumber(Str$(datocontenido)) And Me.NoesTipoId(Me.GridViewPropio.tag[column]) Then
+          Me.gridviewPropio.Data.text = Format$(datocontenido, ",#.#0")
+          Me.gridviewPropio.Data.Alignment = Align.Right
+        Else
+          Me.gridviewPropio.Data.text = datocontenido
+        Endif
+      Endif
+    Endif
+    ''hay datos en  TAG
+  Else
+    Try datocontenido = Me.hresultadoNuevo[Replace(Me.GridViewPropio.tag[column], "_", ".")]
+    If Error Then
+      Print "warning !!: nombre de campo que no encuentro " & Me.GridViewPropio.tag[column] & " en la tabla/vista"
+    Endif
+
+    '---- Texto de Estado
+    If Me.GridViewPropio.tag[column] = "estado" Then
+      estado = New ClassEstadosYTiposPrecios
+      estado.carga()
+
+      Me.gridviewPropio.Data.text = estado.estadopresupuesto[datocontenido]
+
+      Return
+    Endif
+    '-----
+
+    If IsDate(Str$(datocontenido)) Then
+      Me.gridviewPropio.Data.text = Format(Date(datocontenido), Me.formatofecha)
+    Else
+      If IsBoolean(Str$(datocontenido)) Then
+        If datocontenido Then
+          Me.gridviewPropio.data.picture = picture[Me.iconoTrue]
+        Else
+          Me.gridviewPropio.data.picture = picture[Me.iconoFalse]
+        Endif
+      Else
+
+        'añadido para escribir las columnas que contengan números  y que no sea tipo Id el campo
+        If IsNumber(Str$(datocontenido)) And Me.NoesTipoId(Me.GridViewPropio.tag[column]) Then
+          Me.gridviewPropio.Data.text = Format$(datocontenido, ",#.#0")
+          Me.gridviewPropio.Data.Alignment = Align.Right
+        Else
+          Me.gridviewPropio.Data.text = datocontenido
+        Endif
+
+      Endif
+    Endif
+  Endif
+
+  '-----------------------------------------------
+  ' columna con id, con ancho 0, para que no se vea
+  '-----------------------------------------------
+  ' If Upper$(Me.gridviewPropio.Columns[column].title) = Upper$("id") Then
+  '   me.arrayAnchoColumnas[column] = 0
+  '   return 'salgo de la funcion
+  ' Endif
+
+  'Compruebo ancho y amplio si es necesario.
+  ' If me.arrayAnchoColumnas[column]< F.textwidth(me.gridviewPropio.Data.text) Then
+  ' me.arrayAnchoColumnas[column] = F.textwidth(me.gridviewPropio.Data.text & "m")
+  ' Endif
+
+End

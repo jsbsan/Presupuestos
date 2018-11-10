@@ -1,0 +1,380 @@
+' Gambas class file
+
+Public EspaciodeTrabajo As Workspace
+Public CalculandoVariosPresupuesto As Boolean 'controla si aparece o no la barra por cada calculo de presupuesto
+
+Private ManejadorVistaPrespuesto As New VistaPrespuestoAdaptadaDAO
+
+'Public ArrayFormDescom As New FormDescompuesto[]
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+  Settings.Read(Me)
+
+  ManejadorVistaPrespuesto.iconoTrue = "imagenes/CandadoAbierto.png" ' icon:/16/apply"
+  ManejadorVistaPrespuesto.iconoFalse = "imagenes/CandadoCerrado.png" 'icon:/16/cancel" ->
+  ManejadorVistaPrespuesto.ocultaId = "id*"
+
+  Me.Title = "Presupuestos de Trabajos"
+
+  coloresGrid(ManejadorVistaPrespuesto)
+  actualizarRegilla()
+
+End
+
+Public Sub actualizarRegilla()
+
+  ManejadorVistaPrespuesto.MostrarGridView(GridViewPresupuesto, "select * from Vistapresupuesto order by fecha DESC")
+
+End
+
+Public Sub coloresGrid(obj As Object)
+
+  obj.ColorFilaImPar = Color.cyan
+  obj.ColorFilaPar = Color.White
+
+End
+
+Public Sub ButtonLabores_Click()
+
+  If IsNull(EspaciodeTrabajo) Then
+    FormLabores.Show()
+  Else
+    EspaciodeTrabajo.Add(FormLabores)
+  Endif
+
+End
+
+Public Sub ButtonCliente_Click()
+
+  If IsNull(EspaciodeTrabajo) Then
+    FormCliente.Show()
+  Else
+    EspaciodeTrabajo.Add(FormCliente)
+  Endif
+
+End
+
+Public Sub ButtonMateriales_Click()
+
+  If IsNull(EspaciodeTrabajo) Then
+    FormMateriales.Show()
+  Else
+    EspaciodeTrabajo.Add(FormMateriales)
+  Endif
+
+End
+
+Public Sub Form_Close()
+
+  Dim a As Integer
+
+  Settings.Write(Me)
+  FormLabores.Close()
+  FormMateriales.Close()
+  FormCliente.Close()
+
+  'cerrar lista de presupuestos abiertos
+  ' For a = 0 To ArrayFormDescom.count - 1
+  '   Try ArrayFormDescom[a].CLong()
+  ' Next
+
+  FormConfigurar.Close()
+  FormInforme.Close()
+
+End
+
+Public Sub addPresupuesto_Click()
+
+  Dim manejadorPresupuesto As New AdaptadaPresupuestoDAO
+
+  'es necesario que existan clientes!!!
+
+  If comprobarClientes() Then
+    manejadorPresupuesto.FormularioRegistrar(2)
+
+    actualizarRegilla()
+  Else
+    Message.Info(("Es necesario definir al menos un cliente"))
+  Endif
+
+End
+
+Public Function comprobarClientes() As Boolean
+
+  Dim manejadorCliente As New ClienteDAO
+  Dim resultado As Result
+
+  resultado = manejadorCliente.contenido()
+
+  If resultado.Count <> 0 Then
+
+    Return True
+  Else
+    Return False
+  Endif
+
+End
+
+Public Sub MenuEditar_Click()
+
+  '0. Definir clases VO temporales y DAO de manejo Tabla
+  Dim tmpVO As New VistaPresupuestoVO 'datos de un registro de vista
+  Dim tmpVO1 As New PresupuestoVO 'datos de un registro de una tabla
+  Dim tmpDAO As New AdaptadaPresupuestoDAO 'manejador DAO de tabla
+
+  '1. Obtener el registro de la vista que este seleccionado en ele gridview
+  tmpVO = ManejadorVistaPrespuesto.filaSeleccionadaVO()
+
+  '2. Si no es nulo, es porque esta seleccionado algo.
+  If Not IsNull(tmpVO) Then
+    '3. Uso el campo que relaciona las vista con la tabla: idpresupuesto. El valor lo obtengo por la fila seleccionada en la Vista tmpVO.idpresupuesto
+    '   y busco el registro que tenga igual el valor de ese campo  en el Tabla
+    '   con .ConvertirResult, convierto el resultado en un Array de PresupuestoVO
+    tmpVO1 = tmpDAO.ConvertirResult(tmpDAO.BuscarIgualIdpresupuesto(tmpVO.idpresupuesto))[0]
+    '4. Uso los métodos de la clase DAO de la tabla para editar el registro
+    tmpDAO.FormularioTitulo = ("Editando Presupuesto")
+
+    tmpDAO.FormularioModificarRegistroIdpresupuesto(tmpVO1.idpresupuesto, tmpVO1, 2)
+    '5. Presento datos en la Vista
+    actualizarRegilla()
+
+  Endif
+
+End
+
+Public Sub MenuDescompuesto_Click()
+
+  Dim FDes As FormDescompuesto
+  Dim tmpVO As New VistaPresupuestoVO 'datos de un registro de vista
+
+  tmpVO = ManejadorVistaPrespuesto.filaSeleccionadaVO()
+  If Not IsNull(tmpVO) Then
+    fdes = New FormDescompuesto
+    '  ArrayFormDescom.add(fdes)
+    fdes.titulo(tmpVO.claveasignada & "|" & tmpVO.descripcioncorta, tmpVO.idpresupuesto, tmpVO.actualizarprecios, Me)
+    fdes.Show()
+
+  Endif
+
+End
+
+Public Sub MenuGaleria_Click()
+
+  Dim FGale As FormGaleriaImagenes
+  Dim tmpVO As New VistaPresupuestoVO 'datos de un registro de vista
+
+  tmpVO = ManejadorVistaPrespuesto.filaSeleccionadaVO()
+  If Not IsNull(tmpVO) Then
+    'pasar id del presupuesto
+    fgale = New FormGaleriaImagenes
+    FormGaleriaImagenes.titulo(tmpVO.claveasignada & "|" & tmpVO.descripcioncorta, tmpVO.idpresupuesto)
+    FormGaleriaImagenes.Show()
+  Endif
+
+End
+
+Public Sub ButtonDescompuesto_Click()
+
+  MenuDescompuesto_Click()
+
+End
+
+Public Sub GridViewPresupuesto_DblClick()
+
+  MenuDescompuesto_Click()
+
+End
+
+Public Sub MenuRefrescardatosPresupuesto_Click()
+
+  actualizarRegilla()
+
+End
+
+Public Sub Form_GotFocus()
+
+  'refresca datos
+  MenuRefrescardatosPresupuesto_Click()
+
+End
+
+Public Sub ButtonGaleria_Click()
+
+  MenuGaleria_Click()
+
+End
+
+Public Sub ButtonConfigurar_Click()
+
+  FormConfigurar.FormularioPresupuesto = Me
+  FormConfigurar.Show()
+
+End
+
+Public Sub ButtonInforme_Click()
+
+  MenuInforme_Click()
+
+End
+
+Public Sub MenuInforme_Click()
+
+  Dim tmpVO As New VistaPresupuestoVO 'datos de un registro de vista
+
+  tmpVO = ManejadorVistaPrespuesto.filaSeleccionadaVO()
+  If Not IsNull(tmpVO) Then
+    'recalcular el presupuesto elegido... 0.1.16
+    MenuRecalculo_Click()
+    'inicio elformulario de impresion
+    FormInforme.idpresupuesto = tmpVO.idpresupuesto
+
+    FormInforme.Show()
+
+  Endif
+
+End
+
+Public Sub TimerCopiaSeguridad_Timer()
+  '
+  ' 'copiar base de datos
+  ' 'borro .bak
+  ' Try Kill user.home & "/PresupuestosTrabajosPinturas/PresupuestosPintura.bak" 'sqlite"
+  ' Wait 0.05
+  ' 'guardo antigua como .bak
+  '
+  ' Try Move user.home & "/PresupuestosTrabajosPinturas/PresupuestosPintura.sqlite" To user.home & "/PresupuestosTrabajosPinturas/PresupuestosPintura.bak"
+  ' Wait 0.05
+  ' 'copia la de memoria
+  ' Copy "/media/myRamDisk/PresupuestosPintura.sqlite" To user.home & "/PresupuestosTrabajosPinturas/PresupuestosPintura.sqlite"
+
+End
+
+Public Sub ActualizarDesdeDescompuesto()
+
+  actualizarRegilla()
+
+End
+
+'------------------------------------------------------------------------------------------------------------------------
+Public Sub ButtonRecalculo_Click()
+  'RECALCULAR TODOS LOS PRESUPUESTOS....
+  'revisar todos los presupuestos cuya variable link
+  'Si la variable link (enlazado) del registro presupuesto es TRUE  (CANDADO ABIERTO), se debe de recalcular
+  'Si la variable link (enlazado) del registro presupuesto es False (candado cerrado), NO se debe de recalcular
+
+  Dim tmpVO As New VistaPresupuestoVO 'datos de un registro de vista
+  Dim ArrayTmpVO As VistaPresupuestoVO[]
+
+  'obter array de presupuestosVO para sar Idpresupuesto....
+  Dim contador As Integer
+
+  Application.busy = 1
+  HBoxBarrasProceso.Visible = True
+  CalculandoVariosPresupuesto = True
+
+  ArrayTmpVO = ManejadorVistaPrespuesto.ConvertirResult(ManejadorVistaPrespuesto.contenido())
+
+  For Each tmpVO In ArrayTmpVO
+    'voy revisando cada uno de los presupuestos
+    Recalcular(tmpVO.idpresupuesto, tmpVO.actualizarprecios, ProgressBarCalculoParcial)
+    Print "Calculando " & tmpVO.idpresupuesto & "|" & tmpVO.descripcioncorta
+    contador += 1
+    ProgressBarCalculoPresupuesto.value = contador / ArrayTmpVO.count
+  Next
+  actualizarRegilla()
+  Application.Busy = 0
+  HBoxBarrasProceso.Visible = False
+  CalculandoVariosPresupuesto = False
+
+End
+
+Public Sub MenuRecalculo_Click()
+
+  'recalculo el presupuesto que tengo marcado
+
+  Dim tmpVO As New VistaPresupuestoVO 'datos de un registro de vista
+
+  tmpVO = ManejadorVistaPrespuesto.filaSeleccionadaVO()
+  If Not IsNull(tmpVO) Then
+
+    If CalculandoVariosPresupuesto = False Then
+      HBoxBarrasProceso.Visible = True
+      ProgressBarCalculoPresupuesto.Visible = False 'oculto la barra de progreso de "varios proyectos recalculandose"
+    Endif
+
+    Recalcular(tmpVO.idpresupuesto, tmpVO.actualizarprecios, ProgressBarCalculoParcial)
+    'redibujo regillad de datos...
+    ActualizarDesdeDescompuesto()
+
+  Endif
+
+  If CalculandoVariosPresupuesto = False Then
+    HBoxBarrasProceso.Visible = False
+    ProgressBarCalculoPresupuesto.Visible = True
+  Endif
+
+End
+
+Public Sub Recalcular(idpresupuesto As Integer, actualizarPrecios As Boolean, barra As ProgressBar)
+
+  '--------------LABORES------------------------
+  'Por cada descompuesto labor operar
+  '
+  '
+  ' Mediciones:
+  '     Recalcular el Total de mediciones
+
+  ' Precios ->
+  '     si es un proyecto con el Candado Cerrado, no tocar los  precios.
+  ' Si el candado esta abierto:
+  '               ser si estan tomados de la base de datos y en tal caso actualizarlo
+  ' Otener Total: Medicion x Precios
+  'Por cada descompuesto material
+  '-> Precios de Materiales
+  '     si es un proyecto con el Candado Cerrado, no tocar los  precios.
+  ' Si el candado esta abierto:
+  '               ser si estan tomados de la base de datos y en tal caso actualizarlo
+  ' Otener Total: Medicion x Precios
+  ' Finalmente:
+  ' suma de todas los totales de labores y totales de materiales-> consigo nuevo precio calculado del presupuesto
+  Recalculo.Revisar(idpresupuesto, actualizarprecios, barra)
+
+End
+
+Public Sub ClonarPresupuestro_Click()
+
+  'clonarPresupuesto
+  Dim tmpVO As New VistaPresupuestoVO 'datos de un registro de vista
+
+  tmpVO = ManejadorVistaPrespuesto.filaSeleccionadaVO()
+  If Not IsNull(tmpVO) Then
+    ModuloPresupuesto.RealizarClonacion(tmpVO.idpresupuesto, Me)
+  Endif
+
+End
+
+Public Sub MenuBorrarPresupuesto_Click()
+
+  'BorradoPresupuesto
+  Dim tmpVO As New VistaPresupuestoVO 'datos de un registro de vista
+  Dim respuesta As Integer
+
+  tmpVO = ManejadorVistaPrespuesto.filaSeleccionadaVO()
+  If Not IsNull(tmpVO) Then
+
+    respuesta = Message.Question(("El borrado de un presupuesto, significa borrar toda la informacion de ese presupuesto"), ("Si, Borrar"), ("No, Cancelar"))
+
+    If respuesta = 1 Then
+      ModuloPresupuesto.RealizarBorrado(tmpVO.idpresupuesto, Me)
+    Else
+      'no hacer nada, el usuario a cancelado
+    Endif
+
+  Endif
+
+End

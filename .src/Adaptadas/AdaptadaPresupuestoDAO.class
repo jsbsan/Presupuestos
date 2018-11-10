@@ -1,0 +1,106 @@
+' Gambas class file
+
+Inherits PresupuestoDAO
+
+Public Function GeneradorCodigoFormulario(tipo As String, Optional datosEditar As PresupuestoVO) As String
+
+  Dim codigocampos As String
+
+  '---------------------------------------------------
+  'Para añadir registro, cargar combobox
+  '---------------------------------------------------
+  'combobox para estado
+  Dim resultado As Collection
+  Dim opcionesCampoCompuesto As String
+  Dim opcionesCampoId As String
+  Dim aEditar As String
+
+  'combobox2 : para clientes
+  Dim opcionesCampoCompuesto2 As String
+  Dim opcionesCampoId2 As String
+  Dim aEditar2 As String
+
+  Dim numero As Integer
+
+  Dim estados As New ClassEstadosYTiposPrecios
+
+  estados.carga()
+
+  'resultado = comun.ExtraerLista("estado", "estado", "idestado")
+  estados.estadopresupuesto.Delete(0) 'Borro el primer estado que estaba vacio
+  opcionesCampoCompuesto = estados.estadopresupuesto.Join(",")
+
+  opcionesCampoId = estados.numeroestados()
+
+  If tipo = "registrar" Then
+    'no hacer nada...
+  Else
+
+    'nombre del campo a cambiar: idcapitulo
+    If datosEditar.idestado = 0 Then datosEditar.idestado = 1
+
+    numero = Split(opcionesCampoId, ",").Find(datosEditar.idestado)
+    aEditar = Split(opcionesCampoCompuesto, ",")[numero]
+
+  Endif
+  '-----------------------
+  'cargo datos del 2º combobox
+  '-----------------------
+  resultado = comun.ExtraerLista("cliente", "nombre", "idcliente")
+
+  opcionesCampoCompuesto2 = resultado["Compuesto"]
+  opcionesCampoId2 = Replace(resultado["Id"], " ", "")
+
+  If tipo = "registrar" Then
+    'no hacer nada...
+  Else
+    'nombre del campo a cambiar: idcapitulo
+    numero = Split(opcionesCampoId2, ",").Find(datosEditar.idcliente)
+    aEditar2 = Split(opcionesCampoCompuesto2, ",")[numero]
+
+  Endif
+
+  If tipo = "registrar" Then
+    codigocampos &= "null|idpresupuesto|null;"
+    'codigocampos &= "valuebox|idcliente|" & ("idcliente") & "|0;"
+    codigocampos &= "combobox|idcliente|" & ("idcliente") & "| " & opcionesCampoCompuesto2 & "||" & opcionesCampoId2 & ";"
+
+    'codigocampos &= "valuebox|idestado|" & ("idestado") & "|0;"
+
+    codigocampos &= "combobox|idestado|" & ("idestadp") & "| " & opcionesCampoCompuesto & "||" & opcionesCampoId & ";"
+
+    codigocampos &= "textbox|claveasignada|" & ("claveasignada") & "|;"
+    codigocampos &= "valuebox|valorcalculado|" & ("valorcalculado") & "|0|2;"
+    codigocampos &= "valuebox|valorasignado|" & ("valorasignado") & "|0;"
+    codigocampos &= "datebox|fecha|" & ("fecha") & "|" & Format$(Now, Me.formatofecha) & ";"
+    ' codigocampos &= "valuebox|idimagenpresupuesto|" & ("idimagenpresupuesto") & "|0|2;"
+    ' codigocampos &= "valuebox|iddescompuestolabores|" & ("iddescompuestolabores") & "|0|2;"
+    ' codigocampos &= "valuebox|iddescompuestomateriales|" & ("iddescompuestomateriales") & "|0|2;"
+    codigocampos &= "textbox|descripcioncorta|" & ("descripcioncorta") & "|;"
+    codigocampos &= "textarea|comentario|" & ("comentario") & "|;"
+    codigocampos &= "textarea|descripciongeneral|" & ("descripciongeneral") & "|;"
+    codigocampos &= "textarea|textogarantia|" & ("textogarantia") & "|;"
+    codigocampos &= "checkbox|actualizarprecios|" & ("actualizarprecios") & "|True;"
+  Else
+    codigocampos &= "null|idpresupuesto|null;"
+    'codigocampos &= "valuebox|idcliente|" & ("idcliente") & "|" & datosEditar.idcliente & ";"
+    codigocampos &= "combobox|idcliente|" & ("idcliente") & "| " & opcionesCampoCompuesto2 & "|" & aEditar2 & "|" & opcionesCampoId2 & ";"
+
+    'codigocampos &= "valuebox|idestado|" & ("idestado") & "|" & datosEditar.idestado & ";"
+    codigocampos &= "combobox|idestado|" & ("idestado") & "| " & opcionesCampoCompuesto & "|" & aEditar & "|" & opcionesCampoId & ";"
+
+    codigocampos &= "textbox|claveasignada|" & ("claveasignada") & "|" & datosEditar.claveasignada & ";"
+    codigocampos &= "valuebox|valorcalculado|" & ("valorcalculado") & "|" & datosEditar.valorcalculado & "|2;"
+    codigocampos &= "valuebox|valorasignado|" & ("valorasignado") & "|" & datosEditar.valorasignado & ";"
+    codigocampos &= "datebox|fecha|" & ("fecha") & "|" & Format$(datosEditar.fecha, Me.formatofecha) & ";"
+    ' codigocampos &= "valuebox|iddescompuestolabores|" & ("iddescompuestolabores") & "|" & datosEditar.iddescompuestolabores & "|2;"
+    ' codigocampos &= "valuebox|iddescompuestomateriales|" & ("iddescompuestomateriales") & "|" & datosEditar.iddescompuestomateriales & "|2;"
+    codigocampos &= "textbox|descripcioncorta|" & ("descripcioncorta") & "|" & datosEditar.descripcioncorta & ";"
+    codigocampos &= "textarea|comentario|" & ("comentario") & "|" & datosEditar.comentario & ";"
+    codigocampos &= "textarea|descripciongeneral|" & ("descripciongeneral") & "|" & datosEditar.descripciongeneral & ";"
+    codigocampos &= "textarea|textogarantia|" & ("textogarantia") & "|" & datosEditar.textogarantia & ";"
+    codigocampos &= "checkbox|actualizarprecios|" & ("actualizarprecios") & "|" & Str$(datosEditar.actualizarprecios) & ";"
+  Endif
+  Return codigocampos
+
+End

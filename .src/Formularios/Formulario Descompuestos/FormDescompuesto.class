@@ -1,0 +1,1136 @@
+' Gambas class file
+
+Private ValorPresupuestoCalculado As Float
+
+Private idpresupuesto As Integer
+Private manejadorDescompuestolabor As New DescompuestolaboresDAO
+Private manejadorVistaDescompuestoLabor As New VistaDescomLaboresAdaptadaDAO
+
+Private manejadorDescompuestoMaterial As New DescompuestomaterialesDAO
+Private manejadorVistaDescompuestoMaterial As New VistaDescomMaterialesAdaptadaDAO
+
+Private manejadorMedicionesTabla As New AdaptadaMedicionDAO
+
+Private descompuestoLaborElegido As Integer = -1 'aqui guardamos el id de la labor seleccionada en el gridviewlabores
+
+Private linkPrecios As Boolean 'comprueba si se puede editar/añadir/borrar unidades del presupuesto
+Private formularioPresupuesto As FMainListaPresupuestos
+
+Private ContadorOrden As Integer
+
+Public Sub Form_Open()
+
+  GridViewLabores.drop = True 'para que acepte soltar elementos...
+
+  GridViewMateriales.drop = True
+
+  GridViewMedicion.drop = True 'acepta soltar mediciones en ella
+
+  VSplit1.Layout = [5, 3]
+
+  coloresGrid(manejadorVistaDescompuestoLabor)
+  coloresGrid(manejadorVistaDescompuestoMaterial)
+  coloresGrid(manejadorMedicionestabla)
+
+  manejadorVistaDescompuestoLabor.ocultaId = "id*"
+  manejadorVistaDescompuestoMaterial.ocultaId = "id*"
+  manejadorMedicionestabla.ocultaId = "id*"
+
+  ContadorOrden = MaximoOrden()
+
+  rellenarGridLabor()
+  rellenarGridMat()
+
+  CalcularValorPresupuesto()
+
+  actualizarPrecioPresupuesto()
+
+  Me.center
+
+End
+
+Public Function MaximoOrden() As Integer
+
+  Dim misql As String
+  Dim cc As New Conexion
+  Dim miresult As Result
+  Dim numero As Integer
+
+  cc.conexion()
+
+  misql = "SELECT max(idorden) as m FROM descompuestolabores"
+  miresult = cc.hconn.Exec(misql)
+  If IsNull(miresult["m"]) Then
+    numero = 0
+  Else
+    numero = miresult["m"]
+  Endif
+
+  Return numero
+
+End
+
+Public Sub CalcularValorPresupuesto()
+
+  Dim misql As String
+  Dim miresultado As Result
+  Dim miconexion As New Conexion
+
+  miconexion.conexion()
+
+  'consulto suma de descompuesto de materiales
+  misql = "SELECT SUM(total) as Sumatorio FROM descompuestomateriales where idpresupuesto=" & Str$(idpresupuesto)
+  miresultado = miconexion.hconn.Exec(misql)
+  If Not IsNull(miresultado["Sumatorio"]) Then
+    ValorPresupuestoCalculado = miresultado["Sumatorio"] 'suma de descompuesto de materiales
+  Endif
+
+  'consulto suma de descompuesto de laborles
+  misql = "SELECT SUM(total) as Sumatorio FROM descompuestolabores where idpresupuesto=" & Str$(idpresupuesto)
+  miresultado = miconexion.hconn.Exec(misql)
+  If Not IsNull(miresultado["Sumatorio"]) Then
+    ValorPresupuestoCalculado += miresultado["Sumatorio"] 'suma de descompuesto de materiales
+  Endif
+
+  actualizarPrecioPresupuesto()
+  miconexion.desconectar()
+
+End
+
+Public Sub actualizarPrecioPresupuesto()
+
+  ''TODO: Cambiar el valor del presupuesto principal cuando cambia algun valor del total de algun descompuesto
+  'editar el registro del presupuesto, y cambiarle el valor del
+  Dim manejadorpresupuesto As New PresupuestoDAO
+  Dim datosPresupuesto As New PresupuestoVO
+  '
+  ' datosPresupuesto = manejadorpresupuesto.ConvertirResult(manejadorpresupuesto.BuscarIgualIdpresupuesto(idpresupuesto))[0]
+  ' manejadorpresupuesto.bus
+  ' datosPresupuesto.valorcalculado = ValorPresupuestoCalculado
+
+  'guardo el dato
+  datosPresupuesto = manejadorpresupuesto.ExtraerRegistro("idpresupuesto", idpresupuesto)
+  datosPresupuesto.valorcalculado = ValorPresupuestoCalculado
+  manejadorpresupuesto.ModificarIdpresupuesto(idpresupuesto, datosPresupuesto)
+
+  ButtonPresupuesto.text = "Presupuesto Calculado: " & Format$(ValorPresupuestoCalculado, "$,#.###")
+  'actualizo formulario de Presupuestos
+  formularioPresupuesto.ActualizarDesdeDescompuesto()
+
+End
+
+Public Sub rellenarGridLabor()
+
+  Dim sql As String
+  ''FIXME: ordenar por el campo idorden
+  sql = "select * from VistaDescomLabores where idpresupuesto=" & idpresupuesto & " order by idorden"
+
+  manejadorVistaDescompuestoLabor.MostrarGridView(GridViewLabores, sql)
+
+End
+
+Public Sub rellenarGridMat()
+
+  Dim sql As String
+
+  sql = "select * from VistaDescomMateriales where idpresupuesto=" & idpresupuesto
+
+  manejadorVistaDescompuestoMaterial.MostrarGridView(GridViewMateriales, sql)
+
+End
+
+Public Sub coloresGrid(obj As Object)
+
+  If Not linkPrecios Then
+    'no se puede editar, ni cambiar nada.
+    obj.ColorFilaImPar = Color.Yellow
+    obj.ColorFilaPar = Color.Orange
+  Else
+    'se pueden cambiar las mediciones, precios, unidades, materiales
+    obj.ColorFilaImPar = Color.cyan
+    obj.ColorFilaPar = Color.White
+  Endif
+
+End
+
+Public Sub titulo(cadena As String, id As Integer, LinkP As Boolean, formOrigen As FMainListaPresupuestos)
+  'linkp : true  se puede modificar los precios
+  'linkp : false no se pueden cambiar los precios, ni medidas, ni añadir nada.
+
+  formularioPresupuesto = formOrigen
+
+  If LinkP Then
+    'es verdadero, se pueden cambiar los precios
+  Else
+    'no se puede ni borrar, ni editar, ni añadir materiales ni labores, ni mediciones
+    GridViewLabores.popupMenu = Null
+    GridViewMedicion.popupMenu = Null
+    GridViewMateriales.popupMenu = Null
+
+  Endif
+  linkPrecios = LinkP
+  idpresupuesto = id
+  Me.Title = ("Descompuesto: ") & cadena
+
+End
+
+Public Sub GridViewLabores_Drop()
+
+  Dim respuesta As Float[]
+  Dim tmpVO As New DescompuestolaboresVO
+  Dim texto As String
+  Dim extraer As String[]
+
+  If Not linkPrecios Then
+    Message.Error(("El presupuesto esta cerrado"))
+    Return 'modo de ver, no se puede editar
+  Endif
+  texto = Drag.Data
+
+  extraer = Split(texto, "|")
+
+  If extraer.count = 0 Then
+    'no hacer nada, la información no es valida
+    Message.Info(("Solo puede soltar Labores en esta pestaña"))
+  Else
+    Select Case extraer[0]
+      Case "Descompuesto"
+        'se trata de un descompuesto...
+        insertarDescompuestoSoltado(extraer[1])
+
+      Case "labores"
+        'se trata de incorporar una labor a nuestro  descompuesto actual.
+        'y notificar que valor que vamos a tomar
+        ' podemos hacer un formulario pequeño con elegir las 3 opciones
+
+        FormOpcionesPreciosLabores.TextoUnidad = Transito.laborCogido.textocorto
+        FormOpcionesPreciosLabores.laborcompleta = Transito.laborCogido.precioportrabajo
+        FormOpcionesPreciosLabores.dia = Transito.laborCogido.preciopordia
+        FormOpcionesPreciosLabores.hora = Transito.laborCogido.precioporhora
+
+        respuesta = FormOpcionesPreciosLabores.Mostrar()
+        If respuesta[0] = 0 Then
+          'se ha cancelado
+          Return
+        Endif
+        ' una vez determinado por el usuario el precio, se añade el registro
+        tmpVO.idlabor = Transito.laborCogido.idlabor
+        tmpVO.idpresupuesto = idpresupuesto  'es el presupuesto que tengo abierto
+        ' tmpVO.iddescompuesto sera asignado al agregar el registro
+        tmpVO.idtipo = respuesta[0] 'se obtiene del pequeño formulario (1=Trabajo, 2=Dia,3=Hora)
+        Select Case respuesta[0]
+          Case 1
+            tmpVO.precio = Transito.laborCogido.precioportrabajo
+          Case 2
+            tmpVO.precio = Transito.laborCogido.preciopordia 'se obtiene del pequeño formulario
+          Case 3
+
+            tmpVO.precio = Transito.laborCogido.precioporhora
+          Case 4
+            tmpVO.precio = respuesta[1]
+        End Select
+
+        'añado orden de la unidad
+        'FIRME: Arreglar eltema del orde... al añadir
+        ContadorOrden += 1
+        tmpvo.idorden = ContadorOrden
+
+        manejadorDescompuestolabor.registrar(tmpVO)
+
+        'Calculo presupuesto
+        tmpVO.total = tmpVO.medicion * tmpVO.precio
+
+        ValorPresupuestoCalculado += tmpVO.total
+
+        actualizarPrecioPresupuesto()
+
+        'recargar datos de la vista
+        rellenarGridLabor()
+      Default
+        Message.Info(("Solo puede soltar Labores en esta pestaña"))
+    End Select
+
+  Endif
+
+End
+
+'------------------------------------------------------------------------
+'materiales del descompuesto del presupuesto
+'------------------------------------------------------------------------
+'
+
+Public Sub GridViewMateriales_Drop()
+
+  Dim respuesta As Float[]
+  Dim tmpVO As New DescompuestomaterialesVO
+  Dim texto As String
+  Dim extraer As String[]
+
+  If Not linkPrecios Then
+    Message.Error(("El presupuesto esta cerrado"))
+    Return 'modo de ver, no se puede editar
+  Endif
+
+  texto = Drag.Data
+
+  extraer = Split(texto, "|")
+
+  If extraer.count = 0 Then
+    Message.Info(("Solo puede soltar Materiales en esta pestaña"))
+    'no hacer nada, la información no es valida
+    Return
+  Endif
+
+  Select Case extraer[0]
+    Case "DescompuestoMaterial"
+      InsertarDescompuestoMaterial(extraer[1]) 'suelto un descompuesto material
+
+    Case "material"
+      'se trata de incorporar una labor a nuestro  descompuesto actual.
+      'y notificar que valor que vamos a tomar
+      ' podemos hacer un formulario pequeño con elegir las 3 opciones
+
+      FormOpcionPrecioMaterial.TextoUnidad = Transito.MaterialCogido.textocorto
+      FormOpcionPrecioMaterial.PrecioBD = Transito.MaterialCogido.precio 'es el precio de la base de datos
+      FormOpcionPrecioMaterial.Medicion = 0
+
+      respuesta = FormOpcionPrecioMaterial.Mostrar()
+      If respuesta[0] = 0 Then
+        'se ha cancelado
+        Return
+      Endif
+      ' una vez determinado por el usuario el precio, se añade el registro
+      tmpVO.idmaterial = Transito.MaterialCogido.idmaterial
+      tmpVO.idpresupuesto = idpresupuesto  'es el presupuesto que tengo abierto
+      ' tmpVO.iddescompuesto sera asignado al agregar el registro
+      tmpVO.idtipo = respuesta[0] 'se obtiene del pequeño formulario (5=precio de la base de datos Materiales, 4= personalizado)
+      Select Case respuesta[0]
+        Case 5 'material: precio de la base de datos
+          tmpVO.precio = Transito.MaterialCogido.precio 'precio de la base de datos
+
+        Case 4 '
+          tmpVO.precio = respuesta[1] 'se obtiene del pequeño formulario
+
+      End Select
+
+      tmpVO.medicion = respuesta[2] 'el 3º elemento devuelve la medicion
+
+      'Calculo presupuesto
+      '
+      tmpVO.total = tmpVO.medicion * tmpVO.precio
+
+      ValorPresupuestoCalculado += tmpVO.total
+
+      actualizarPrecioPresupuesto()
+
+      manejadorDescompuestoMaterial.registrar(tmpVO)
+      'recargar datos de la vista
+  End Select
+
+  rellenarGridMat()
+
+End
+
+Public Sub EditarMaterial_Click()
+  ''TODO: Ejemplo como editar un precio/medicion de un material de un descompuesto.
+
+  Dim diff As Float
+  Dim respuesta As Float[]
+  Dim tmpVistaVO As New VistaDescomMaterialesVO
+  Dim tmptablaVO As New DescompuestomaterialesVO
+  Dim TMPmanejadorDescompuestoMaterial As New DescompuestomaterialesDAO
+
+  Dim precioMaterialBD As Float
+  Dim manejadorMaterial As New MaterialesDAO
+
+  Dim tmpMaterialVO As New MaterialesVO
+  Dim tmpManejadorMaterialDAO As New MaterialesDAO
+  'para editar un material usamos el formulario de opciones de precio...
+  '1) ver que material se ha seleccionado...
+  'obtener el VO del registro seleccionado
+  tmpVistaVO = manejadorVistaDescompuestoMaterial.filaSeleccionadaVO()
+  'aqui obtengo los datos del registro de la vista...
+  If Not IsNull(tmpVistaVO) Then
+    '2) pasar datos de Nombre, precio y medicion (Y cual precio es de la base de datos o personalizado)
+    'del dato de la vista, (el .iddescompuesto), busco el correspondiente a la tabla de descompuesto, , y extraigo su registro
+    tmptablaVO = TMPmanejadorDescompuestoMaterial.ConvertirResult(manejadorDescompuestoMaterial.BuscarIgualIddescompuestomaterial(tmpVistaVO.iddescompuestomaterial))[0]
+    FormOpcionPrecioMaterial.TextoUnidad = tmpVistaVO.textocorto
+    If tmptablaVO.idtipo = 5 Then
+      'tiene el precio de la base de datos
+      FormOpcionPrecioMaterial.PrecioBD = tmptablaVO.precio
+      FormOpcionPrecioMaterial.eleccion = 5 'precio de la base de datos de material
+      FormOpcionPrecioMaterial.Personalizado = 0
+    Else
+
+      'tengo que buscar elprecio del material
+      precioMaterialBD = manejadorMaterial.ExtraerRegistro("idmaterial", tmptablaVO.idmaterial).precio
+      FormOpcionPrecioMaterial.PrecioBD = precioMaterialBD
+      'tiene un precio personalizado.
+      FormOpcionPrecioMaterial.Personalizado = tmptablaVO.precio
+      FormOpcionPrecioMaterial.eleccion = 4
+
+    Endif
+
+    FormOpcionPrecioMaterial.Medicion = tmpVistaVO.medicion
+    '3) recupera lo que ha develto el formulario
+    respuesta = FormOpcionPrecioMaterial.Mostrar()
+
+    If respuesta[0] = 0 Then
+      'se ha cancelado la edicion
+      Return
+    Endif
+    '4) si no ha cancelado, modifica el registro
+
+    ' tmpVO.iddescompuesto sera asignado al agregar el registro
+    tmptablaVO.idtipo = respuesta[0] 'se obtiene del pequeño formulario (1=precio de la base de datos, 4= personalizado)
+    Select Case respuesta[0]
+      Case 5 'precio que proviene de la base de datos
+        Try tmptablaVO.precio = BDMaterial(tmpVistaVO.idmaterial).precio
+        If Error Then
+          Message.Info(("Se le asigna un precio = 0"))
+          tmptablaVO.idtipo = 4
+        Endif
+
+      Case 4
+        'Precio Personalizado
+        tmptablaVO.precio = respuesta[1] 'se obtiene del pequeño formulario
+
+    End Select
+
+    tmptablaVO.medicion = respuesta[2] 'el 3º elemento devuelve la medicion
+
+    'recalculo del presupuesto
+    'Calculo presupuesto
+    diff = tmptablaVO.total 'total anterior
+    tmptablaVO.total = tmptablaVO.medicion * tmptablaVO.precio
+    diff = tmptablaVO.total - diff
+
+    ValorPresupuestoCalculado += diff
+
+    actualizarPrecioPresupuesto()
+
+    manejadorDescompuestoMaterial.ModificarIddescompuestomaterial(tmptablaVO.iddescompuestomaterial, tmptablaVO)
+    '5) rellenar grid
+
+    rellenarGridMat() '
+
+  Endif
+
+End
+
+'---------------
+Public Function BDMaterial(id As Integer) As MaterialesVO
+  'consulta del dato del precio en la tabla Materiales
+
+  Dim m As New MaterialesDAO
+  Dim dato As New MaterialesVO
+
+  'dato = m.ExtraerRegistro("idmaterial", id)
+  Try dato = m.ConvertirResult(m.BuscarIgualIdmaterial(id))[0]
+  If Error Then
+    Message.Error(("No he encontrado el material en la base de datos"))
+    Return Null
+  Endif
+
+  Return dato
+
+End
+
+Public Sub ButtonBaseDedatosLabores_Click()
+
+  FormLabores.Show()
+
+End
+
+Public Sub ButtonBaseDedatosMateriales_Click()
+
+  FormMateriales.Show()
+
+End
+
+Public Sub EditarLabores_Click()
+
+  'editar precio de la labor
+
+  Dim respuesta As Float[]
+
+  Dim tmpVistaVO As New VistaDescomLaboresVO
+  Dim tmpTablaVO As New DescompuestolaboresVO
+  Dim tmpManejadorLaborDAO As New DescompuestolaboresDAO
+
+  Dim tmpLaborVO As New LaborVO
+  Dim tmpLaborDAO As New LaborDAO
+
+  tmpVistaVO = manejadorVistaDescompuestoLabor.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVistaVO) Then
+
+    tmptablaVO = tmpManejadorLaborDAO.ExtraerRegistro("iddescompuesto", tmpVistaVO.iddescompuesto)
+    FormOpcionesPreciosLabores.TextoUnidad = tmpVistaVO.textocorto 'el texto corto esta en la Vista, en el Tabla de descompuesto de labor, solo esta el idlabor
+
+    'obtener precios de precioportrabajo, preciopordia, precioporhora de la tabla labores (laborDAO) para ponerlo en el formulario
+    tmpLaborVO = tmpLaborDAO.ExtraerRegistro("idlabor", tmptablaVO.idlabor)
+
+    FormOpcionesPreciosLabores.laborcompleta = tmpLaborVO.precioportrabajo
+    FormOpcionesPreciosLabores.dia = tmpLaborVO.preciopordia
+    FormOpcionesPreciosLabores.hora = tmpLaborVO.precioporhora
+
+    'activar los radio buton, segun cual sea el precio que tengamos elegido
+    Select Case tmptablaVO.idtipo
+      Case 1
+        'elegir el radiobutoon1
+        FormOpcionesPreciosLabores.eleccion = 1
+      Case 2
+        'elegir el radiobutoon2
+        FormOpcionesPreciosLabores.eleccion = 2
+      Case 3
+        'elegir el radiobutoon3
+        FormOpcionesPreciosLabores.eleccion = 3
+      Case 4
+        'elegir el radiobutoon4
+        FormOpcionesPreciosLabores.eleccion = 4
+        FormOpcionesPreciosLabores.Personalizado = tmptablaVO.precio
+    End Select
+
+    respuesta = FormOpcionesPreciosLabores.Mostrar()
+    If respuesta[0] = 0 Then
+      'se ha cancelado
+      Return
+    Else
+      'ha habido modificacion aceptada...
+
+    Endif
+
+    ''TODO: asignar precio a labor (editor)
+    asignarPrecioAlabor(tmptablaVO, respuesta)
+  Endif
+
+End
+
+Public Sub asignarPrecioAlabor(tmpTablaVO As DescompuestolaboresVO, respuesta As Float[])
+
+  Dim totalAnterior As Float
+
+  totalAnterior = tmptablaVO.total 'cogo el valor del total anterior
+
+  ' tmpVO.iddescompuesto sera asignado al agregar el registro
+  tmpTablaVO.idtipo = respuesta[0] 'se obtiene del pequeño formulario (1=Trabajo, 2=Dia,3=Hora)
+
+  tmpTablaVO.precio = respuesta[1] 'se le asigna el precio
+
+  'recalculo el total nuevo
+  tmptablaVO.total = tmptablaVO.medicion * tmptablaVO.precio
+
+  'guardo datos de la labor
+  manejadorDescompuestolabor.ModificarIddescompuesto(tmpTablaVO.iddescompuesto, tmptablaVO)
+
+  'ReCalculo presupuesto
+  ValorPresupuestoCalculado -= totalAnterior 'anterior total de esa labor
+
+  ValorPresupuestoCalculado += tmptablaVO.total 'nuevo total de esa labor
+
+  actualizarPrecioPresupuesto()
+
+  'recargar datos de la vista
+  rellenarGridLabor()
+
+End
+
+Public Sub GridViewLabores_Click()
+  '' escribir mediciones cuando se haga CLICK en la fila del gridview de labores
+
+  Dim sql As String
+
+  Dim tmpVistaVO As New VistaDescomLaboresVO
+
+  tmpVistaVO = manejadorVistaDescompuestoLabor.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVistaVO) Then
+    'Rellenar
+    'gridview de mediciones, que tenga el mismo idDescompuesto
+    sql = "select * from Medicion where iddescompuesto=" & tmpVistaVO.iddescompuesto
+
+    manejadorMedicionesTabla.MostrarGridView(GridViewMedicion, sql)
+    descompuestoLaborElegido = tmpVistaVO.iddescompuesto
+    LabelUnidadSeleccinada.text = tmpVistaVO.textocorto
+  Endif
+
+  mostrarComentario()
+
+End
+
+Public Sub addmedicion_Click()
+
+  Dim respuesta As Boolean
+  Dim medicionAntigua As Float
+  Dim hresult As Result
+  Dim ArrayTmpVo As MedicionVO[]
+  Dim datoMedicionVO As New MedicionVO
+  Dim sql As String
+
+  Dim numerodeveces As Float
+  Dim ancho As Float
+  Dim alto As Float
+  Dim largo As Float
+
+  'añadir medicion
+  Dim tmpVistaVO As New VistaDescomLaboresVO
+
+  If descompuestoLaborElegido <> -1 Then
+    datoMedicionVO.iddescompuesto = descompuestoLaborElegido
+  Else
+    tmpVistaVO = manejadorVistaDescompuestoLabor.filaSeleccionadaVO()
+
+    If Not IsNull(tmpVistaVO) Then
+      'el registro medicion ya tiene un campo definido, el del descompuesto (idmedicion)
+      datoMedicionVO.iddescompuesto = tmpVistaVO.iddescompuesto
+    Else
+      Return 'ni hay elegido, ni antes hubo una fila elegida...
+    Endif
+  Endif
+
+  manejadorMedicionesTabla.registrar(datoMedicionVO)
+
+  'me voy al ultimo registro y consigo su id para editarlo
+
+  hresult = manejadorMedicionesTabla.contenido()
+  hresult.MoveLast
+  ArrayTmpVo = manejadorMedicionesTabla.ConvertirResult(hresult)
+  datoMedicionVO = ArrayTmpVo[0]
+
+  'lo edito
+  manejadorMedicionesTabla.FormularioTitulo = ("Añadir linea de medición")
+
+  respuesta = manejadorMedicionesTabla.FormularioModificarRegistroId(datoMedicionVO.id, datoMedicionVO, 1)
+
+  If Not respuesta Then
+    'se ha cancelado la medicion
+    datoMedicionVO = manejadorMedicionesTabla.UltimoIntroducido()
+    ' hresult = manejadorMedicionesTabla.contenido()
+    ' hresult.MoveLast
+    ' ArrayTmpVo = manejadorMedicionesTabla.ConvertirResult(hresult)
+    ' datoMedicionVO = ArrayTmpVo[0]
+    ' 'borro el dato que he añadido...
+    manejadorMedicionesTabla.BorrarId(datoMedicionVO.id)
+
+  Else
+    'no se ha cancelado la edicion
+    'vuelvo a recuperar el registro editado...
+    hresult = manejadorMedicionesTabla.contenido()
+    hresult.MoveLast
+    ArrayTmpVo = manejadorMedicionesTabla.ConvertirResult(hresult)
+    datoMedicionVO = ArrayTmpVo[0]
+
+    'obtener el total de medicion
+    numerodeveces = datoMedicionVO.numeroveces
+    ancho = If(datoMedicionVO.ancho = 0, 1, datoMedicionVO.ancho)
+    largo = If(datoMedicionVO.largo = 0, 1, datoMedicionVO.largo)
+    alto = If(datoMedicionVO.alto = 0, 1, datoMedicionVO.alto)
+
+    'recalcular el total de la partida (medicion x precio ) y luego actualizar el precio del presupuesto
+    medicionAntigua = datoMedicionVO.total
+
+    datoMedicionVO.total = datoMedicionVO.numeroveces * ancho * largo * alto
+    'ingreso el dato
+    manejadorMedicionesTabla.ModificarId(datoMedicionVO.id, datoMedicionVO)
+
+    'mostrar datos
+    sql = "select * from Medicion where iddescompuesto=" & descompuestoLaborElegido
+    manejadorMedicionesTabla.MostrarGridView(GridViewMedicion, sql)
+
+    actualizarValoresDescompuesto(descompuestoLaborElegido)
+
+  Endif
+
+End
+
+Public Sub actualizarValoresDescompuesto(descompuestoLaborElegido As Integer)
+
+  Dim tmpVO As New DescompuestolaboresVO
+  Dim totalmedicion As Float
+  Dim misql As String
+  Dim miconexion As New Conexion
+  Dim miresultado As Result
+  Dim incremento As Float
+
+  miconexion.conexion()
+
+  'iddescompuesto
+  ' If descompuestoLaborElegido = -1 Then
+  '   Return
+  ' Endif
+  tmpvo = manejadorDescompuestolabor.ExtraerRegistro("iddescompuesto", descompuestoLaborElegido)
+
+  'suma todas la mediciones
+
+  misql = "SELECT SUM(total) as Sumatorio FROM Medicion where iddescompuesto=" & Str$(descompuestoLaborElegido)
+  miresultado = miconexion.hconn.Exec(misql)
+  If Not IsNull(miresultado["Sumatorio"]) Then
+
+    totalmedicion = miresultado["Sumatorio"] 'suma de descompuesto de materiales
+
+    'recalculo el total
+    incremento = (totalmedicion - tmpVO.medicion) * tmpVO.precio
+    tmpvo.medicion = totalmedicion
+    tmpvo.total = totalmedicion * tmpvo.precio
+
+  Else
+    'no hay sumatorio, la medicion del descompuesto = 0
+    'actualizar valor total del descompuesto.
+    tmpvo.medicion = 0
+    incremento = - tmpvo.total
+    tmpvo.total = 0
+
+  Endif
+
+  'actualizar valor total del descompuesto.
+  manejadorDescompuestolabor.ModificarIddescompuesto(tmpVO.iddescompuesto, tmpvo)
+
+  ValorPresupuestoCalculado += incremento
+
+  actualizarPrecioPresupuesto()
+
+  'recargar datos de la vista
+  rellenarGridLabor()
+
+End
+
+Public Sub editarmedicion_Click()
+
+  Dim sql As String
+  Dim numerodeveces As Float
+  Dim ancho As Float
+  Dim largo As Float
+  Dim alto As Float
+  Dim medicionAntigua As Float
+
+  Dim datoMedicionVO As MedicionVO
+  'leo linea de medicion en la que se ha echo click
+
+  datoMedicionVO = manejadorMedicionesTabla.filaSeleccionadaVO()
+
+  If Not IsNull(datoMedicionVO) Then
+    manejadorMedicionestabla.FormularioModificarRegistroId(datoMedicionVO.id, datoMedicionVO, 1)
+    'tengo que leer de nuevo el registro...
+    'mostrar datos
+    sql = "select * from Medicion where iddescompuesto=" & descompuestoLaborElegido
+    manejadorMedicionesTabla.MostrarGridView(GridViewMedicion, sql)
+
+    'cargo la linea seleccinada
+    datoMedicionVO = manejadorMedicionesTabla.ExtraerRegistro("id", datoMedicionVO.id)
+
+    'obtener el total de medicion
+    numerodeveces = datoMedicionVO.numeroveces
+    ancho = If(datoMedicionVO.ancho = 0, 1, datoMedicionVO.ancho)
+    largo = If(datoMedicionVO.largo = 0, 1, datoMedicionVO.largo)
+    alto = If(datoMedicionVO.alto = 0, 1, datoMedicionVO.alto)
+
+    'recalcular el total de la partida (medicion x precio ) y luego actualizar el precio del presupuesto
+    medicionAntigua = datoMedicionVO.total
+
+    datoMedicionVO.total = numerodeveces * ancho * largo * alto
+    'ingreso el dato
+    manejadorMedicionesTabla.ModificarId(datoMedicionVO.id, datoMedicionVO)
+
+    'mostrar datos
+    sql = "select * from Medicion where iddescompuesto=" & descompuestoLaborElegido
+    manejadorMedicionesTabla.MostrarGridView(GridViewMedicion, sql)
+
+    'habria que recalcular el total de la  medicion, recalcular medicion del descommpuesto y presupueto
+    actualizarValoresDescompuesto(datoMedicionVO.iddescompuesto)
+  Endif
+
+End
+
+Public Sub BorrarMedicion_Click()
+
+  Dim sql As String
+  Dim datoMedicionVO As MedicionVO
+  'leo linea de medicion en la que se ha echo click
+
+  datoMedicionVO = manejadorMedicionesTabla.filaSeleccionadaVO()
+
+  If Not IsNull(datoMedicionVO) Then
+
+    manejadorMedicionesTabla.BorrarId(datoMedicionVO.id)
+
+    'muetra todos los registros de mediciones del descompuesto actual
+    sql = "select * from Medicion where iddescompuesto=" & descompuestoLaborElegido
+    manejadorMedicionesTabla.MostrarGridView(GridViewMedicion, sql)
+
+    'recalcular el valor del presupuesto...
+    'habria que recalcular el total de la  medicion, recalcular medicion del descommpuesto y presupueto
+    actualizarValoresDescompuesto(datoMedicionVO.iddescompuesto)
+  Endif
+
+End
+
+Public Sub BorraMaterial_Click()
+  'la fila seleccionada de material hay que borrala. y recalcular el presupuesto.
+
+  Dim TMPmanejadorDescompuestoMaterial As New DescompuestomaterialesDAO
+
+  Dim tmpVistaVO As New VistaDescomMaterialesVO
+  '1) ver que material se ha seleccionado...
+  'obtener el VO del registro seleccionado
+  tmpVistaVO = manejadorVistaDescompuestoMaterial.filaSeleccionadaVO()
+  If Not IsNull(tmpVistaVO) Then
+    '2) pasar datos de Nombre, precio y medicion (Y cual precio es de la base de datos o personalizado)
+    'del dato de la vista, (el .iddescompuesto), busco el correspondiente a la tabla de descompuesto, , y extraigo su registro
+    ValorPresupuestoCalculado -= tmpVistaVO.total
+
+    'borro el registro seleccinado
+    TMPmanejadorDescompuestoMaterial.BorrarIddescompuestomaterial(tmpVistaVO.iddescompuestoMaterial)
+    'recalcular
+
+    actualizarPrecioPresupuesto()
+
+    '5) rellenar grid
+
+    rellenarGridMat() '
+
+  Endif
+
+End
+
+Public Sub BorrarLabores_Click()
+
+  'borrar medicion asociada al descompuesto
+  'borrar linea de descompuestolaboral
+
+  Dim sql As String
+  Dim tmpVistaVO As New VistaDescomLaboresVO
+
+  tmpVistaVO = manejadorVistaDescompuestoLabor.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVistaVO) Then
+    'recalcular precios del proeycto
+    ValorPresupuestoCalculado -= tmpVistaVO.total
+    'borro del descompuesto la labor
+    manejadorDescompuestolabor.BorrarIddescompuesto(tmpVistaVO.iddescompuesto)
+
+    'borro de la descompuesto
+
+    manejadorDescompuestolabor.BorrarIddescompuesto(tmpVistaVO.iddescompuesto)
+
+    actualizarPrecioPresupuesto()
+
+    rellenarGridLabor()
+
+    'borrar datos de medicion del descompuesto seleccionado
+    sql = "delete  from Medicion where iddescompuesto=" & tmpVistaVO.iddescompuesto
+    manejadorMedicionesTabla.MostrarGridView(GridViewMedicion, sql)
+
+  Endif
+
+End
+
+Public Sub TabStripLaboralesMateriales_Arrange()
+
+  Select Case TabStripLaboralesMateriales.index
+    Case 0 'Paso a la  Pestaña Labores
+      GridViewMedicion.visible = True
+      TextLabelComentario.visible = True
+      VSplit1.Layout = [5, 3]
+    Case 1 'paso de la pestaña de materiales
+      'ocultar o read onl
+      VSplit1.Layout = [1, 0]
+      GridViewMedicion.visible = False
+      TextLabelComentario.visible = False
+  End Select
+
+  '
+
+End
+
+Public Sub mostrarComentario()
+
+  Dim sql As String
+  Dim hresult As Result
+  Dim tmpVistaVO As New VistaDescomLaboresVO
+
+  tmpVistaVO = manejadorVistaDescompuestoLabor.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVistaVO) Then
+    'Rellenar
+    sql = "select comentario from descompuestolabores where iddescompuesto=" & tmpVistaVO.iddescompuesto
+    hresult = manejadorDescompuestolabor.sql(sql)
+    TextLabelComentario.text = hresult["comentario"]
+  Endif
+
+End
+
+Public Sub TextLabelComentario_MouseDown()
+
+  Dim texto As String
+  Dim tmpTablaDAO As DescompuestolaboresDAO
+  Dim tmpTablaVO As DescompuestolaboresVO
+  Dim tmpVistaVO As New VistaDescomLaboresVO
+
+  If Not linkPrecios Then
+    Return 'modo de ver, no se puede editar
+  Endif
+
+  tmpVistaVO = manejadorVistaDescompuestoLabor.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVistaVO) Then
+    'Rellenar
+    texto = InputBox("Comentario:",, TextLabelComentario.text)
+    'guardar ese textobo
+
+    tmptablaVO = manejadorDescompuestolabor.ExtraerRegistro("iddescompuesto", tmpVistaVO.iddescompuesto)
+
+    tmptablaVO.comentario = texto
+    TextLabelComentario.Text = texto
+
+    manejadorDescompuestolabor.ModificarIddescompuesto(tmptablaVO.iddescompuesto, tmptablaVO)
+
+  Endif
+
+End
+
+Public Sub SubirDescompuesto_Click()
+
+  Dim tmpVistaVO As VistaDescomLaboresVO
+  Dim tmpVistaSubirVO As VistaDescomLaboresVO
+
+  Dim tmpTablaVO As DescompuestolaboresVO
+  Dim tmpTablaDAO As New DescompuestolaboresDAO
+
+  Dim tmpTablaSubirVO As DescompuestolaboresVO
+  Dim tmpTablaSubirDAO As New DescompuestolaboresDAO
+
+  tmpVistaVO = manejadorVistaDescompuestoLabor.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVistaVO) Then
+
+    tmpVistaSubirVO = manejadorVistaDescompuestoLabor.filaSeleccionadaVOarriba()
+
+    If IsNull(tmpVistaSubirVO) Then
+      'no hacer nada, intercambio valores
+    Else
+      'convierto los datos de VO vista a VO tabla....
+      tmpTablaVO = tmpTablaDAO.ExtraerRegistro("iddescompuesto", tmpVistaVO.iddescompuesto)
+      tmpTablaSubirVO = tmpTablaSubirDAO.ExtraerRegistro("iddescompuesto", tmpVistaSubirVO.iddescompuesto)
+
+      Swap tmptablaVO.idorden, tmpTablaSubirVO.idorden
+
+      manejadorDescompuestolabor.ModificarIddescompuesto(tmpTablaSubirVO.iddescompuesto, tmptablaSubirVO)
+      manejadorDescompuestolabor.ModificarIddescompuesto(tmpTablaVO.iddescompuesto, tmpTablaVO)
+      rellenarGridLabor()
+    Endif
+  Endif
+
+End
+
+Public Sub BajarPrecio_Click()
+
+  Dim tmpVistaVO As VistaDescomLaboresVO
+  Dim tmpVistaBajarVO As VistaDescomLaboresVO
+
+  Dim tmpTablaVO As DescompuestolaboresVO
+  Dim tmpTablaDAO As New DescompuestolaboresDAO
+
+  Dim tmpTablaBajarVO As DescompuestolaboresVO
+  Dim tmpTablaBajarDAO As New DescompuestolaboresDAO
+
+  tmpVistaVO = manejadorVistaDescompuestoLabor.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVistaVO) Then
+
+    tmpVistaBajarVO = manejadorVistaDescompuestoLabor.filaSeleccionadaVOabajo()
+
+    If IsNull(tmpVistaBajarVO) Then
+      'no hacer nada, intercambio valores
+    Else
+      'convierto los datos de VO vista a VO tabla....
+      tmpTablaVO = tmpTablaDAO.ExtraerRegistro("iddescompuesto", tmpVistaVO.iddescompuesto)
+      tmpTablaBajarVO = tmpTablaBajarDAO.ExtraerRegistro("iddescompuesto", tmpVistaBajarVO.iddescompuesto)
+
+      Swap tmptablaVO.idorden, tmpTablaBajarVO.idorden
+
+      manejadorDescompuestolabor.ModificarIddescompuesto(tmpTablaBajarVO.iddescompuesto, tmptablaBajarVO)
+      manejadorDescompuestolabor.ModificarIddescompuesto(tmpTablaVO.iddescompuesto, tmpTablaVO)
+      rellenarGridLabor()
+    Endif
+  Endif
+
+End
+
+'-----------------------------------------------------------------------------------
+
+Public Sub GridViewMedicion_Drop()
+
+  Dim tmpMedicionVO As MedicionVO
+  Dim diferenciaMedicion As Float
+  Dim misql As String
+  'suelto mediciones....
+  '1º si el es mismo iddescompuesto, se trata que ha soltado las mimas mediciones y no debe de hacer nada
+
+  If Split(Drag.Data, "|")[0] = "Mediciones" Then
+
+    If Transito.MedicionesArray[0].iddescompuesto = descompuestoLaborElegido Or descompuestoLaborElegido = -1 Then
+      'no hacer nada, se trata de las mismas mediciones que se han soltado en el mismo sitio.
+      Message.Error(("No se puede añadir medicion, seleccione una labor"))
+      Return
+    Else
+
+      For Each tmpMedicionVO In Transito.MedicionesArray
+        'registrar lineas de mediciones nuevas
+        tmpMedicionVO.iddescompuesto = descompuestoLaborElegido 'cambio al descompuestolaborelegido
+        manejadorMedicionesTabla.registrar(tmpMedicionVO)
+        diferenciaMedicion += tmpMedicionVO.total
+      Next
+      'actualizar eltotal de la medicion del Descompuesto...
+
+      'mostrar datos
+      misql = "select * from Medicion where iddescompuesto=" & descompuestoLaborElegido
+      manejadorMedicionesTabla.MostrarGridView(GridViewMedicion, misql)
+
+      'habria que recalcular el total de la  medicion, recalcular medicion del descommpuesto y presupueto
+      actualizarValoresDescompuesto(descompuestoLaborElegido)
+
+    Endif
+  Endif
+
+End
+
+Public Sub GridViewMedicion_MouseDrag()
+
+  Dim ArrayMedicionesVO As MedicionVO[]
+  Dim misql As String
+  'coger medicion
+  'selecciona todas las mediciones, y las guarda en un arraydeMediciones...
+
+  'mostrar datos
+  misql = "select * from Medicion where iddescompuesto=" & descompuestoLaborElegido
+  ArrayMedicionesVO = manejadorMedicionesTabla.ConvertirResult(manejadorMedicionesTabla.sql(misql))
+
+  Transito.MedicionesArray = ArrayMedicionesVO
+  GridViewMedicion.Drag("Mediciones") ''NOTE: coger datos de mediciones
+
+End
+
+Public Sub GridViewLabores_MouseDrag()
+
+  'coger datos de un Descompuesto...
+  GridViewMedicion.Drag("Descompuesto|" & Str$(descompuestoLaborElegido)) ''NOTE: coger datos del descompuesto"
+
+End
+
+Public Sub insertarDescompuestoSoltado(iddescompuestoSoltado As Integer)
+
+  Dim tmpDescompuestoVOorigen As DescompuestolaboresVO
+  Dim tmpDescompuestoVOdestino As DescompuestolaboresVO
+
+  Dim hresult As Result
+  Dim IdUltimoDescompuesto As Integer
+
+  If iddescompuestoSoltado = descompuestoLaborElegido Then
+    'no hacer nada es el mismo descompuesto
+  Else
+    tmpDescompuestoVOorigen = manejadorDescompuestolabor.ExtraerRegistro("iddescompuesto", iddescompuestoSoltado)
+
+    tmpDescompuestoVOdestino = tmpDescompuestoVOorigen.Copia()
+
+    'añado orden de la unidad
+    'FIRME: Arreglar eltema del orde... al añadir
+    ContadorOrden += 1
+    tmpDescompuestoVOdestino.idorden = ContadorOrden
+    tmpDescompuestoVOdestino.idpresupuesto = idpresupuesto 'presupuesto actual, donde suelto la informacion
+    manejadorDescompuestolabor.registrar(tmpDescompuestoVOdestino)
+
+    'copia de la medicion....
+    '1º conocer cual es el id insertado
+    'necesito conocer el id del descompopuesto laboral que se le ha asignado automaticamente...
+    hresult = manejadorDescompuestolabor.contenido()
+    hresult.MoveLast 'me voy al ultimo registro introducido...
+    IdUltimoDescompuesto = manejadorDescompuestolabor.ConvertirResult(hresult)[0].iddescompuesto 'leo el registro, y lo convierto en VO
+
+    CopiarMediciones(iddescompuestoSoltado, IdUltimoDescompuesto)
+
+    'Calculo presupuesto
+    tmpDescompuestoVOdestino.total = tmpDescompuestoVOdestino.medicion * tmpDescompuestoVOdestino.precio
+
+    ValorPresupuestoCalculado += tmpDescompuestoVOdestino.total
+
+    actualizarPrecioPresupuesto()
+
+    'recargar datos de la vista
+    rellenarGridLabor()
+
+  Endif
+
+End
+
+Public Sub CopiarMediciones(idSoltado As Integer, idCreado As Integer)
+
+  Dim tmpMedicionVO As MedicionVO
+  Dim ArrayMedicionesVO As MedicionVO[]
+  Dim misql As String
+  'selecciona todas las mediciones, y las guarda en un arraydeMediciones...
+
+  'mostrar datos
+  misql = "select * from Medicion where iddescompuesto=" & idSoltado
+  ArrayMedicionesVO = manejadorMedicionesTabla.ConvertirResult(manejadorMedicionesTabla.sql(misql))
+
+  If idsoltado = idCreado Then
+    Return
+    'se ha soltado asi mismo
+  Endif
+
+  For Each tmpMedicionVO In ArrayMedicionesVO
+
+    tmpMedicionVO.iddescompuesto = idCreado 'cambio a iddescompuesto que se ha creado
+
+    'registro la medicion nueva
+    manejadorMedicionesTabla.registrar(tmpMedicionVO)
+
+  Next
+
+  'mostrar las mediciones
+  misql = "select * from Medicion where iddescompuesto=" & idCreado
+  manejadorMedicionesTabla.MostrarGridView(GridViewMedicion, misql)
+
+End
+
+'-------------------------------------------------------------------------------------------
+' coger y soltar materiales.
+'-------------------------------------------------------------------------------------------
+
+Public Sub GridViewMateriales_MouseDrag()
+
+  Dim tmpVistaVO As VistaDescomMaterialesVO
+  'coger un material y su medicion
+  tmpVistaVO = manejadorVistaDescompuestoMaterial.filaSeleccionadaVO()
+  'aqui obtengo los datos del registro de la vista...
+  If Not IsNull(tmpVistaVO) Then
+    GridViewMateriales.Drag("DescompuestoMaterial|" & Str$(tmpVistaVO.iddescompuestomaterial)) ''NOTE: coger datos del descompuesto"
+  Endif
+
+End
+
+Public Sub InsertarDescompuestoMaterial(idSoltado As Integer)
+
+  Dim tmpDescMatVO As DescompuestomaterialesVO
+
+  tmpDescMatVO = manejadorDescompuestoMaterial.ExtraerRegistro("iddescompuestomaterial", idSoltado)
+
+  tmpDescMatVO.idpresupuesto = idpresupuesto 'actualizao el prespuesto
+
+  manejadorDescompuestoMaterial.registrar(tmpDescMatVO)
+
+  'actualizo el presupuesto Ttotal
+  ValorPresupuestoCalculado += tmpDescMatVO.total
+
+  actualizarPrecioPresupuesto()
+
+  ' rellenar grid
+
+  rellenarGridMat() '
+
+End
+
+Public Sub ButtonRecalculo_Click()
+
+End

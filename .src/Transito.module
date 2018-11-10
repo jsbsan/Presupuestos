@@ -1,0 +1,5 @@
+' Gambas module file
+
+Public laborCogido As LaborVO
+Public MaterialCogido As MaterialesVO
+Public MedicionesArray As MedicionVO[]

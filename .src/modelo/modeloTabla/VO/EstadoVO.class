@@ -1,0 +1,107 @@
+' Gambas class file
+
+Property idestado As Integer
+Private hidestado As Integer
+
+Property estado As String
+Private hestado As String
+
+Property campo As String[]
+Private hcampo As New String[]
+
+Property campotipo As String[]
+Private hcampotipo As New String[]
+
+Property campovisible As String[]
+Private hcampovisible As New String[]
+
+Private Function idestado_read() As Integer
+
+  Return hidestado
+
+End
+
+Private Sub idestado_write(Valor As Integer)
+
+  hidestado = Valor
+
+End
+
+Private Function estado_read() As String
+
+  Return hestado
+
+End
+
+Private Sub estado_write(Valor As String)
+
+  hestado = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function Copia(Optional dato As EstadoVO) As EstadoVO
+
+  Dim datoVOtmp As New EstadoVO
+  Dim datoVOtmpOriginal As EstadoVO
+
+  If IsNull(dato) Then
+    dato = Me 'se copia a si mismo
+  Endif
+  datoVOtmp.idestado = dato.idestado
+  datoVOtmp.estado = dato.estado
+  Return datoVOtmp
+
+End
+
+Public Function ConvertirVOaColeccion(dato As EstadoVO) As Collection
+
+  Dim colecciontmp As New Collection
+  colecciontmp.add(dato.idestado, "idestado")
+  colecciontmp.add(dato.estado, "estado")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As EstadoVO
+
+  Dim datoVOtmp As New EstadoVO
+Try datoVOtmp.idestado = dato["idestado"]
+Try datoVOtmp.estado = dato["estado"]
+Return datoVOtmp
+End

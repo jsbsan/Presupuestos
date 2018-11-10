@@ -1,0 +1,216 @@
+' Gambas module file
+
+Private ValorPresupuestoCalculado As Float
+
+Public Sub Revisar(idpresupuesto As Integer, linkado As Boolean, barra As ProgressBar)
+
+  Dim TmpDatoDescompuesto As DescompuestolaboresVO
+  Dim arrayDescompuesto As DescompuestolaboresVO[]
+  Dim manejadorDescompuesto As New DescompuestolaboresDAO
+
+  Dim TmpDatoDescompuestoMaterial As DescompuestomaterialesVO
+  Dim arrayDescompuestoMaterial As DescompuestomaterialesVO[]
+  Dim manejadorDescompuestoMaterial As New DescompuestomaterialesDAO
+
+  Dim misql As String
+  Dim miresultado As Result
+  Dim miconexion As New Conexion
+
+  Dim miiddescompuesto As Integer
+  Dim contador As Integer
+
+  ValorPresupuestoCalculado = 0
+
+  miconexion.conexion()
+
+  'Reviso LABORES -> MEDICION Y PRECIOS
+
+  'obtener listado de iddescompuesto
+  misql = "SELECT * FROM descompuestolabores where idpresupuesto=" & idpresupuesto
+  arrayDescompuesto = manejadorDescompuesto.ConvertirResult(manejadorDescompuesto.sql(misql))
+
+  misql = "SELECT * FROM descompuestomateriales where idpresupuesto=" & idpresupuesto
+  arrayDescompuestoMaterial = manejadorDescompuestoMaterial.ConvertirResult(manejadorDescompuestoMaterial.sql(misql))
+
+  'recalcular medicion de Labores
+  For Each TmpDatoDescompuesto In arrayDescompuesto
+    'recalcular la medicion
+    TmpDatoDescompuesto.MEDICION = RecalcularMedicion(TmpDatoDescompuesto.IDDESCOMPUESTO) 'recalcular los totales de mediciones de las Labores del Presupuesto
+    manejadorDescompuesto.ModificarIddescompuesto(TmpDatoDescompuesto.IDDESCOMPUESTO, TmpDatoDescompuesto)
+    contador += 1
+    barra.Value = contador / arrayDescompuesto.Count
+  Next
+
+  '----------------------------------------
+  'calcular precio !!!
+  '--------------------------------------
+  ''¿estan linkcado? Si -> tomar datos de la base de datos, No-> dejarlo los precios con el mismo valor.
+
+  If linkado = True Then
+    'hay que actualizar precios...LABORES
+    For Each TmpDatoDescompuesto In arrayDescompuesto
+      TmpDatoDescompuesto.PRECIO = RecalcularPrecio(TmpDatoDescompuesto) 'recalcular los totales de mediciones de las Labores del Presupuesto
+      manejadorDescompuesto.ModificarIddescompuesto(TmpDatoDescompuesto.IDDESCOMPUESTO, TmpDatoDescompuesto)
+    Next
+    'Hay que actualizar precios.... MATERIALES
+    For Each TmpDatoDescompuestoMaterial In arrayDescompuestoMaterial
+      TmpDatoDescompuestoMaterial.PRECIO = RecalcularPrecioMaterial(TmpDatoDescompuestoMaterial)
+
+      manejadorDescompuestoMaterial.ModificarIddescompuestomaterial(TmpDatoDescompuestoMaterial.IDDESCOMPUESTOMATERIAL, TmpDatoDescompuestoMaterial)
+    Next
+    '
+
+  Else
+    'no hay que hacer nada en los precios,
+    ' ya que no se pueden modificar al estar el candado cerrado (no linkeado con la base de datos)
+  Endif
+  '
+  '
+
+  'multiplicar Medicion X Precio de cada descompuesto del presupuesto LABORES
+  For Each TmpDatoDescompuesto In arrayDescompuesto
+    TmpDatoDescompuesto.TOTAL = TmpDatoDescompuesto.MEDICION * TmpDatoDescompuesto.PRECIO
+    manejadorDescompuesto.ModificarIddescompuesto(TmpDatoDescompuesto.IDDESCOMPUESTO, TmpDatoDescompuesto)
+  Next
+
+  'multiplicar Medicion X Precio de cada descompuesto del presupuesto MATERIALES
+  For Each TmpDatoDescompuestoMaterial In arrayDescompuestoMaterial
+    TmpDatoDescompuestoMaterial.TOTAL = TmpDatoDescompuestoMaterial.MEDICION * TmpDatoDescompuestoMaterial.PRECIO
+    manejadorDescompuestoMaterial.ModificarIddescompuestomaterial(TmpDatoDescompuestoMaterial.IDDESCOMPUESTOMATERIAL, TmpDatoDescompuestoMaterial)
+  Next
+
+  'sumar los totales y sacar el valor del presupuesto
+  misql = "SELECT SUM(total) as Sumatorio FROM descompuestolabores where idpresupuesto=" & Str$(idpresupuesto)
+  miresultado = miconexion.hconn.Exec(misql)
+  If Not IsNull(miresultado["Sumatorio"]) Then
+    ValorPresupuestoCalculado += miresultado["Sumatorio"] 'suma de descompuesto de materiales
+  Endif
+
+  'sumar los totales de los materiales....
+  'consulto suma de descompuesto de materiales
+  misql = "SELECT SUM(total) as Sumatorio FROM descompuestomateriales where idpresupuesto=" & Str$(idpresupuesto)
+  miresultado = miconexion.hconn.Exec(misql)
+  If Not IsNull(miresultado["Sumatorio"]) Then
+    ValorPresupuestoCalculado += miresultado["Sumatorio"] 'suma de descompuesto de materiales
+  Endif
+
+  ActualizarValorPresupuesto(idpresupuesto)
+
+End
+
+Public Sub ActualizarValorPresupuesto(idpresupuesto As Integer)
+
+  Dim manejadorpresupuesto As New PresupuestoDAO
+  Dim datosPresupuesto As New PresupuestoVO
+  '
+  datosPresupuesto = manejadorpresupuesto.ExtraerRegistro("idpresupuesto", idpresupuesto)
+  datosPresupuesto.valorcalculado = ValorPresupuestoCalculado
+  manejadorpresupuesto.ModificarIdpresupuesto(idpresupuesto, datosPresupuesto)
+
+End
+
+Public Sub RecalcularMedicion(iddescompuesto As Integer) As Float
+
+  Dim datoMedicionVO As MedicionVO
+  Dim ArrayMedicionVO As MedicionVO[]
+  Dim Manejador As New MedicionDAO
+  Dim totalMedicionDescompuesto As Float
+
+  Dim numerodeveces As Float
+  Dim ancho As Float
+  Dim largo As Float
+  Dim alto As Float
+
+  ArrayMedicionVO = Manejador.ConvertirResult(Manejador.BuscarIgualIddescompuesto(iddescompuesto))
+
+  'por cada linea de medicion, hacer comprobaciones de operaciones numero de vece X alto X ancho X largo
+  For Each datoMedicionVO In ArrayMedicionVO
+    'obtener el total de medicion
+    numerodeveces = datoMedicionVO.numeroveces
+    ancho = If(datoMedicionVO.ancho = 0, 1, datoMedicionVO.ancho)
+    largo = If(datoMedicionVO.largo = 0, 1, datoMedicionVO.largo)
+    alto = If(datoMedicionVO.alto = 0, 1, datoMedicionVO.alto)
+
+    datoMedicionVO.total = numerodeveces * ancho * largo * alto
+    totalMedicionDescompuesto += datoMedicionVO.total
+    'ingreso el dato
+    Manejador.ModificarId(datoMedicionVO.id, datoMedicionVO)
+
+  Next
+
+  Return totalMedicionDescompuesto
+
+End
+
+' Public Function ActualizarPreciosMedicionMateriales(idpresupuesto As Integer) As Float
+'
+'   Dim arrayDescompuestoMaterial As DescompuestomaterialesVO[]
+'   Dim TmpDatoDescompuestoMaterial As DescompuestomaterialesVO
+'   Dim manejadorDescompuestoMaterial As DescompuestomaterialesDAO
+'
+'   arrayDescompuestoMaterial = manejadorDescompuestoMaterial.ConvertirResult(manejadorDescompuestoMaterial.BuscarIgualIdpresupuesto(idpresupuesto))
+'
+'   For Each TmpDatoDescompuestoMaterial In arrayDescompuestoMaterial
+'     TmpDatoDescompuestoMaterial.TOTAL = TmpDatoDescompuestoMaterial.MEDICION * TmpDatoDescompuestoMaterial.PRECIO
+'     manejadorDescompuestoMaterial.ModificarIddescompuestomaterial(TmpDatoDescompuestoMaterial.IDDESCOMPUESTOMATERIAL, TmpDatoDescompuestoMaterial)
+'
+'   Next
+'
+' End
+
+Public Function RecalcularPrecio(tmptablaVO As DescompuestolaboresVO) As Float
+
+  Dim preciolaborcompleta As Float
+  Dim precioDia As Float
+  Dim precioHora As Float
+
+  Dim tmpLaborVO As LaborVO
+  Dim tmpLaborDAO As New LaborDAO
+
+  Dim precioActualizado As Float
+
+  If tmptablaVO.idtipo = 4 Then
+    'el precio es personalizado no hay que buscarlo en la base de datos de precios
+    Return tmptablaVO.precio
+  Endif
+
+  'obtener precios de precioportrabajo, preciopordia, precioporhora de la tabla labores (laborDAO) para ponerlo en el formulario
+  tmpLaborVO = tmpLaborDAO.ExtraerRegistro("idlabor", tmptablaVO.idlabor)
+
+  preciolaborcompleta = tmpLaborVO.precioportrabajo
+  precioDia = tmpLaborVO.preciopordia
+  precioHora = tmpLaborVO.precioporhora
+
+  Select Case tmptablaVO.idtipo
+    Case 1
+      precioActualizado = preciolaborcompleta
+    Case 2
+
+      precioActualizado = precioDia
+    Case 3
+      precioActualizado = precioHora
+  End Select
+
+  Return precioActualizado
+
+End
+
+Public Function RecalcularPrecioMaterial(tmptablaVO As DescompuestomaterialesVO) As Float
+  'los materiales solo tienen dos tipo 4 (personalizado) y 5 (de la base de datos de los materiales)
+
+  Dim precioBaseDatos As Float
+
+  Dim tmpMaterialVO As MaterialesVO
+  Dim tmpMaterialDAO As New MaterialesDAO
+
+  If tmptablaVO.idtipo = 4 Then
+    'el precio es personalizado no hay que buscarlo en la base de datos de precios
+    Return tmptablaVO.precio
+  Endif
+
+  'obtener precios de precioportrabajo, preciopordia, precioporhora de la tabla labores (laborDAO) para ponerlo en el formulario
+  tmpMaterialVO = tmpMaterialDAO.ExtraerRegistro("idmaterial", tmptablaVO.IDMATERIAL)
+
+  Return tmpMaterialVO.PRECIO
+
+End

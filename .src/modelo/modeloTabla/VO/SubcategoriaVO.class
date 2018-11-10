@@ -1,0 +1,125 @@
+' Gambas class file
+
+Property idsubcategoria As Integer
+Private hidsubcategoria As Integer
+
+Property idcapitulo As Integer
+Private hidcapitulo As Integer
+
+Property textosubcategoria As String
+Private htextosubcategoria As String
+
+Property campo As String[]
+Private hcampo As New String[]
+
+Property campotipo As String[]
+Private hcampotipo As New String[]
+
+Property campovisible As String[]
+Private hcampovisible As New String[]
+
+Private Function idsubcategoria_read() As Integer
+
+  Return hidsubcategoria
+
+End
+
+Private Sub idsubcategoria_write(Valor As Integer)
+
+  hidsubcategoria = Valor
+
+End
+
+Private Function idcapitulo_read() As Integer
+
+  Return hidcapitulo
+
+End
+
+Private Sub idcapitulo_write(Valor As Integer)
+
+  hidcapitulo = Valor
+
+End
+
+Private Function textosubcategoria_read() As String
+
+  Return htextosubcategoria
+
+End
+
+Private Sub textosubcategoria_write(Valor As String)
+
+  htextosubcategoria = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function Copia(Optional dato As SubcategoriaVO) As SubcategoriaVO
+
+  Dim datoVOtmp As New SubcategoriaVO
+  Dim datoVOtmpOriginal As SubcategoriaVO
+
+  If IsNull(dato) Then
+    dato = Me 'se copia a si mismo
+  Endif
+  datoVOtmp.idsubcategoria = dato.idsubcategoria
+  datoVOtmp.idcapitulo = dato.idcapitulo
+  datoVOtmp.textosubcategoria = dato.textosubcategoria
+  Return datoVOtmp
+
+End
+
+Public Function ConvertirVOaColeccion(dato As SubcategoriaVO) As Collection
+
+  Dim colecciontmp As New Collection
+  colecciontmp.add(dato.idsubcategoria, "idsubcategoria")
+  colecciontmp.add(dato.idcapitulo, "idcapitulo")
+  colecciontmp.add(dato.textosubcategoria, "textosubcategoria")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As SubcategoriaVO
+
+  Dim datoVOtmp As New SubcategoriaVO
+Try datoVOtmp.idsubcategoria = dato["idsubcategoria"]
+Try datoVOtmp.idcapitulo = dato["idcapitulo"]
+Try datoVOtmp.textosubcategoria = dato["textosubcategoria"]
+Return datoVOtmp
+End

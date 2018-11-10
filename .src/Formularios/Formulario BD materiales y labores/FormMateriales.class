@@ -1,0 +1,131 @@
+' Gambas class file
+
+Private manejarMateriales As New AdaptadaMaterialesDAO
+
+Public Sub Form_Open()
+
+  Me.w = Screen.W / 2
+  Me.h = Screen.h / 2 - 50
+  Me.x = Screen.W / 2
+  Me.y = Screen.h / 2 + 50
+
+  Me.Title = ("Materiales")
+  coloresGrid(manejarMateriales)
+  rellenarGrid()
+
+End
+
+Public Sub coloresGrid(obj As Object)
+
+  obj.ColorFilaImPar = Color.cyan
+  obj.ColorFilaPar = Color.White
+
+End
+
+Public Sub AddMat_Click()
+
+  manejarMateriales.FormularioRegistrar(1)
+  manejarMateriales.MostrarGridView(GridViewMateriales)
+
+End
+
+Public Sub MenuEditar_Click()
+  'creamos un objeto para trabajar con los datos de la fila seleccionada del gridviewTablaGeneral
+
+  Dim tmpVO As New MaterialesVO
+  'obtener el VO del registro seleccionado
+  tmpVO = manejarMateriales.filaSeleccionadaVO()
+  If Not IsNull(tmpVO) Then
+    'si hay una fila seleccionada, abrimos formularios para editar datos....
+    manejarMateriales.FormularioModificarRegistroIdmaterial(tmpVO.idmaterial, tmpvO, 1)
+    'mostramos gridview actualizados
+    rellenarGrid()
+
+  Endif
+
+End
+
+Public Sub MenuBorrar_Click()
+
+  Dim hresult As Result
+
+  Dim tmpVO As New MaterialesVO
+  Dim TablaDescompuestoMateriales As New DescompuestomaterialesDAO
+
+  tmpVO = manejarMateriales.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+    If TablaDescompuestoMateriales.BuscarIgualIdmaterial(tmpVO.idmaterial).count = 0 Then
+
+      'se puede borrar, nadie lo usa
+      manejarMateriales.BorrarIdmaterial(tmpVO.idmaterial)
+      'mostramos gridview actualizados
+      rellenarGrid()
+
+    Else
+      Message.Info(("Si se esta usando en algun presupuesto, no se puede borrar"))
+    Endif
+  Endif
+
+End
+
+Public Sub rellenarGrid()
+
+  manejarMateriales.MostrarGridView(GridViewMateriales)
+
+End
+
+Public Sub TextBoxBusquedaMateriales_KeyPress()
+  'cada vez que se escriba una letra, carga el contenido del listbox
+
+  If Len(TextBoxBusquedaMateriales.text) > 1 Then
+
+    If IsLetter(Key.text) Then
+      cargaRegillaFiltrada(TextBoxBusquedaMateriales.text & Key.Text)
+    Else
+
+      If Key.code = 16777219 Then
+        'pulsado la tecla de suprimir
+        cargaRegillaFiltrada(Mid$(TextBoxBusquedaMateriales.text, 1, Len(TextBoxBusquedaMateriales.text) - 1))
+      Endif
+    Endif
+  Else
+    rellenarGrid()
+  Endif
+
+End
+
+Public Sub cargaRegillaFiltrada(cadena As String)
+
+  manejarMateriales.MostrarGridView(GridViewMateriales, "Select * from materiales where (textocorto like '%" & cadena & "%' or textolargo like '%" & cadena & "%')")
+
+End
+
+Public Sub ButtonQuitarFiltro_Click()
+
+  TextBoxBusquedaMateriales.text = ""
+  rellenarGrid()
+
+End
+
+Public Sub Form_Close()
+
+  '   settings.write(Me)
+
+End
+
+Public Sub GridViewMateriales_MouseDrag()
+
+  'debe de estar seleccionado alguna fila
+
+  Dim tmpVO As New MaterialesVO
+
+  tmpVO = manejarMateriales.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+    Transito.MaterialCogido = tmpVO
+    GridViewMateriales.Drag("material|" & tmpVO.idmaterial) ''NOTE: coger datos de materiales
+
+  Endif
+
+End

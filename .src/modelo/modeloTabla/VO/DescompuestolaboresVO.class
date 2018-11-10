@@ -1,0 +1,251 @@
+' Gambas class file
+
+Property iddescompuesto As Integer
+Private hiddescompuesto As Integer
+
+Property idpresupuesto As Integer
+Private hidpresupuesto As Integer
+
+Property idlabor As Integer
+Private hidlabor As Integer
+
+Property precio As Float
+Private hprecio As Float
+
+Property idtipo As Integer
+Private hidtipo As Integer
+
+Property comentario As String
+Private hcomentario As String
+
+Property idorden As Integer
+Private hidorden As Integer
+
+Property medicion As Float
+Private hmedicion As Float
+
+Property total As Float
+Private htotal As Float
+
+Property precioenlazado As Boolean
+Private hprecioenlazado As Boolean
+
+Property campo As String[]
+Private hcampo As New String[]
+
+Property campotipo As String[]
+Private hcampotipo As New String[]
+
+Property campovisible As String[]
+Private hcampovisible As New String[]
+
+Private Function iddescompuesto_read() As Integer
+
+  Return hiddescompuesto
+
+End
+
+Private Sub iddescompuesto_write(Valor As Integer)
+
+  hiddescompuesto = Valor
+
+End
+
+Private Function idpresupuesto_read() As Integer
+
+  Return hidpresupuesto
+
+End
+
+Private Sub idpresupuesto_write(Valor As Integer)
+
+  hidpresupuesto = Valor
+
+End
+
+Private Function idlabor_read() As Integer
+
+  Return hidlabor
+
+End
+
+Private Sub idlabor_write(Valor As Integer)
+
+  hidlabor = Valor
+
+End
+
+Private Function precio_read() As Float
+
+  Return hprecio
+
+End
+
+Private Sub precio_write(Valor As Float)
+
+  hprecio = Valor
+
+End
+
+Private Function idtipo_read() As Integer
+
+  Return hidtipo
+
+End
+
+Private Sub idtipo_write(Valor As Integer)
+
+  hidtipo = Valor
+
+End
+
+Private Function comentario_read() As String
+
+  Return hcomentario
+
+End
+
+Private Sub comentario_write(Valor As String)
+
+  hcomentario = Valor
+
+End
+
+Private Function idorden_read() As Integer
+
+  Return hidorden
+
+End
+
+Private Sub idorden_write(Valor As Integer)
+
+  hidorden = Valor
+
+End
+
+Private Function medicion_read() As Float
+
+  Return hmedicion
+
+End
+
+Private Sub medicion_write(Valor As Float)
+
+  hmedicion = Valor
+
+End
+
+Private Function total_read() As Float
+
+  Return htotal
+
+End
+
+Private Sub total_write(Valor As Float)
+
+  htotal = Valor
+
+End
+
+Private Function precioenlazado_read() As Boolean
+
+  Return hprecioenlazado
+
+End
+
+Private Sub precioenlazado_write(Valor As Boolean)
+
+  hprecioenlazado = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function Copia(Optional dato As DescompuestolaboresVO) As DescompuestolaboresVO
+
+  Dim datoVOtmp As New DescompuestolaboresVO
+  Dim datoVOtmpOriginal As DescompuestolaboresVO
+
+  If IsNull(dato) Then
+    dato = Me 'se copia a si mismo
+  Endif
+  datoVOtmp.iddescompuesto = dato.iddescompuesto
+  datoVOtmp.idpresupuesto = dato.idpresupuesto
+  datoVOtmp.idlabor = dato.idlabor
+  datoVOtmp.precio = dato.precio
+  datoVOtmp.idtipo = dato.idtipo
+  datoVOtmp.comentario = dato.comentario
+  datoVOtmp.idorden = dato.idorden
+  datoVOtmp.medicion = dato.medicion
+  datoVOtmp.total = dato.total
+  datoVOtmp.precioenlazado = dato.precioenlazado
+  Return datoVOtmp
+
+End
+
+Public Function ConvertirVOaColeccion(dato As DescompuestolaboresVO) As Collection
+
+  Dim colecciontmp As New Collection
+  colecciontmp.add(dato.iddescompuesto, "iddescompuesto")
+  colecciontmp.add(dato.idpresupuesto, "idpresupuesto")
+  colecciontmp.add(dato.idlabor, "idlabor")
+  colecciontmp.add(dato.precio, "precio")
+  colecciontmp.add(dato.idtipo, "idtipo")
+  colecciontmp.add(dato.comentario, "comentario")
+  colecciontmp.add(dato.idorden, "idorden")
+  colecciontmp.add(dato.medicion, "medicion")
+  colecciontmp.add(dato.total, "total")
+  colecciontmp.add(dato.precioenlazado, "precioenlazado")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As DescompuestolaboresVO
+
+  Dim datoVOtmp As New DescompuestolaboresVO
+  Try datoVOtmp.iddescompuesto = dato["iddescompuesto"]
+  Try datoVOtmp.idpresupuesto = dato["idpresupuesto"]
+  Try datoVOtmp.idlabor = dato["idlabor"]
+  Try datoVOtmp.precio = dato["precio"]
+  Try datoVOtmp.idtipo = dato["idtipo"]
+Try datoVOtmp.comentario = dato["comentario"]
+Try datoVOtmp.idorden = dato["idorden"]
+Try datoVOtmp.medicion = dato["medicion"]
+Try datoVOtmp.total = dato["total"]
+Try datoVOtmp.precioenlazado = dato["precioenlazado"]
+Return datoVOtmp
+End

@@ -1,0 +1,17 @@
+Public Sub rellenar(modo As Integer)
+
+  Dim sql As String
+  Dim hresult As Result
+  Dim c As New Conexion
+
+  c.conexion()
+  sql = "select * from Imagenes where idpresupuesto=" & idpresupuesto & " and tipo=" & Str$(modo)
+  hresult = c.hconn.Exec(sql)
+
+  While hresult.Available
+
+    creaDibujo(modo, hResult["ruta"])
+
+    hresult.MoveNext
+
+  Wend

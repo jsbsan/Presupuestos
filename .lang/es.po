@@ -1,0 +1,1039 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-01 04:27+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .project:1 FormConfigurar.form:53
+msgid "Presupuestos"
+msgstr ""
+
+#: .project:2
+msgid "Programa para hacer presupuestos de trabajos de pintura."
+msgstr ""
+
+#: AdaptadaLaborDAO.class:11 AdaptadaMaterialesDAO.class:12 LaborDAO.class:353
+#: MaterialesDAO.class:466 VistaDescomLaboresDAO.class:280
+#: VistaDescomMaterialesDAO.class:233 VistaLaborDAO.class:230
+msgid "textocorto"
+msgstr ""
+
+#: AdaptadaLaborDAO.class:12 LaborDAO.class:356 VistaLaborDAO.class:233
+msgid "precioportrabajo"
+msgstr ""
+
+#: AdaptadaLaborDAO.class:13 LaborDAO.class:359 VistaLaborDAO.class:236
+msgid "preciopordia"
+msgstr ""
+
+#: AdaptadaLaborDAO.class:15 LaborDAO.class:362 VistaLaborDAO.class:239
+msgid "precioporhora"
+msgstr ""
+
+#: AdaptadaLaborDAO.class:16 AdaptadaMedicionDAO.class:12 LaborDAO.class:368
+#: MedicionDAO.class:360 VistaLaborDAO.class:242 VistaMedicionDAO.class:252
+msgid "descripcion"
+msgstr ""
+
+#: AdaptadaLaborDAO.class:18 LaborDAO.class:365 SubcategoriaDAO.class:224
+msgid "idsubcategoria"
+msgstr ""
+
+#: AdaptadaMaterialesDAO.class:11 AdaptadaPresupuestoDAO.class:74
+#: MaterialesDAO.class:463 PresupuestoDAO.class:630
+#: VistaPresupuestoDAO.class:255
+msgid "fecha"
+msgstr ""
+
+#: AdaptadaMaterialesDAO.class:13 MaterialesDAO.class:469
+msgid "textolargo"
+msgstr ""
+
+#: AdaptadaMaterialesDAO.class:14 MaterialesDAO.class:472
+msgid "lugarcompra"
+msgstr ""
+
+#: AdaptadaMaterialesDAO.class:15 DescompuestolaboresDAO.class:415
+#: DescompuestomaterialesDAO.class:366 MaterialesDAO.class:475
+#: VistaDescomLaboresDAO.class:283 VistaDescomMaterialesDAO.class:236
+msgid "precio"
+msgstr ""
+
+#: AdaptadaMaterialesDAO.class:16 AdaptadaPresupuestoDAO.class:79
+#: AdaptadoClienteDAO.class:15 ClienteDAO.class:405
+#: DescompuestolaboresDAO.class:421 DescompuestomaterialesDAO.class:372
+#: MaterialesDAO.class:478 PresupuestoDAO.class:636
+msgid "comentario"
+msgstr ""
+
+#: AdaptadaMedicionDAO.class:11 DescompuestolaboresDAO.class:406
+#: MedicionDAO.class:357 VistaDescomLaboresDAO.class:265
+#: VistaMedicionDAO.class:249
+msgid "iddescompuesto"
+msgstr ""
+
+#: AdaptadaMedicionDAO.class:13 MedicionDAO.class:363
+#: VistaMedicionDAO.class:255
+msgid "numeroveces"
+msgstr ""
+
+#: AdaptadaMedicionDAO.class:14 MedicionDAO.class:366
+#: VistaMedicionDAO.class:258
+msgid "largo"
+msgstr ""
+
+#: AdaptadaMedicionDAO.class:15 MedicionDAO.class:369
+#: VistaMedicionDAO.class:261
+msgid "ancho"
+msgstr ""
+
+#: AdaptadaMedicionDAO.class:16 MedicionDAO.class:372
+#: VistaMedicionDAO.class:264
+msgid "alto"
+msgstr ""
+
+#: AdaptadaMedicionDAO.class:17 DescompuestolaboresDAO.class:430
+#: DescompuestomaterialesDAO.class:369 MedicionDAO.class:375
+#: VistaDescomLaboresDAO.class:292 VistaDescomMaterialesDAO.class:242
+msgid "total"
+msgstr ""
+
+#: AdaptadaPresupuestoDAO.class:65 ClienteDAO.class:390
+#: PresupuestoDAO.class:615
+msgid "idcliente"
+msgstr ""
+
+#: AdaptadaPresupuestoDAO.class:69
+msgid "idestadp"
+msgstr ""
+
+#: AdaptadaPresupuestoDAO.class:71 PresupuestoDAO.class:621
+#: VistaPresupuestoDAO.class:249
+msgid "claveasignada"
+msgstr ""
+
+#: AdaptadaPresupuestoDAO.class:72 PresupuestoDAO.class:624
+#: VistaPresupuestoDAO.class:264
+msgid "valorcalculado"
+msgstr ""
+
+#: AdaptadaPresupuestoDAO.class:73 PresupuestoDAO.class:627
+#: VistaPresupuestoDAO.class:267
+msgid "valorasignado"
+msgstr ""
+
+#: AdaptadaPresupuestoDAO.class:78 PresupuestoDAO.class:633
+#: VistaPresupuestoDAO.class:258
+msgid "descripcioncorta"
+msgstr ""
+
+#: AdaptadaPresupuestoDAO.class:80 PresupuestoDAO.class:639
+msgid "descripciongeneral"
+msgstr ""
+
+#: AdaptadaPresupuestoDAO.class:81 PresupuestoDAO.class:642
+msgid "textogarantia"
+msgstr ""
+
+#: AdaptadaPresupuestoDAO.class:82 PresupuestoDAO.class:645
+#: VistaPresupuestoDAO.class:252
+msgid "actualizarprecios"
+msgstr "Link"
+
+#: AdaptadaPresupuestoDAO.class:89 EstadoDAO.class:198
+#: PresupuestoDAO.class:618
+msgid "idestado"
+msgstr ""
+
+#: AdaptadaSubcategoriaDAO.class:35 SubcategoriaDAO.class:227
+msgid "idcapitulo"
+msgstr ""
+
+#: AdaptadaSubcategoriaDAO.class:38 SubcategoriaDAO.class:230
+#: VistaLaborDAO.class:227 VistaSubcategoriaDAO.class:117
+msgid "textosubcategoria"
+msgstr ""
+
+#: AdaptadoClienteDAO.class:11 ClienteDAO.class:393
+msgid "nombre"
+msgstr ""
+
+#: AdaptadoClienteDAO.class:12 ClienteDAO.class:396
+msgid "telefono"
+msgstr ""
+
+#: AdaptadoClienteDAO.class:13 ClienteDAO.class:399
+msgid "email"
+msgstr ""
+
+#: AdaptadoClienteDAO.class:14 ClienteDAO.class:402
+msgid "domicilio"
+msgstr ""
+
+#: CategoriaDAO.class:13
+msgid " Se ha producido un ERROR al Intentar obtener lista"
+msgstr ""
+
+#: CategoriaDAO.class:60
+msgid " Se ha producido un ERROR al intentar Borrar datos, revise ID , "
+msgstr ""
+
+#: CategoriaDAO.class:198
+msgid "idcategoria"
+msgstr ""
+
+#: CategoriaDAO.class:201 VistaLaborDAO.class:224
+#: VistaSubcategoriaDAO.class:114
+msgid "textocapitulo"
+msgstr ""
+
+#: CategoriaDAO.class:617 ClienteDAO.class:853
+#: DescompuestolaboresDAO.class:913 DescompuestomaterialesDAO.class:839
+#: EstadoDAO.class:617 ImagenesDAO.class:691 LaborDAO.class:824
+#: MaterialesDAO.class:934 MedicionDAO.class:839 PresupuestoDAO.class:1141
+#: SubcategoriaDAO.class:654 TipoDAO.class:617 UnidadmedidaDAO.class:617
+#: VistaDescomLaboresDAO.class:772 VistaDescomMaterialesDAO.class:706
+#: VistaLaborDAO.class:706 VistaMedicionDAO.class:700
+#: VistaPresupuestoDAO.class:739 VistaSubcategoriaDAO.class:541
+msgid "No hay registro seleccionado"
+msgstr ""
+
+#: CategoriaDAO.class:746 ClienteDAO.class:988
+#: DescompuestolaboresDAO.class:1057 DescompuestomaterialesDAO.class:979
+#: EstadoDAO.class:745 ImagenesDAO.class:823 LaborDAO.class:962
+#: MaterialesDAO.class:1071 MedicionDAO.class:979 PresupuestoDAO.class:1288
+#: SubcategoriaDAO.class:784 TipoDAO.class:745 UnidadmedidaDAO.class:745
+#: VistaDescomLaboresDAO.class:859 VistaDescomMaterialesDAO.class:793
+#: VistaLaborDAO.class:793 VistaMedicionDAO.class:786
+#: VistaPresupuestoDAO.class:826 VistaSubcategoriaDAO.class:628
+msgid "INFORME"
+msgstr ""
+
+#: CategoriaDAO.class:765 ClienteDAO.class:1007
+#: DescompuestolaboresDAO.class:1076 DescompuestomaterialesDAO.class:998
+#: EstadoDAO.class:764 ImagenesDAO.class:842 LaborDAO.class:981
+#: MaterialesDAO.class:1090 MedicionDAO.class:998 PresupuestoDAO.class:1307
+#: SubcategoriaDAO.class:803 TipoDAO.class:764 UnidadmedidaDAO.class:764
+#: VistaDescomLaboresDAO.class:878 VistaDescomMaterialesDAO.class:812
+#: VistaLaborDAO.class:812 VistaMedicionDAO.class:805
+#: VistaPresupuestoDAO.class:845 VistaSubcategoriaDAO.class:647
+msgid "Seleccione un registro"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:19
+msgid "Trabajo"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:20
+msgid "Día"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:21 FormOpcionesPreciosLabores.form:44
+msgid "Hora"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:22
+msgid "Pers."
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:23
+msgid "Mat."
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:33
+msgid "Redactándose"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:34
+msgid "Enviado"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:35
+msgid "No admitido"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:36
+msgid "Aceptado"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:37
+msgid "Trabajando en él"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:38
+msgid "Sin cobrar"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:39
+msgid "Falta algo por cobrar"
+msgstr ""
+
+#: ClassEstadosYTiposPrecios.class:40
+msgid "Cobrado"
+msgstr ""
+
+#: DescompuestolaboresDAO.class:409 DescompuestomaterialesDAO.class:357
+#: ImagenesDAO.class:253 PresupuestoDAO.class:612
+#: VistaDescomLaboresDAO.class:268 VistaDescomMaterialesDAO.class:224
+#: VistaMedicionDAO.class:246 VistaPresupuestoDAO.class:243
+msgid "idpresupuesto"
+msgstr ""
+
+#: DescompuestolaboresDAO.class:412 LaborDAO.class:350 VistaLaborDAO.class:221
+msgid "idlabor"
+msgstr ""
+
+#: DescompuestolaboresDAO.class:418 DescompuestomaterialesDAO.class:375
+#: TipoDAO.class:198
+msgid "idtipo"
+msgstr ""
+
+#: DescompuestolaboresDAO.class:424 VistaDescomLaboresDAO.class:289
+msgid "idorden"
+msgstr ""
+
+#: DescompuestolaboresDAO.class:427 DescompuestomaterialesDAO.class:363
+#: VistaDescomLaboresDAO.class:286 VistaDescomMaterialesDAO.class:239
+msgid "medicion"
+msgstr ""
+
+#: DescompuestolaboresDAO.class:433
+msgid "precioenlazado"
+msgstr ""
+
+#: DescompuestomaterialesDAO.class:354 VistaDescomMaterialesDAO.class:221
+msgid "iddescompuestomaterial"
+msgstr ""
+
+#: DescompuestomaterialesDAO.class:360 MaterialesDAO.class:460
+#: VistaDescomMaterialesDAO.class:227
+msgid "idmaterial"
+msgstr ""
+
+#: EstadoDAO.class:201 VistaPresupuestoDAO.class:261
+msgid "estado"
+msgstr ""
+
+#: FMainListaPresupuestos.class:102
+msgid "Es necesario definir al menos un cliente"
+msgstr ""
+
+#: FMainListaPresupuestos.class:140
+msgid "Editando Presupuesto"
+msgstr ""
+
+#: FMainListaPresupuestos.class:367
+msgid "El borrado de un presupuesto, significa borrar toda la informacion de ese presupuesto"
+msgstr ""
+
+#: FMainListaPresupuestos.class:367
+msgid "No, Cancelar"
+msgstr ""
+
+#: FMainListaPresupuestos.class:367
+msgid "Si, Borrar"
+msgstr ""
+
+#: FMainListaPresupuestos.form:42
+msgid "MenuPresupuesto"
+msgstr ""
+
+#: FMainListaPresupuestos.form:46
+msgid "Presupuesto"
+msgstr ""
+
+#: FMainListaPresupuestos.form:54 FormCliente.form:34 FormDescompuesto.form:74
+msgid "Añadir"
+msgstr ""
+
+#: FMainListaPresupuestos.form:59 FormCliente.form:39 FormDescompuesto.form:56
+#: FormLabores.form:70 FormMateriales.form:39
+msgid "Editar"
+msgstr ""
+
+#: FMainListaPresupuestos.form:67
+msgid "Clonar"
+msgstr ""
+
+#: FMainListaPresupuestos.form:75
+msgid "Recalculo"
+msgstr ""
+
+#: FMainListaPresupuestos.form:80
+msgid "Informe"
+msgstr ""
+
+#: FMainListaPresupuestos.form:88
+msgid "Labores y Materiales"
+msgstr ""
+
+#: FMainListaPresupuestos.form:93
+msgid "Galería de imágenes"
+msgstr ""
+
+#: FMainListaPresupuestos.form:101 FormCliente.form:47
+#: FormDescompuesto.form:64 FormLabores.form:78 FormMateriales.form:47
+msgid "Borrar"
+msgstr ""
+
+#: FMainListaPresupuestos.form:124
+msgid "Descompuesto"
+msgstr ""
+
+#: FMainListaPresupuestos.form:133
+msgid "Galeria"
+msgstr ""
+
+#: FMainListaPresupuestos.form:148
+msgid "Recalcular todos los presupuestos"
+msgstr ""
+
+#: FMainListaPresupuestos.form:150
+msgid "Todos"
+msgstr ""
+
+#: FMainListaPresupuestos.form:163 FormCliente.form:27
+msgid "Clientes"
+msgstr ""
+
+#: FMainListaPresupuestos.form:172 FormDescompuesto.form:128
+#: FormLabores.form:196
+msgid "Labores"
+msgstr ""
+
+#: FMainListaPresupuestos.form:181 FormDescompuesto.form:93
+#: FormMateriales.form:27
+msgid "Materiales"
+msgstr ""
+
+#: FMainListaPresupuestos.form:193
+msgid "Calculando presupuesto..."
+msgstr ""
+
+#: FMainListaPresupuestos.form:209
+msgid "Doble click para abrir descompuesto"
+msgstr ""
+
+#: FormAutomaticoDinamico.form:34 FormOpcionPrecioMaterial.form:40
+#: FormOpcionesPreciosLabores.form:54
+msgid "Aceptar"
+msgstr ""
+
+#: FormAutomaticoDinamico.form:46 FormConfigurar.class:132
+#: FormOpcionPrecioMaterial.form:35 FormOpcionesPreciosLabores.form:49
+msgid "Cancelar"
+msgstr ""
+
+#: FormCliente.class:47
+msgid "Si un presupuesto esta usando un cliente, no se puede borrar"
+msgstr ""
+
+#: FormCliente.form:23
+msgid "MenuClientes"
+msgstr ""
+
+#: FormCliente.form:57
+msgid "Filtro Clientes:"
+msgstr ""
+
+#: FormConfigurar.class:100
+msgid "Crear copia de seguridad"
+msgstr ""
+
+#: FormConfigurar.class:111
+msgid "Se va a copiar la base de datos, con el nombre:"
+msgstr ""
+
+#: FormConfigurar.class:111
+msgid "en la ruta"
+msgstr ""
+
+#: FormConfigurar.class:121
+msgid "Copia realizada"
+msgstr ""
+
+#: FormConfigurar.class:132
+msgid "Al restaurar una copia de seguridad, se borrarán los datos actuales!!!"
+msgstr ""
+
+#: FormConfigurar.class:132
+msgid "Continuar"
+msgstr ""
+
+#: FormConfigurar.class:136
+msgid "Restaurar una copia de seguridad"
+msgstr ""
+
+#: FormConfigurar.class:153
+msgid "Se ha producido un error al intentar copiar el archivo"
+msgstr ""
+
+#: FormConfigurar.class:158
+msgid "Restauración realizada"
+msgstr ""
+
+#: FormConfigurar.form:42
+msgid "Acerca de..."
+msgstr ""
+
+#: FormConfigurar.form:59
+msgid "Version"
+msgstr ""
+
+#: FormConfigurar.form:65
+msgid "Autor: Julio Sánchez Berro"
+msgstr ""
+
+#: FormConfigurar.form:71
+msgid "Update: Comprobar si existe nueva versión"
+msgstr ""
+
+#: FormConfigurar.form:77
+msgid ""
+"Softwarelibre para creación de presupuestos <br>de diversos tipos de trabajos (pintura, reparaciónes, etc).<br> Realizado en gambas3<br>\n"
+"Licencia GPL 2.0"
+msgstr ""
+
+#: FormConfigurar.form:85
+msgid "www.presupuestosobras.blogspot.com.es"
+msgstr ""
+
+#: FormConfigurar.form:89
+msgid "Datos Empresas"
+msgstr ""
+
+#: FormConfigurar.form:93
+msgid "Nombre Empresa:"
+msgstr ""
+
+#: FormConfigurar.form:99
+msgid "Dirección:"
+msgstr ""
+
+#: FormConfigurar.form:105
+msgid "Teléfono:"
+msgstr ""
+
+#: FormConfigurar.form:111
+msgid "Email:"
+msgstr ""
+
+#: FormConfigurar.form:133
+msgid "Guardar"
+msgstr ""
+
+#: FormConfigurar.form:152
+msgid "Texto Final en Presupuesto:"
+msgstr ""
+
+#: FormConfigurar.form:161
+msgid "Moneda:"
+msgstr ""
+
+#: FormConfigurar.form:165
+msgid "Copia de Seguridad"
+msgstr ""
+
+#: FormConfigurar.form:169
+msgid "Realizar Copia de Seguridad"
+msgstr ""
+
+#: FormConfigurar.form:175
+msgid "Restaurar Copia de Seguridad"
+msgstr ""
+
+#: FormDescompuesto.class:173
+msgid "Descompuesto: "
+msgstr ""
+
+#: FormDescompuesto.class:185
+msgid "El presupuesto esta cerrado"
+msgstr ""
+
+#: FormDescompuesto.class:194
+msgid "Solo puede soltar Labores en esta pestaña"
+msgstr ""
+
+#: FormDescompuesto.class:279
+msgid "Solo puede soltar Materiales en esta pestaña"
+msgstr ""
+
+#: FormDescompuesto.class:390
+msgid "Se le asigna un precio = 0"
+msgstr ""
+
+#: FormDescompuesto.class:431
+msgid "No he encontrado el material en la base de datos"
+msgstr ""
+
+#: FormDescompuesto.class:594
+msgid "Añadir linea de medición"
+msgstr ""
+
+#: FormDescompuesto.class:946
+msgid "No se puede añadir medicion, seleccione una labor"
+msgstr ""
+
+#: FormDescompuesto.form:39
+msgid "MenuDescompuestoLabores"
+msgstr ""
+
+#: FormDescompuesto.form:43
+msgid "Subir"
+msgstr ""
+
+#: FormDescompuesto.form:48
+msgid "Bajar"
+msgstr ""
+
+#: FormDescompuesto.form:70
+msgid "Medicion"
+msgstr ""
+
+#: FormDescompuesto.form:117
+msgid "Presupuesto:"
+msgstr ""
+
+#: FormDescompuesto.form:183 FormInforme.class:245
+msgid "Comentario"
+msgstr ""
+
+#: FormGaleriaImagenes.class:48
+msgid "Galeria: "
+msgstr ""
+
+#: FormGaleriaImagenes.class:78
+msgid "Existe un nombre igual a ese archivo ya almacenado, cambie de nombre el archivo: "
+msgstr ""
+
+#: FormGaleriaImagenes.class:209
+msgid "Ocultar"
+msgstr ""
+
+#: FormGaleriaImagenes.class:235
+msgid ""
+"\n"
+" no se puede añadir, no es un fichero de imagen válido"
+msgstr ""
+
+#: FormGaleriaImagenes.class:235
+msgid "El archivo\n"
+msgstr ""
+
+#: FormGaleriaImagenes.class:248
+msgid "Selecciones una carpeta o creala"
+msgstr ""
+
+#: FormGaleriaImagenes.class:265
+msgid "No puedo crear esa ruta, debe seleccionar otra"
+msgstr ""
+
+#: FormGaleriaImagenes.class:315
+msgid "Archivos copiados"
+msgstr ""
+
+#: FormGaleriaImagenes.class:336
+msgid "No, cancelar"
+msgstr ""
+
+#: FormGaleriaImagenes.class:336
+msgid "Si, borralo"
+msgstr ""
+
+#: FormGaleriaImagenes.class:336
+msgid "¿Seguro que quiere borrarlo?"
+msgstr ""
+
+#: FormGaleriaImagenes.form:32
+msgid "Crear Directorio con las imágenes de este presupuesto"
+msgstr ""
+
+#: FormGaleriaImagenes.form:46
+msgid "Mostrar"
+msgstr ""
+
+#: FormGaleriaImagenes.form:67
+msgid "Antes del Trabajo"
+msgstr ""
+
+#: FormGaleriaImagenes.form:81
+msgid "Despues de acabar el trabajo"
+msgstr ""
+
+#: FormGaleriaImagenes.form:95
+msgid "Otras"
+msgstr ""
+
+#: FormGaleriaImagenes.form:127
+msgid "Pasar Archivos"
+msgstr ""
+
+#: FormInforme.class:179
+msgid "Subcategoria: "
+msgstr ""
+
+#: FormInforme.class:183
+msgid "(Category)"
+msgstr ""
+
+#: FormInforme.class:183
+msgid ": "
+msgstr ""
+
+#: FormInforme.class:183
+msgid "Categoria "
+msgstr ""
+
+#: FormInforme.class:184
+msgid "(Subcategory)"
+msgstr ""
+
+#: FormInforme.class:184
+msgid "Subcategoria "
+msgstr ""
+
+#: FormInforme.class:247
+msgid "Número"
+msgstr ""
+
+#: FormInforme.class:248
+msgid "Largo"
+msgstr ""
+
+#: FormInforme.class:249
+msgid "Ancho"
+msgstr ""
+
+#: FormInforme.class:250
+msgid "Alto"
+msgstr ""
+
+#: FormInforme.class:251
+msgid "Total"
+msgstr ""
+
+#: FormInforme.form:23
+msgid "Calculado"
+msgstr ""
+
+#: FormInforme.form:29
+msgid "Valor del Presupuesto:"
+msgstr ""
+
+#: FormInforme.form:34
+msgid "Asignado Manualmente"
+msgstr ""
+
+#: FormInforme.form:39
+msgid "Imprimir listado de mediciones"
+msgstr ""
+
+#: FormInforme.form:45
+msgid "Imprimir textos largos de labores (definidos en la base de datos)"
+msgstr ""
+
+#: FormInforme.form:51
+msgid "comentarios de labores (definidos en cada presupuesto)"
+msgstr ""
+
+#: FormInforme.form:58
+msgid "INFORME DE PRESUPUESTO"
+msgstr ""
+
+#: FormInforme.form:64
+msgid "Generar informe"
+msgstr ""
+
+#: FormInforme.form:76
+msgid "imprimir resumen de medicion, precio y total"
+msgstr ""
+
+#: FormInforme.form:82
+msgid "Imprimir categoria y subcategoria de la labor"
+msgstr ""
+
+#: FormLabores.class:89
+msgid "Añadir Categoria"
+msgstr ""
+
+#: FormLabores.class:102
+msgid "Editar Categoria"
+msgstr ""
+
+#: FormLabores.class:127
+msgid "No se puede borrar una Categoria que se esta usando"
+msgstr ""
+
+#: FormLabores.class:150
+msgid "Añadiendo Subcategoria"
+msgstr ""
+
+#: FormLabores.class:156
+msgid "Falta indicar categoria"
+msgstr ""
+
+#: FormLabores.class:171
+msgid "Editando Subcategoria"
+msgstr ""
+
+#: FormLabores.class:194
+msgid "No se puede borrar una Subcategoria que se esta usando"
+msgstr ""
+
+#: FormLabores.class:258
+msgid "Defina una subcategoria"
+msgstr ""
+
+#: FormLabores.class:279
+msgid "Falta definir subcategoria"
+msgstr ""
+
+#: FormLabores.class:339
+msgid "Solo se borrarán labores que no esten usadas en los presupuestos"
+msgstr ""
+
+#: FormLabores.form:54
+msgid "MenuCategoria"
+msgstr ""
+
+#: FormLabores.form:58
+msgid "Menu Categoria"
+msgstr ""
+
+#: FormLabores.form:65
+msgid "Agregar"
+msgstr ""
+
+#: FormLabores.form:84
+msgid "MenuSubcategoria"
+msgstr ""
+
+#: FormLabores.form:88
+msgid "Menu Subcategoria"
+msgstr ""
+
+#: FormLabores.form:114
+msgid "MenuLabores"
+msgstr ""
+
+#: FormLabores.form:118
+msgid "Menu Labores"
+msgstr ""
+
+#: FormLabores.form:144
+msgid "EditarBusquedaGeneral"
+msgstr ""
+
+#: FormLabores.form:148
+msgid "Edita"
+msgstr ""
+
+#: FormLabores.form:159
+msgid "Categoria"
+msgstr ""
+
+#: FormLabores.form:167
+msgid "SubCategoria"
+msgstr ""
+
+#: FormLabores.form:174
+msgid "Categoria:"
+msgstr ""
+
+#: FormLabores.form:204
+msgid "ComboBox1"
+msgstr ""
+
+#: FormLabores.form:215
+msgid "Subcategoria:"
+msgstr ""
+
+#: FormLabores.form:221
+msgid "ComboBox2"
+msgstr ""
+
+#: FormLabores.form:243
+msgid "Búsqueda de Labores"
+msgstr ""
+
+#: FormLabores.form:250
+msgid "Filtrar Por Contenido:"
+msgstr ""
+
+#: FormMateriales.class:66
+msgid "Si se esta usando en algun presupuesto, no se puede borrar"
+msgstr ""
+
+#: FormMateriales.form:23
+msgid "Menu1"
+msgstr ""
+
+#: FormMateriales.form:34
+msgid "Añadir Materiales"
+msgstr ""
+
+#: FormMateriales.form:57
+msgid "Filtro de Materiales:"
+msgstr ""
+
+#: FormMateriales.form:66
+msgid "quitar filtro de materiales"
+msgstr ""
+
+#: FormOpcionPrecioMaterial.class:13 FormOpcionesPreciosLabores.class:15
+msgid "Elegir Precio"
+msgstr ""
+
+#: FormOpcionPrecioMaterial.form:23
+msgid "Precio material"
+msgstr ""
+
+#: FormOpcionPrecioMaterial.form:29 FormOpcionesPreciosLabores.form:31
+msgid "Label1"
+msgstr ""
+
+#: FormOpcionPrecioMaterial.form:45 FormOpcionesPreciosLabores.form:59
+msgid "Personalizado:"
+msgstr ""
+
+#: FormOpcionPrecioMaterial.form:50 FormOpcionesPreciosLabores.form:64
+msgid "ValueBox1"
+msgstr ""
+
+#: FormOpcionPrecioMaterial.form:55
+msgid "Medición:"
+msgstr ""
+
+#: FormOpcionesPreciosLabores.form:25
+msgid "Trabajo Completo"
+msgstr ""
+
+#: FormOpcionesPreciosLabores.form:38
+msgid "Dia"
+msgstr ""
+
+#: ImagenesDAO.class:250
+msgid "idimagen"
+msgstr ""
+
+#: ImagenesDAO.class:256
+msgid "ruta"
+msgstr ""
+
+#: ImagenesDAO.class:259 TipoDAO.class:201 VistaDescomLaboresDAO.class:277
+#: VistaDescomMaterialesDAO.class:230
+msgid "tipo"
+msgstr ""
+
+#: MedicionDAO.class:354 VistaMedicionDAO.class:243
+#: VistaSubcategoriaDAO.class:111
+msgid "id"
+msgstr ""
+
+#: ModuleUpdate.module:20
+msgid "No ha sido posible conectarse al servidor"
+msgstr ""
+
+#: ModuleUpdate.module:20
+msgid "No puedo comprobar si hay nueva versión"
+msgstr ""
+
+#: ModuleUpdate.module:33
+msgid "El archivo de versión no es para este programa"
+msgstr ""
+
+#: ModuleUpdate.module:36
+msgid "Dirección Url de descarga:"
+msgstr ""
+
+#: ModuleUpdate.module:36
+msgid "Existe una nueva versión"
+msgstr ""
+
+#: ModuleUpdate.module:36
+msgid "Mejoras:"
+msgstr ""
+
+#: ModuleUpdate.module:36
+msgid "Programa:"
+msgstr ""
+
+#: ModuleUpdate.module:36
+msgid "Versión encontrada:"
+msgstr ""
+
+#: ModuleUpdate.module:37
+msgid "Ir a la página de descarga"
+msgstr ""
+
+#: ModuleUpdate.module:37
+#, fuzzy
+msgid "No actualización"
+msgstr "Link"
+
+#: ModuleUpdate.module:45
+msgid "La versión actual:"
+msgstr ""
+
+#: ModuleUpdate.module:45
+msgid "No necesita actualizarla"
+msgstr ""
+
+#: ModuleUpdate.module:45
+msgid "es igual o superior que la que hay en el servidor"
+msgstr ""
+
+#: ModuloPresupuesto.module:28
+msgid "(clon)"
+msgstr ""
+
+#: ModuloPresupuesto.module:105
+msgid "Se ha producido un error al borrar las mediciones de los descompuestos del presupuesto"
+msgstr ""
+
+#: ModuloPresupuesto.module:116
+msgid "Se ha producido un error al borrar las labores del presupuesto"
+msgstr ""
+
+#: ModuloPresupuesto.module:127
+msgid "Se ha producido un error al borrar los materiales del presupuesto"
+msgstr ""
+
+#: ModuloPresupuesto.module:144
+msgid "Se ha producido un error al borrar las imagenes del presupuesto"
+msgstr ""
+
+#: UnidadmedidaDAO.class:198
+msgid "idunidadmedida"
+msgstr ""
+
+#: UnidadmedidaDAO.class:201
+msgid "texto"
+msgstr ""
+
+#: VistaDescomLaboresDAO.class:271
+msgid "capitulo"
+msgstr ""
+
+#: VistaDescomLaboresDAO.class:274
+msgid "subcategoria"
+msgstr ""
+
+#: VistaMedicionDAO.class:267
+msgid "medicion_total"
+msgstr ""
+
+#: VistaPresupuestoDAO.class:246
+msgid "cliente"
+msgstr ""
+
+#: comun.module:60
+msgid "Trazada:"
+msgstr ""

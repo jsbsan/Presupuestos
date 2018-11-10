@@ -1,0 +1,79 @@
+' Gambas class file
+
+Public TextoUnidad As String
+Public laborcompleta As Float
+Public dia As Float
+Public hora As Float
+Public respuesta As Integer
+Public preciofinal As Float
+Public Personalizado As Float 'precio que pone la persona a la unidad
+
+Public eleccion As Integer
+
+Public Sub Form_Open()
+
+  Me.Title = ("Elegir Precio")
+  Me.Center()
+
+End
+
+Public Sub ButtonCancelar_Click()
+
+  respuesta = 0
+  Me.Close()
+
+End
+
+Public Function Mostrar() As Float[]
+
+  Label1.text = TextoUnidad
+  RadioButton1.Text = ("Trabajo Completo") & " (" & laborcompleta & ")"
+  RadioButton2.Text = ("Dia") & " (" & dia & ")"
+  RadioButton3.Text = ("Hora") & " (" & hora & ")"
+
+  Select Case eleccion
+    Case 1
+      RadioButton1.value = True
+      preciofinal = laborcompleta
+    Case 2
+      RadioButton2.value = True
+      preciofinal = dia
+    Case 3
+      RadioButton3.value = True
+      preciofinal = hora
+    Case 4
+      RadioButton4.value = True
+      ValueBoxPrecioPersonalizado.value = Personalizado
+  End Select
+
+  Me.Showmodal()
+
+  Return [respuesta, preciofinal]
+
+End
+
+Public Sub ButtonAceptar_Click()
+
+  If RadioButton1.value = True Then
+    respuesta = 1
+    preciofinal = laborcompleta
+  Endif
+
+  If RadioButton2.value = True Then
+    respuesta = 2
+    preciofinal = dia
+  Endif
+
+  If RadioButton3.value = True Then
+    respuesta = 3
+    preciofinal = hora
+  Endif
+
+  If RadioButton4.value = True Then
+    respuesta = 4
+    preciofinal = ValueBoxPrecioPersonalizado.Value
+  Endif
+
+  Me.Close()
+
+End

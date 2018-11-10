@@ -1,0 +1,154 @@
+' Gambas module file
+
+Public Sub RealizarClonacion(idpresupuesto As Integer, FListPresupuesto As FMainListaPresupuestos)
+
+  Dim tmpPresupuestoNuevoVO As PresupuestoVO
+  Dim tmpPresupuestoOriginalVO As PresupuestoVO
+  Dim manejarPresupuestoDAO As New PresupuestoDAO
+  Dim hresult As Result
+
+  Dim manejadorDescompuestoMaterialDAO As New DescompuestomaterialesDAO
+  Dim tmpDescompuestoMaterialVO As DescompuestomaterialesVO
+  Dim tmpArrayDescompuestoMaterialVO As DescompuestomaterialesVO[]
+
+  Dim manejadorDescompuestoLaboralDAO As New DescompuestolaboresDAO
+  Dim tmpDescompuestoLaboresVO As DescompuestolaboresVO
+  Dim tmpArrayDescompuestoLaboresVO As DescompuestolaboresVO[]
+
+  Dim manejadorMedicionesDAO As New MedicionDAO
+  Dim tmpMedicionesVO As MedicionVO
+  Dim tmpArrayMedicionesVO As MedicionVO[]
+
+  Dim iddescompuestoAnterior As Integer 'contiene el id del descompuesto Original del presupuesto Original
+  'Pasos:
+  '1º Crear una nuevo presupuesto
+  tmpPresupuestoOriginalVO = manejarPresupuestoDAO.ExtraerRegistro("idpresupuesto", idpresupuesto) 'datos del original
+  tmpPresupuestoNuevoVO = tmpPresupuestoOriginalVO.Copia()
+
+  tmpPresupuestoNuevoVO.claveasignada &= ("(clon)")
+  tmpPresupuestoNuevoVO.descripcioncorta &= ("(clon)")
+
+  manejarPresupuestoDAO.registrar(tmpPresupuestoNuevoVO)
+
+  'obtener la ultimo objeto del ultimo presupuesto añadido, para conocer el Idpresupuesto dado
+  hresult = manejarPresupuestoDAO.contenido()
+  hresult.MoveLast
+  tmpPresupuestoNuevoVO = manejarPresupuestoDAO.ConvertirResult(hresult)[0]
+
+  'copia de descompuestos....
+  'Descompuestos materiales....
+  tmpArrayDescompuestoMaterialVO = manejadorDescompuestoMaterialDAO.ConvertirResult(manejadorDescompuestoMaterialDAO.BuscarIgualIdpresupuesto(idpresupuesto))
+
+  'recorro el array de descompuestomateriales, y le cambio el id, guardandolo
+  For Each tmpDescompuestoMaterialVO In tmpArrayDescompuestoMaterialVO
+    tmpDescompuestoMaterialVO.idpresupuesto = tmpPresupuestoNuevoVO.idpresupuesto
+    manejadorDescompuestoMaterialDAO.registrar(tmpDescompuestoMaterialVO)
+  Next
+
+  'copia de descompuesto de labores....
+  tmpArrayDescompuestoLaboresVO = manejadorDescompuestoLaboralDAO.ConvertirResult(manejadorDescompuestoLaboralDAO.BuscarIgualIdpresupuesto(idpresupuesto))
+
+  For Each tmpDescompuestoLaboresVO In tmpArrayDescompuestoLaboresVO
+    iddescompuestoAnterior = tmpDescompuestoLaboresVO.iddescompuesto
+    tmpDescompuestoLaboresVO.idpresupuesto = tmpPresupuestoNuevoVO.idpresupuesto
+    manejadorDescompuestoLaboralDAO.registrar(tmpDescompuestoLaboresVO)
+    'copia de mediciones
+    'necesito conocer el id del descompopuesto laboral que se le ha asignado automaticamente...
+    hresult = manejadorDescompuestoLaboralDAO.contenido()
+    hresult.MoveLast 'me voy al ultimo registro introducido...
+    tmpDescompuestoLaboresVO = manejadorDescompuestoLaboralDAO.ConvertirResult(hresult)[0] 'leo el registro, y lo convierto en VO
+
+    'obtengo lista de mediciones del iddescompuesto, y luego cambio el iddescompuesto y lo guardo
+    tmpArrayMedicionesVO = manejadorMedicionesDAO.ConvertirResult(manejadorMedicionesDAO.BuscarIgualIddescompuesto(iddescompuestoAnterior))
+    For Each tmpMedicionesVO In TmpArrayMedicionesVO
+      tmpMedicionesVO.iddescompuesto = tmpDescompuestoLaboresVO.iddescompuesto
+      manejadorMedicionesDAO.registrar(tmpMedicionesVO)
+    Next
+
+  Next
+
+  'copia de imagenes....¿?
+
+  'ultimo que hay que hacer: redibuja gridview de presupuestos
+  FListPresupuesto.actualizarRegilla()
+
+End
+
+'-------------------------------------------------------------------------------------------------
+Public Sub RealizarBorrado(idpresupuesto As Integer, FListPresupuesto As FMainListaPresupuestos)
+
+  Dim misql As String
+  Dim miresult As Result
+  Dim conectar As New Conexion
+
+  Dim manejarPresupuestoDAO As New PresupuestoDAO
+  Dim manejadorDescompuestoLaboralDAO As New DescompuestolaboresDAO
+
+  Dim arrayDescompuesto As DescompuestolaboresVO[]
+  Dim listaDescompuesto As String[]
+  Dim a As Integer
+
+  conectar.conexion()
+  'LABORES
+  'obtener lista de todos los descumpuestos de labores de ese presupuesto y borrarlos....
+  misql = "select * from Descompuestolabores where idpresupuesto=" & idpresupuesto & " order by idorden"
+
+  arrayDescompuesto = manejadorDescompuestoLaboralDAO.ConvertirResult(manejadorDescompuestoLaboralDAO.sql(misql))
+
+  listaDescompuesto = Split(manejadorDescompuestoLaboralDAO.extraeColumnaArray(arrayDescompuesto, "iddescompuesto"), ",")
+
+  For a = 0 To listaDescompuesto.Max
+    'borrado de mediciones....
+    misql = "DELETE FROM medicion WHERE iddescompuesto=&1"
+    Try conectar.hconn.Exec(misql, Val(listadescompuesto[a]))
+    If Error Then
+      Message.Error(("Se ha producido un error al borrar las mediciones de los descompuestos del presupuesto"))
+      Return
+    Endif
+  Next
+
+  'Borro la labores
+  misql = "DELETE FROM Descompuestolabores WHERE idpresupuesto=&1"
+  Try conectar.hconn.Exec(misql, idpresupuesto)
+  If Error Then
+    Print Error.Text
+
+    Message.Error(("Se ha producido un error al borrar las labores del presupuesto"))
+    Return
+  Endif
+
+  'MATERIALES
+  'obtener lista de todos los descomuesto de  materiales de ese presupuesto y borrarlos...
+  misql = "DELETE FROM Descompuestomateriales WHERE idpresupuesto=&1"
+  Try conectar.hconn.Exec(misql, idpresupuesto)
+  If Error Then
+    Print Error.Text
+
+    Message.Error(("Se ha producido un error al borrar los materiales del presupuesto"))
+    Return
+  Endif
+
+  'borrado de imagenes:
+  misql = "select * from Imagenes where idpresupuesto=" & idpresupuesto
+  miresult = conectar.hconn.Exec(misql)
+  While miresult.Available
+    Try Kill miresult["ruta"]
+    miresult.MoveNext
+  Wend
+  'borro las rutas de la base de datos...
+  misql = "DELETE from Imagenes where idpresupuesto=" & idpresupuesto
+  Try conectar.hconn.Exec(misql)
+  If Error Then
+    Print Error.Text
+
+    Message.Error(("Se ha producido un error al borrar las imagenes del presupuesto"))
+    Return
+  Endif
+
+  'el idpresupuesto se borra
+  manejarPresupuestoDAO.BorrarIdpresupuesto(idpresupuesto)
+
+  'ultimo que hay que hacer: redibuja gridview de presupuestos
+  FListPresupuesto.actualizarRegilla()
+
+End

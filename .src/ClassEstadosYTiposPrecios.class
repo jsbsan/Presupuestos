@@ -1,0 +1,93 @@
+' Gambas class file
+
+Property tipoprecio As String[]
+Private htipoprecio As New String[]
+
+Property estadopresupuesto As String[]
+Private hestadopresupuesto As New String[]
+
+Property iconoestado As String[]
+Private hiconoestado As New String[]
+
+Public Sub New()
+
+End
+
+Public Sub carga()
+
+  htipoprecio.Add(("")) '0
+  htipoprecio.Add(("Trabajo")) '1 icono calendario
+  htipoprecio.Add(("Día")) '2 icono calendario de un dia
+  htipoprecio.Add(("Hora")) '3 icono reloj
+  htipoprecio.Add(("Pers.")) '4 icono pèrsona
+  htipoprecio.Add(("Mat.")) '5 icon ladrillo
+
+  hiconoestado.Add("") '0
+  hiconoestado.Add("./TiposPrecio/calendario.png")
+  hiconoestado.Add("./TiposPrecio/dia.png")
+  hiconoestado.Add("./TiposPrecio/hora.png")
+  hiconoestado.Add("./TiposPrecio/pintor.png")
+  hiconoestado.Add("./TiposPrecio/materiales.png")
+
+  hestadopresupuesto.Add((""))
+  hestadopresupuesto.Add(("Redactándose"))
+  hestadopresupuesto.Add(("Enviado"))
+  hestadopresupuesto.Add(("No admitido"))
+  hestadopresupuesto.Add(("Aceptado"))
+  hestadopresupuesto.Add(("Trabajando en él"))
+  hestadopresupuesto.Add(("Sin cobrar"))
+  hestadopresupuesto.Add(("Falta algo por cobrar"))
+  hestadopresupuesto.Add(("Cobrado"))
+
+End
+
+Public Function numeroestados() As String
+
+  Dim a As Integer
+  Dim listanumero As String
+
+  For a = 1 To hestadopresupuesto.count
+
+    listanumero &= Str$(a) & ","
+
+  Next
+
+  Return Mid$(listanumero, 1, Len(listanumero) - 1)
+
+End
+
+Private Function tipoprecio_Read() As String[]
+
+  Return htipoprecio
+
+End
+
+Private Sub tipoprecio_Write(Value As String[])
+
+  htipoprecio = value
+
+End
+
+Private Function estadopresupuesto_Read() As String[]
+
+  Return hestadopresupuesto
+
+End
+
+Private Sub estadopresupuesto_Write(Value As String[])
+
+  hestadopresupuesto = value
+
+End
+
+Private Function iconoestado_Read() As String[]
+
+  Return hiconoestado
+
+End
+
+Private Sub iconoestado_Write(Value As String[])
+
+  hiconoestado = value
+
+End

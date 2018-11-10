@@ -1,0 +1,68 @@
+* Mon Mar 16 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.18
+
+* Sun Mar 15 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.17
+- quito menus superiores
+
+* Sat Mar 07 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.16
+- Antes de imprimir se recalcula el presupuesto. Bug de edicion de precio que sumaba cantidad. Cuando se cancela la edicion de una nueva linea, se añadia.
+
+* Sat Mar 07 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.15
+
+* Sat Mar 07 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.15
+
+* Sat Mar 07 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.15
+- filaseleccionado hago cambio de . por , al leer del gridview
+
+* Sat Mar 07 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.15
+
+* Sat Mar 07 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.15
+
+* Sat Mar 07 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.15
+- Cambios en FormAutomaticoDinamico para modificar punto por como y si da error, no hacer el cambio
+
+* Fri Mar 06 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.14
+- update se ve el mensaje de actualizacion
+
+* Fri Mar 06 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.12
+
+* Wed Mar 04 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.11
+
+* Wed Mar 04 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.11
+
+* Wed Mar 04 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.1.11
+
+* Mon Mar 02 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.9
+- añadido recalculo, borrado  y clonado de presupuestos
+
+* Sat Feb 28 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.7
+- recalculo en pruebas
+
+* Wed Feb 25 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.5
+- añadido update
+
+* Wed Feb 25 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.5
+
+* Wed Feb 25 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.4
+- quito wkhtmltopdf, mejor hacerlo todo con navegardor
+
+* Tue Feb 24 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.4
+
+* Tue Feb 24 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.4
+- evince
+
+* Tue Feb 24 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.4
+
+* Tue Feb 24 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.4
+- texlive-base
+
+* Tue Feb 24 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.4
+- sudo apt-get install texlive-full
+
+* Tue Feb 24 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.4
+- texmaker
+
+* Sat Feb 14 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.1
+
+* Sat Feb 14 2015 julio sanchez berro <jusabejusabe@gmail.com> 0.0.1
+- Lanzamiento inicial
+

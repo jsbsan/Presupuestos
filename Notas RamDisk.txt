@@ -1,0 +1,31 @@
+Crear un ramdisk
+
+http://www.ehowenespanol.com/disco-memoria-linux-como_286617/
+
+
+Instrucciones
+
+    1
+
+    Inicia sesión en la computadora como usuario "root" si tu versión de Linux permite iniciar sesión como superusuario.
+     Si no es así, inicia la sesión como usuario regular.
+    2
+
+    Inicia comandos de shell haciendo clic en el icono "Terminal" en el escritorio gráfico, o ingresando en modo texto.
+    3
+
+    Eleva los privilegios de tu shell, si no inicias sesión como "root", escribiendo el siguiente comando en la shell:
+     sudo -i Pulsa el botón "Enter". Escribe la contraseña y pulsa "Enter" de nuevo.
+    4
+
+    Crea un punto de montaje, que es una ubicación en la jerarquía de directorio para el disco RAM que vas a crear.
+     Escribe el siguiente comando en la shell:
+      mkdir -p /media/myRamDisk Reemplaza "/media/myRamDisk" 
+      por la ruta completa del punto de montaje que se está creando. Pulsa el botón "Enter".
+    5
+
+    Crea y monta el disco RAM escribiendo el siguiente comando en la shell:
+     mount -t tmpfs none /media/myRamDisk -o size=512m
+      Sustituye "512" por el tamaño (en MB) del disco RAM que deseas crear. 
+     Después de ejecutar este comando, todas las aplicaciones serán capaces de leer y escribir en el disco RAM como si se tratara de
+      cualquier dispositivo regular de almacenamiento de Linux.

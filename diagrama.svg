@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd"><svg width="10cm" height="4cm" viewBox="86 92 1950 750" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="g1"> 
+ <rect style="fill: #ffffff" x="80" y="88" width="250" height="160"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="80" y="88" width="250" height="160"/>
+<rect style="fill: #ffffff" x="80" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="80" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="90" y="113">Cliente</text>/n/n<rect style="fill: #ffffff" x="80" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="80" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="90" y="136">idcliente: Null</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="90" y="156">nombre: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="90" y="176">telefono: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="90" y="196">email: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="90" y="216">domicilio: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="90" y="236">comentario: String</text>
+
+ </g>
+<g id="g2"> 
+ <rect style="fill: #ffffff" x="340" y="88" width="250" height="80"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="340" y="88" width="250" height="80"/>
+<rect style="fill: #ffffff" x="340" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="340" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="350" y="113">Unidadmedida</text>/n/n<rect style="fill: #ffffff" x="340" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="340" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="136">idunidadmedida: Null</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="156">texto: String</text>
+
+ </g>
+<g id="g3"> 
+ <rect style="fill: #ffffff" x="600" y="88" width="250" height="80"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="600" y="88" width="250" height="80"/>
+<rect style="fill: #ffffff" x="600" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="600" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="610" y="113">Estado</text>/n/n<rect style="fill: #ffffff" x="600" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="600" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="610" y="136">idestado: Null</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="610" y="156">estado: String</text>
+
+ </g>
+<g id="g4"> 
+ <rect style="fill: #ffffff" x="860" y="88" width="250" height="100"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="860" y="88" width="250" height="100"/>
+<rect style="fill: #ffffff" x="860" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="860" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="870" y="113">Subcategoria</text>/n/n<rect style="fill: #ffffff" x="860" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="860" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="136">idsubcategoria: Null</text>
+<rect style="fill: #ffffff" x="860" y="140" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="860" y="140" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="156">idcapitulo: INTEGER</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="176">textosubcategoria: String</text>
+
+ </g>
+<g id="g5"> 
+ <rect style="fill: #ffffff" x="1120" y="88" width="250" height="80"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1120" y="88" width="250" height="80"/>
+<rect style="fill: #ffffff" x="1120" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1120" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1130" y="113">Categoria</text>/n/n<rect style="fill: #ffffff" x="1120" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1120" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="136">idcategoria: Null</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="156">textocapitulo: String</text>
+
+ </g>
+<g id="g6"> 
+ <rect style="fill: #ffffff" x="1380" y="88" width="250" height="180"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1380" y="88" width="250" height="180"/>
+<rect style="fill: #ffffff" x="1380" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1380" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1390" y="113">Materiales</text>/n/n<rect style="fill: #ffffff" x="1380" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1380" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1390" y="136">idmaterial: Null</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1390" y="156">fecha: Date</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1390" y="176">textocorto: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1390" y="196">textolargo: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1390" y="216">lugarcompra: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1390" y="236">precio: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1390" y="256">comentario: String</text>
+
+ </g>
+<g id="g7"> 
+ <rect style="fill: #ffffff" x="1640" y="88" width="250" height="80"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1640" y="88" width="250" height="80"/>
+<rect style="fill: #ffffff" x="1640" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1640" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1650" y="113">Tipo</text>/n/n<rect style="fill: #ffffff" x="1640" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1640" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1650" y="136">idtipo: Null</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1650" y="156">tipo: String</text>
+
+ </g>
+<g id="g8"> 
+ <rect style="fill: #ffffff" x="1900" y="88" width="250" height="280"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1900" y="88" width="250" height="280"/>
+<rect style="fill: #ffffff" x="1900" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1900" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1910" y="113">Presupuesto</text>/n/n<rect style="fill: #ffffff" x="1900" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1900" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="136">idpresupuesto: Null</text>
+<rect style="fill: #ffffff" x="1900" y="140" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1900" y="140" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="156">idcliente: INTEGER</text>
+<rect style="fill: #ffffff" x="1900" y="160" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1900" y="160" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="176">idestado: INTEGER</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="196">claveasignada: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="216">valorcalculado: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="236">valorasignado: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="256">fecha: Date</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="276">descripcioncorta: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="296">comentario: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="316">descripciongeneral: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="336">textogarantia: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1910" y="356">actualizarprecios: Boolean</text>
+
+ </g>
+<g id="g9"> 
+ <rect style="fill: #ffffff" x="2160" y="88" width="250" height="120"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2160" y="88" width="250" height="120"/>
+<rect style="fill: #ffffff" x="2160" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2160" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="2170" y="113">Imagenes</text>/n/n<rect style="fill: #ffffff" x="2160" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2160" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2170" y="136">idimagen: Null</text>
+<rect style="fill: #ffffff" x="2160" y="140" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2160" y="140" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2170" y="156">idpresupuesto: INTEGER</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2170" y="176">ruta: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2170" y="196">tipo: INTEGER</text>
+
+ </g>
+<g id="g10"> 
+ <rect style="fill: #ffffff" x="2420" y="88" width="250" height="200"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2420" y="88" width="250" height="200"/>
+<rect style="fill: #ffffff" x="2420" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2420" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="2430" y="113">Descompuestomateriales</text>/n/n<rect style="fill: #ffffff" x="2420" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2420" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2430" y="136">iddescompuestomaterial: Null</text>
+<rect style="fill: #ffffff" x="2420" y="140" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2420" y="140" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2430" y="156">idpresupuesto: INTEGER</text>
+<rect style="fill: #ffffff" x="2420" y="160" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2420" y="160" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2430" y="176">idmaterial: INTEGER</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2430" y="196">medicion: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2430" y="216">precio: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2430" y="236">total: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2430" y="256">comentario: String</text>
+<rect style="fill: #ffffff" x="2420" y="260" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2420" y="260" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2430" y="276">idtipo: INTEGER</text>
+
+ </g>
+<g id="g11"> 
+ <rect style="fill: #ffffff" x="2680" y="88" width="250" height="200"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2680" y="88" width="250" height="200"/>
+<rect style="fill: #ffffff" x="2680" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2680" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="2690" y="113">Medicion</text>/n/n<rect style="fill: #ffffff" x="2680" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2680" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2690" y="136">id: Null</text>
+<rect style="fill: #ffffff" x="2680" y="140" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2680" y="140" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2690" y="156">iddescompuesto: INTEGER</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2690" y="176">descripcion: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2690" y="196">numeroveces: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2690" y="216">largo: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2690" y="236">ancho: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2690" y="256">alto: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2690" y="276">total: FLOAT</text>
+
+ </g>
+<g id="g12"> 
+ <rect style="fill: #ffffff" x="2940" y="88" width="250" height="240"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="2940" y="88" width="250" height="240"/>
+<rect style="fill: #ffffff" x="2940" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2940" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="2950" y="113">Descompuestolabores</text>/n/n<rect style="fill: #ffffff" x="2940" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2940" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2950" y="136">iddescompuesto: Null</text>
+<rect style="fill: #ffffff" x="2940" y="140" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2940" y="140" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2950" y="156">idpresupuesto: INTEGER</text>
+<rect style="fill: #ffffff" x="2940" y="160" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2940" y="160" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2950" y="176">idlabor: INTEGER</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2950" y="196">precio: float</text>
+<rect style="fill: #ffffff" x="2940" y="200" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2940" y="200" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2950" y="216">idtipo: INTEGER</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2950" y="236">comentario: String</text>
+<rect style="fill: #ffffff" x="2940" y="240" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="2940" y="240" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2950" y="256">idorden: INTEGER</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2950" y="276">medicion: float</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2950" y="296">total: float</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="2950" y="316">precioenlazado: Boolean</text>
+
+ </g>
+<g id="g13"> 
+ <rect style="fill: #ffffff" x="3200" y="88" width="250" height="180"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="3200" y="88" width="250" height="180"/>
+<rect style="fill: #ffffff" x="3200" y="88" width="250" height="30"/>/n<rect style="fill:#BFFF7F; fill-opacity:1; stroke-width: 2; stroke: #000000" x="3200" y="88" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="3210" y="113">Labor</text>/n/n<rect style="fill: #ffffff" x="3200" y="120" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="3200" y="120" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3210" y="136">idlabor: Null</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3210" y="156">textocorto: String</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3210" y="176">precioportrabajo: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3210" y="196">preciopordia: FLOAT</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3210" y="216">precioporhora: FLOAT</text>
+<rect style="fill: #ffffff" x="3200" y="220" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="3200" y="220" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3210" y="236">idsubcategoria: INTEGER</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="3210" y="256">descripcion: String</text>
+
+ </g>
+<g id="g14"> 
+ <rect style="fill: #ffffff" x="80" y="425" width="250" height="100"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="80" y="425" width="250" height="100"/>
+<rect style="fill: #ffffff" x="80" y="425" width="250" height="30"/>/n<rect style="fill:#00FFFF; fill-opacity:1; stroke-width: 2; stroke: #000000" x="80" y="425" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="90" y="450">VistaSubcategoria</text>/n/n<rect style="fill: #ffffff" x="80" y="457" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="80" y="457" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="90" y="473">id: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="90" y="493">textocapitulo: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="90" y="513">textosubcategoria: string</text>
+
+ </g>
+<g id="g15"> 
+ <rect style="fill: #ffffff" x="340" y="425" width="250" height="220"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="340" y="425" width="250" height="220"/>
+<rect style="fill: #ffffff" x="340" y="425" width="250" height="30"/>/n<rect style="fill:#00FFFF; fill-opacity:1; stroke-width: 2; stroke: #000000" x="340" y="425" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="350" y="450">VistaPresupuesto</text>/n/n<rect style="fill: #ffffff" x="340" y="457" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="340" y="457" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="473">idpresupuesto: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="493">cliente: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="513">claveasignada: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="533">actualizarprecios: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="553">fecha: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="573">descripcioncorta: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="593">estado: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="613">valorcalculado: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="350" y="633">valorasignado: string</text>
+
+ </g>
+<g id="g16"> 
+ <rect style="fill: #ffffff" x="600" y="425" width="250" height="200"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="600" y="425" width="250" height="200"/>
+<rect style="fill: #ffffff" x="600" y="425" width="250" height="30"/>/n<rect style="fill:#00FFFF; fill-opacity:1; stroke-width: 2; stroke: #000000" x="600" y="425" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="610" y="450">VistaDescomMateriales</text>/n/n<rect style="fill: #ffffff" x="600" y="457" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="600" y="457" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="610" y="473">iddescompuestomaterial: string</text>
+<rect style="fill: #ffffff" x="600" y="477" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="600" y="477" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="610" y="493">idpresupuesto: string</text>
+<rect style="fill: #ffffff" x="600" y="497" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="600" y="497" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="610" y="513">idmaterial: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="610" y="533">tipo: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="610" y="553">textocorto: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="610" y="573">precio: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="610" y="593">medicion: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="610" y="613">total: string</text>
+
+ </g>
+<g id="g17"> 
+ <rect style="fill: #ffffff" x="860" y="425" width="250" height="200"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="860" y="425" width="250" height="200"/>
+<rect style="fill: #ffffff" x="860" y="425" width="250" height="30"/>/n<rect style="fill:#00FFFF; fill-opacity:1; stroke-width: 2; stroke: #000000" x="860" y="425" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="870" y="450">VistaLabor</text>/n/n<rect style="fill: #ffffff" x="860" y="457" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="860" y="457" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="473">idlabor: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="493">textocapitulo: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="513">textosubcategoria: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="533">textocorto: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="553">precioportrabajo: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="573">preciopordia: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="593">precioporhora: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="870" y="613">descripcion: string</text>
+
+ </g>
+<g id="g18"> 
+ <rect style="fill: #ffffff" x="1120" y="425" width="250" height="240"/>/n<rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1120" y="425" width="250" height="240"/>
+<rect style="fill: #ffffff" x="1120" y="425" width="250" height="30"/>/n<rect style="fill:#00FFFF; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1120" y="425" width="250" height="30"/>
+<text font-size="16" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1130" y="450">VistaDescomLabores</text>/n/n<rect style="fill: #ffffff" x="1120" y="457" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1120" y="457" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="473">iddescompuesto: string</text>
+<rect style="fill: #ffffff" x="1120" y="477" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1120" y="477" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="493">idpresupuesto: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="513">capitulo: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="533">subcategoria: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="553">tipo: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="573">textocorto: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="593">precio: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="613">medicion: string</text>
+<rect style="fill: #ffffff" x="1120" y="617" width="250" height="20"/>/n<rect style="fill:#FFFF00; fill-opacity:1; stroke-width: 2; stroke: #000000" x="1120" y="617" width="250" height="20"/>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="633">idorden: string</text>
+<text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1130" y="653">total: string</text>
+
+ </g>
+<path
+ id="path1"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 80,120 80,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g1"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g1"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path2"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 1900,140 80,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g8"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g1"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path3"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 340,120 340,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g2"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g2"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path4"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 600,120 600,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g3"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g3"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path5"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 1900,160 600,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g8"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g3"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path6"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 860,120 860,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g4"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g4"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path7"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 3200,220 860,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g13"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g4"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path8"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 1120,120 1120,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g5"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g5"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path9"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 1380,120 1380,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g6"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g6"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path10"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2420,160 1380,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g10"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g6"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path11"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 1640,120 1640,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g7"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g7"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path12"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2420,260 1640,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g10"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g7"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path13"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2940,200 1640,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g12"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g7"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path14"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 1900,120 1900,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g8"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g8"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path15"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2160,140 1900,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g9"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g8"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path16"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2420,140 1900,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g10"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g8"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path17"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2940,140 1900,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g12"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g8"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path18"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2160,120 2160,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g9"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g9"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path19"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2420,140 2160,140" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g10"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g9"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path20"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2940,140 2160,140" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g12"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g9"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path21"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2420,120 2420,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g10"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g10"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path22"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2940,140 2420,140" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g12"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g10"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path23"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2680,120 2680,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g11"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g11"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path24"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2940,120 2680,140" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g12"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g11"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path25"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 2940,120 2940,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g12"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g12"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path26"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 3200,120 2940,160" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g13"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g12"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path27"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 3200,120 3200,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g13"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g13"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path28"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 80,457 860,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g14"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g4"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path29"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 80,457 1120,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g14"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g5"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path30"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 340,457 80,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g15"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g1"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path31"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 340,457 1900,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g15"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g8"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path32"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 600,457 2420,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g16"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g10"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path33"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 600,457 1380,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g16"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g6"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path34"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 1120,457 2940,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g18"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g12"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path35"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 1120,457 3200,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g18"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g13"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path36"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 1120,457 860,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g18"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g4"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+<path
+ id="path37"
+   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="M 1120,457 1120,120" inkscape:connector-type="polyline"
+    inkscape:connector-curvature="0"
+    inkscape:connection-start="#g18"
+    inkscape:connection-start-point="d4"
+    inkscape:connection-end="#g5"
+    inkscape:connection-end-point="d4"
+    transform="matrix(5.5033332,0,0,5.5033332,86,77.000008)" />
+</svg>

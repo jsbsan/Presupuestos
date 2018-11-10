@@ -1,0 +1,49 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,106,39)
+  Icon = Picture["imagenes/clientes.png"]
+  Arrangement = Arrange.Vertical
+  { MenuClientes Menu
+    Text = ("MenuClientes")
+    Visible = False
+    { Menu3 Menu
+      Text = ("Clientes")
+    }
+    { Menu2 Menu
+    }
+    { addcliente Menu
+      Text = ("Añadir")
+      Picture = Picture["icon:/22/add"]
+    }
+    { MenuEditar Menu
+      Text = ("Editar")
+      Picture = Picture["icon:/22/edit"]
+    }
+    { Menu4 Menu
+    }
+    { MenuBorrado Menu
+      Text = ("Borrar")
+      Picture = Picture["icon:/22/erase"]
+    }
+  }
+  { HBox1 HBox
+    MoveScaled(2,1,76,6)
+    { Label1 Label
+      MoveScaled(2,1,15,4)
+      Text = ("Filtro Clientes:")
+    }
+    { TextBoxFiltroClientes TextBox
+      MoveScaled(17,1,40,4)
+    }
+    { ButtonFiltro Button
+      MoveScaled(63,1,6,4)
+      Picture = Picture["icon:/22/cancel"]
+    }
+  }
+  { GridViewCliente GridView
+    MoveScaled(6,11,52,22)
+    Expand = True
+    PopupMenu = "MenuClientes"
+  }
+}

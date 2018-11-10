@@ -1,0 +1,28 @@
+' Gambas class file
+
+Inherits MaterialesDAO
+
+Public Function GeneradorCodigoFormulario(tipo As String, Optional datosEditar As MaterialesVO) As String
+
+  Dim codigocampos As String
+
+  If tipo = "registrar" Then
+    codigocampos &= "null|idmaterial|null;"
+    codigocampos &= "datebox|fecha|" & ("fecha") & "|" & Format$(Now, Me.formatofecha) & ";"
+    codigocampos &= "textbox|textocorto|" & ("textocorto") & "|;"
+    codigocampos &= "textarea|textolargo|" & ("textolargo") & "|;"
+    codigocampos &= "textbox|lugarcompra|" & ("lugarcompra") & "|;"
+    codigocampos &= "valuebox|precio|" & ("precio") & "|0;"
+    codigocampos &= "textarea|comentario|" & ("comentario") & "|;"
+  Else
+    codigocampos &= "null|idmaterial|null;"
+    codigocampos &= "datebox|fecha|" & ("fecha") & "|" & Format$(datosEditar.fecha, Me.formatofecha) & ";"
+    codigocampos &= "textbox|textocorto|" & ("textocorto") & "|" & datosEditar.textocorto & ";"
+    codigocampos &= "textarea|textolargo|" & ("textolargo") & "|" & datosEditar.textolargo & ";"
+    codigocampos &= "textbox|lugarcompra|" & ("lugarcompra") & "|" & datosEditar.lugarcompra & ";"
+    codigocampos &= "valuebox|precio|" & ("precio") & "|" & datosEditar.precio & ";"
+    codigocampos &= "textarea|comentario|" & ("comentario") & "|" & datosEditar.comentario & ";"
+  Endif
+  Return codigocampos
+
+End

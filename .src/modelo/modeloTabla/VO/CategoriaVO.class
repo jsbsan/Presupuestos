@@ -1,0 +1,107 @@
+' Gambas class file
+
+Property idcategoria As Integer
+Private hidcategoria As Integer
+
+Property textocapitulo As String
+Private htextocapitulo As String
+
+Property campo As String[]
+Private hcampo As New String[]
+
+Property campotipo As String[]
+Private hcampotipo As New String[]
+
+Property campovisible As String[]
+Private hcampovisible As New String[]
+
+Private Function idcategoria_read() As Integer
+
+  Return hidcategoria
+
+End
+
+Private Sub idcategoria_write(Valor As Integer)
+
+  hidcategoria = Valor
+
+End
+
+Private Function textocapitulo_read() As String
+
+  Return htextocapitulo
+
+End
+
+Private Sub textocapitulo_write(Valor As String)
+
+  htextocapitulo = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function Copia(Optional dato As CategoriaVO) As CategoriaVO
+
+  Dim datoVOtmp As New CategoriaVO
+  Dim datoVOtmpOriginal As CategoriaVO
+
+  If IsNull(dato) Then
+    dato = Me 'se copia a si mismo
+  Endif
+  datoVOtmp.idcategoria = dato.idcategoria
+  datoVOtmp.textocapitulo = dato.textocapitulo
+  Return datoVOtmp
+
+End
+
+Public Function ConvertirVOaColeccion(dato As CategoriaVO) As Collection
+
+  Dim colecciontmp As New Collection
+  colecciontmp.add(dato.idcategoria, "idcategoria")
+  colecciontmp.add(dato.textocapitulo, "textocapitulo")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As CategoriaVO
+
+  Dim datoVOtmp As New CategoriaVO
+Try datoVOtmp.idcategoria = dato["idcategoria"]
+Try datoVOtmp.textocapitulo = dato["textocapitulo"]
+Return datoVOtmp
+End

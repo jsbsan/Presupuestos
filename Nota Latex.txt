@@ -1,0 +1,5 @@
+http://extensions.libreoffice.org/extension-center/writer2latex-1
+https://mecatronicauaslp.wordpress.com/2013/07/25/latex-instalacion-texlive-texmaker-ubuntu/
+
+sudo apt-get install texlive-latex-base
+evince

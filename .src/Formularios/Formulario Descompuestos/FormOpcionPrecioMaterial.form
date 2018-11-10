@@ -1,0 +1,50 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,55,28)
+  Icon = Picture["imagenes/bote-de-pinturapeque.png"]
+  Resizable = False
+  { RadioButton1 RadioButton
+    MoveScaled(15,4,29,4)
+    Tag = "1"
+    Text = ("Precio material")
+    Value = True
+  }
+  { Label1 Label
+    MoveScaled(0,0,53,4)
+    Text = ("Label1")
+    Alignment = Align.Center
+  }
+  { ButtonCancelar Button
+    MoveScaled(31,22,12,4)
+    Text = ("Cancelar")
+  }
+  { ButtonAceptar Button
+    MoveScaled(8,22,12,4)
+    Text = ("Aceptar")
+  }
+  { RadioButton4 RadioButton
+    MoveScaled(15,9,18,3)
+    Text = ("Personalizado:")
+  }
+  { ValueBoxPrecio ValueBox
+    MoveScaled(35,9,11,3)
+    Text = ("ValueBox1")
+  }
+  { Label2 Label
+    MoveScaled(11,15,11,4)
+    Text = ("Medición:")
+  }
+  { ValueBoxMedicion ValueBox
+    MoveScaled(24,15,11,4)
+    Text = ("ValueBox1")
+  }
+  { PictureBox3 PictureBox
+    MoveScaled(10,5,5,3)
+    Picture = Picture["TiposPrecio/materiales.png"]
+  }
+  { PictureBox4 PictureBox
+    MoveScaled(10,9,4,3)
+    Picture = Picture["TiposPrecio/pintor.png"]
+  }
+}

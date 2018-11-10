@@ -1,0 +1,32 @@
+' Gambas class file
+
+Inherits LaborDAO
+
+Public Function GeneradorCodigoFormulario(tipo As String, Optional datosEditar As LaborVO) As String
+
+  Dim codigocampos As String
+
+  If tipo = "registrar" Then
+    codigocampos &= "null|idlabor|null;"
+    codigocampos &= "textbox|textocorto|" & ("textocorto") & "|;"
+    codigocampos &= "valuebox|precioportrabajo|" & ("precioportrabajo") & "|0;"
+    codigocampos &= "valuebox|preciopordia|" & ("preciopordia") & "|0;"
+
+    codigocampos &= "valuebox|precioporhora|" & ("precioporhora") & "|0;"
+    codigocampos &= "textbox|descripcion|" & ("descripcion") & "|;"
+    'codigocampos &= "valuebox|idsubcategoria|" & ("idsubcategoria") & "|0;"
+    codigocampos &= "valuebox|idsubcategoria|" & ("idsubcategoria") & "|0;"
+  Else
+    codigocampos &= "null|idlabor|null;"
+    codigocampos &= "textbox|textocorto|" & ("textocorto") & "|" & datosEditar.textocorto & ";"
+    codigocampos &= "valuebox|precioportrabajo|" & ("precioportrabajo") & "|" & datosEditar.precioportrabajo & ";"
+    codigocampos &= "valuebox|preciopordia|" & ("preciopordia") & "|" & datosEditar.preciopordia & ";"
+    codigocampos &= "valuebox|precioporhora|" & ("precioporhora") & "|" & datosEditar.precioporhora & ";"
+
+    codigocampos &= "textarea|descripcion|" & ("descripcion") & "|" & datosEditar.descripcion & ";"
+    'codigocampos &= "valuebox|idsubcategoria|" & ("idsubcategoria") & "|" & datosEditar.idsubcategoria & ";"
+    codigocampos &= "valuebox|idsubcategoria|" & ("idsubcategoria") & "|" & datosEditar.idsubcategoria & "|true;"
+  Endif
+  Return codigocampos
+
+End

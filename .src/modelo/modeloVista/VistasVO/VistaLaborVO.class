@@ -1,0 +1,145 @@
+PROPERTY idlabor AS string 
+PRIVATE hidlabor AS string
+
+PROPERTY textocapitulo AS string 
+PRIVATE htextocapitulo AS string
+
+PROPERTY textosubcategoria AS string 
+PRIVATE htextosubcategoria AS string
+
+PROPERTY textocorto AS string 
+PRIVATE htextocorto AS string
+
+PROPERTY precioportrabajo AS string 
+PRIVATE hprecioportrabajo AS string
+
+PROPERTY preciopordia AS string 
+PRIVATE hpreciopordia AS string
+
+PROPERTY precioporhora AS string 
+PRIVATE hprecioporhora AS string
+
+PROPERTY descripcion AS string 
+PRIVATE hdescripcion AS string
+
+PROPERTY campo AS string[] 
+PRIVATE hcampo AS new string[]
+
+PROPERTY campotipo AS string[] 
+PRIVATE hcampotipo AS new string[]
+
+PROPERTY campovisible AS string[] 
+PRIVATE hcampovisible AS new string[]
+
+PRIVATE FUNCTION idlabor_read() AS string
+ RETURN hidlabor 
+END 
+ 
+PRIVATE SUB idlabor_write(Valor AS string)
+ hidlabor= Valor 
+END  
+ 
+PRIVATE FUNCTION textocapitulo_read() AS string
+ RETURN htextocapitulo 
+END 
+ 
+PRIVATE SUB textocapitulo_write(Valor AS string)
+ htextocapitulo= Valor 
+END  
+ 
+PRIVATE FUNCTION textosubcategoria_read() AS string
+ RETURN htextosubcategoria 
+END 
+ 
+PRIVATE SUB textosubcategoria_write(Valor AS string)
+ htextosubcategoria= Valor 
+END  
+ 
+PRIVATE FUNCTION textocorto_read() AS string
+ RETURN htextocorto 
+END 
+ 
+PRIVATE SUB textocorto_write(Valor AS string)
+ htextocorto= Valor 
+END  
+ 
+PRIVATE FUNCTION precioportrabajo_read() AS string
+ RETURN hprecioportrabajo 
+END 
+ 
+PRIVATE SUB precioportrabajo_write(Valor AS string)
+ hprecioportrabajo= Valor 
+END  
+ 
+PRIVATE FUNCTION preciopordia_read() AS string
+ RETURN hpreciopordia 
+END 
+ 
+PRIVATE SUB preciopordia_write(Valor AS string)
+ hpreciopordia= Valor 
+END  
+ 
+PRIVATE FUNCTION precioporhora_read() AS string
+ RETURN hprecioporhora 
+END 
+ 
+PRIVATE SUB precioporhora_write(Valor AS string)
+ hprecioporhora= Valor 
+END  
+ 
+PRIVATE FUNCTION descripcion_read() AS string
+ RETURN hdescripcion 
+END 
+ 
+PRIVATE SUB descripcion_write(Valor AS string)
+ hdescripcion= Valor 
+END  
+ 
+PRIVATE FUNCTION campo_read() AS string[]
+ RETURN hcampo 
+END 
+ 
+PRIVATE SUB campo_write(Valor AS string[])
+ hcampo= Valor 
+END  
+ 
+PRIVATE FUNCTION campotipo_read() AS string[]
+ RETURN hcampotipo 
+END 
+ 
+PRIVATE SUB campotipo_write(Valor AS string[])
+ hcampotipo= Valor 
+END  
+ 
+PRIVATE FUNCTION campovisible_read() AS string[]
+ RETURN hcampovisible 
+END 
+ 
+PRIVATE SUB campovisible_write(Valor AS string[])
+ hcampovisible= Valor 
+END  
+ 
+PUBLIC FUNCTION ConvertirVOaColeccion(dato as VistaLaborVO) AS collection
+Dim colecciontmp as new collection
+colecciontmp.add(dato.idlabor,"idlabor")
+colecciontmp.add(dato.textocapitulo,"textocapitulo")
+colecciontmp.add(dato.textosubcategoria,"textosubcategoria")
+colecciontmp.add(dato.textocorto,"textocorto")
+colecciontmp.add(dato.precioportrabajo,"precioportrabajo")
+colecciontmp.add(dato.preciopordia,"preciopordia")
+colecciontmp.add(dato.precioporhora,"precioporhora")
+colecciontmp.add(dato.descripcion,"descripcion")
+return colecciontmp
+end
+PUBLIC FUNCTION ConvertirColeccionaVO(dato as collection) AS VistaLaborVO
+Dim datoVOtmp as new VistaLaborVO
+try datoVOtmp.idlabor=dato["idlabor"]
+try datoVOtmp.textocapitulo=dato["textocapitulo"]
+try datoVOtmp.textosubcategoria=dato["textosubcategoria"]
+try datoVOtmp.textocorto=dato["textocorto"]
+try datoVOtmp.precioportrabajo=dato["precioportrabajo"]
+try datoVOtmp.preciopordia=dato["preciopordia"]
+try datoVOtmp.precioporhora=dato["precioporhora"]
+try datoVOtmp.descripcion=dato["descripcion"]
+return datoVOtmp
+end

@@ -1,0 +1,287 @@
+' Gambas class file
+
+Property idpresupuesto As Integer
+Private hidpresupuesto As Integer
+
+Property idcliente As Integer
+Private hidcliente As Integer
+
+Property idestado As Integer
+Private hidestado As Integer
+
+Property claveasignada As String
+Private hclaveasignada As String
+
+Property valorcalculado As Float
+Private hvalorcalculado As Float
+
+Property valorasignado As Float
+Private hvalorasignado As Float
+
+Property fecha As Date
+Private hfecha As Date
+
+Property descripcioncorta As String
+Private hdescripcioncorta As String
+
+Property comentario As String
+Private hcomentario As String
+
+Property descripciongeneral As String
+Private hdescripciongeneral As String
+
+Property textogarantia As String
+Private htextogarantia As String
+
+Property actualizarprecios As Boolean
+Private hactualizarprecios As Boolean
+
+Property campo As String[]
+Private hcampo As New String[]
+
+Property campotipo As String[]
+Private hcampotipo As New String[]
+
+Property campovisible As String[]
+Private hcampovisible As New String[]
+
+Private Function idpresupuesto_read() As Integer
+
+  Return hidpresupuesto
+
+End
+
+Private Sub idpresupuesto_write(Valor As Integer)
+
+  hidpresupuesto = Valor
+
+End
+
+Private Function idcliente_read() As Integer
+
+  Return hidcliente
+
+End
+
+Private Sub idcliente_write(Valor As Integer)
+
+  hidcliente = Valor
+
+End
+
+Private Function idestado_read() As Integer
+
+  Return hidestado
+
+End
+
+Private Sub idestado_write(Valor As Integer)
+
+  hidestado = Valor
+
+End
+
+Private Function claveasignada_read() As String
+
+  Return hclaveasignada
+
+End
+
+Private Sub claveasignada_write(Valor As String)
+
+  hclaveasignada = Valor
+
+End
+
+Private Function valorcalculado_read() As Float
+
+  Return hvalorcalculado
+
+End
+
+Private Sub valorcalculado_write(Valor As Float)
+
+  hvalorcalculado = Valor
+
+End
+
+Private Function valorasignado_read() As Float
+
+  Return hvalorasignado
+
+End
+
+Private Sub valorasignado_write(Valor As Float)
+
+  hvalorasignado = Valor
+
+End
+
+Private Function fecha_read() As Date
+
+  Return hfecha
+
+End
+
+Private Sub fecha_write(Valor As Date)
+
+  hfecha = Valor
+
+End
+
+Private Function descripcioncorta_read() As String
+
+  Return hdescripcioncorta
+
+End
+
+Private Sub descripcioncorta_write(Valor As String)
+
+  hdescripcioncorta = Valor
+
+End
+
+Private Function comentario_read() As String
+
+  Return hcomentario
+
+End
+
+Private Sub comentario_write(Valor As String)
+
+  hcomentario = Valor
+
+End
+
+Private Function descripciongeneral_read() As String
+
+  Return hdescripciongeneral
+
+End
+
+Private Sub descripciongeneral_write(Valor As String)
+
+  hdescripciongeneral = Valor
+
+End
+
+Private Function textogarantia_read() As String
+
+  Return htextogarantia
+
+End
+
+Private Sub textogarantia_write(Valor As String)
+
+  htextogarantia = Valor
+
+End
+
+Private Function actualizarprecios_read() As Boolean
+
+  Return hactualizarprecios
+
+End
+
+Private Sub actualizarprecios_write(Valor As Boolean)
+
+  hactualizarprecios = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function Copia(Optional dato As PresupuestoVO) As PresupuestoVO
+
+  Dim datoVOtmp As New PresupuestoVO
+  Dim datoVOtmpOriginal As PresupuestoVO
+
+  If IsNull(dato) Then
+    dato = Me 'se copia a si mismo
+  Endif
+  datoVOtmp.idpresupuesto = dato.idpresupuesto
+  datoVOtmp.idcliente = dato.idcliente
+  datoVOtmp.idestado = dato.idestado
+  datoVOtmp.claveasignada = dato.claveasignada
+  datoVOtmp.valorcalculado = dato.valorcalculado
+  datoVOtmp.valorasignado = dato.valorasignado
+  datoVOtmp.fecha = dato.fecha
+  datoVOtmp.descripcioncorta = dato.descripcioncorta
+  datoVOtmp.comentario = dato.comentario
+  datoVOtmp.descripciongeneral = dato.descripciongeneral
+  datoVOtmp.textogarantia = dato.textogarantia
+  datoVOtmp.actualizarprecios = dato.actualizarprecios
+  Return datoVOtmp
+
+End
+
+Public Function ConvertirVOaColeccion(dato As PresupuestoVO) As Collection
+
+  Dim colecciontmp As New Collection
+  colecciontmp.add(dato.idpresupuesto, "idpresupuesto")
+  colecciontmp.add(dato.idcliente, "idcliente")
+  colecciontmp.add(dato.idestado, "idestado")
+  colecciontmp.add(dato.claveasignada, "claveasignada")
+  colecciontmp.add(dato.valorcalculado, "valorcalculado")
+  colecciontmp.add(dato.valorasignado, "valorasignado")
+  colecciontmp.add(dato.fecha, "fecha")
+  colecciontmp.add(dato.descripcioncorta, "descripcioncorta")
+  colecciontmp.add(dato.comentario, "comentario")
+  colecciontmp.add(dato.descripciongeneral, "descripciongeneral")
+  colecciontmp.add(dato.textogarantia, "textogarantia")
+  colecciontmp.add(dato.actualizarprecios, "actualizarprecios")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As PresupuestoVO
+
+  Dim datoVOtmp As New PresupuestoVO
+  Try datoVOtmp.idpresupuesto = dato["idpresupuesto"]
+  Try datoVOtmp.idcliente = dato["idcliente"]
+  Try datoVOtmp.idestado = dato["idestado"]
+  Try datoVOtmp.claveasignada = dato["claveasignada"]
+  Try datoVOtmp.valorcalculado = dato["valorcalculado"]
+  Try datoVOtmp.valorasignado = dato["valorasignado"]
+Try datoVOtmp.fecha = dato["fecha"]
+Try datoVOtmp.descripcioncorta = dato["descripcioncorta"]
+Try datoVOtmp.comentario = dato["comentario"]
+Try datoVOtmp.descripciongeneral = dato["descripciongeneral"]
+Try datoVOtmp.textogarantia = dato["textogarantia"]
+Try datoVOtmp.actualizarprecios = dato["actualizarprecios"]
+Return datoVOtmp
+End

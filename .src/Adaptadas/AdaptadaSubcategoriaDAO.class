@@ -1,0 +1,50 @@
+' Gambas class file
+
+Inherits SubcategoriaDAO
+
+Public Function GeneradorCodigoFormulario(tipo As String, Optional datosEditar As SubcategoriaVO) As String
+
+  Dim codigocampos As String
+
+  '---------------------------------------------------
+  'Para añadir registro, cargar combobox
+  '---------------------------------------------------
+  Dim resultado As Collection
+  Dim opcionesCampoCompuesto As String
+  Dim opcionesCampoId As String
+
+  Dim aEditar As String
+  Dim numero As Integer
+
+  resultado = comun.ExtraerLista("categoria", "textocapitulo", "idcategoria")
+
+  opcionesCampoCompuesto = resultado["Compuesto"]
+  opcionesCampoId = Replace(resultado["Id"], " ", "")
+
+  If tipo = "registrar" Then
+    'no hacer nada...
+  Else
+    'nombre del campo a cambiar: idcapitulo
+
+    numero = Split(opcionesCampoId, ",").Find(datosEditar.idcapitulo)
+    aEditar = Split(opcionesCampoCompuesto, ",")[numero]
+  Endif
+
+  If tipo = "registrar" Then
+    codigocampos &= "null|idsubcategoria|null;"
+    codigocampos &= "combobox|idcapitulo|" & ("idcapitulo") & "| " & opcionesCampoCompuesto & "||" & opcionesCampoId & ";"
+
+    'codigocampos &= "valuebox|idcapitulo|" & ("idcapitulo") & "|0;"
+    codigocampos &= "textbox|textosubcategoria|" & ("textosubcategoria") & "|;"
+  Else
+    codigocampos &= "null|idsubcategoria|null;"
+
+    '  codigocampos &= "valuebox|idcapitulo|" & ("idcapitulo") & "|" & datosEditar.idcapitulo & ";"
+
+    codigocampos &= "combobox|idcapitulo|" & ("idcapitulo") & "| " & opcionesCampoCompuesto & "|" & aEditar & "|" & opcionesCampoId & ";"
+
+    codigocampos &= "textbox|textosubcategoria|" & ("textosubcategoria") & "|" & datosEditar.textosubcategoria & ";"
+  Endif
+  Return codigocampos
+
+End

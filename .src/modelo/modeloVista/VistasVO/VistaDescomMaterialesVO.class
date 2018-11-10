@@ -1,0 +1,195 @@
+' Gambas class file
+
+Property iddescompuestomaterial As String
+Private hiddescompuestomaterial As String
+
+Property idpresupuesto As String
+Private hidpresupuesto As String
+
+Property idmaterial As String
+Private hidmaterial As String
+
+Property tipo As String
+Private htipo As String
+
+Property textocorto As String
+Private htextocorto As String
+
+Property precio As String
+Private hprecio As String
+
+Property medicion As String
+Private hmedicion As String
+
+Property total As String
+Private htotal As String
+
+Property campo As String[]
+Private hcampo As New String[]
+
+Property campotipo As String[]
+Private hcampotipo As New String[]
+
+Property campovisible As String[]
+Private hcampovisible As New String[]
+
+Private Function iddescompuestomaterial_read() As String
+
+  Return hiddescompuestomaterial
+
+End
+
+Private Sub iddescompuestomaterial_write(Valor As String)
+
+  hiddescompuestomaterial = Valor
+
+End
+
+Private Function idpresupuesto_read() As String
+
+  Return hidpresupuesto
+
+End
+
+Private Sub idpresupuesto_write(Valor As String)
+
+  hidpresupuesto = Valor
+
+End
+
+Private Function idmaterial_read() As String
+
+  Return hidmaterial
+
+End
+
+Private Sub idmaterial_write(Valor As String)
+
+  hidmaterial = Valor
+
+End
+
+Private Function tipo_read() As String
+
+  Return htipo
+
+End
+
+Private Sub tipo_write(Valor As String)
+
+  htipo = Valor
+
+End
+
+Private Function textocorto_read() As String
+
+  Return htextocorto
+
+End
+
+Private Sub textocorto_write(Valor As String)
+
+  htextocorto = Valor
+
+End
+
+Private Function precio_read() As String
+
+  Return hprecio
+
+End
+
+Private Sub precio_write(Valor As String)
+
+  hprecio = Valor
+
+End
+
+Private Function medicion_read() As String
+
+  Return hmedicion
+
+End
+
+Private Sub medicion_write(Valor As String)
+
+  hmedicion = Valor
+
+End
+
+Private Function total_read() As String
+
+  Return htotal
+
+End
+
+Private Sub total_write(Valor As String)
+
+  htotal = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function ConvertirVOaColeccion(dato As VistaDescomMaterialesVO) As Collection
+
+  Dim colecciontmp As New Collection
+  colecciontmp.add(dato.iddescompuestomaterial, "iddescompuestomaterial")
+  colecciontmp.add(dato.idpresupuesto, "idpresupuesto")
+  colecciontmp.add(dato.idmaterial, "idmaterial")
+  colecciontmp.add(dato.tipo, "tipo")
+  colecciontmp.add(dato.textocorto, "textocorto")
+  colecciontmp.add(dato.precio, "precio")
+  colecciontmp.add(dato.medicion, "medicion")
+  colecciontmp.add(dato.total, "total")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As VistaDescomMaterialesVO
+
+  Dim datoVOtmp As New VistaDescomMaterialesVO
+  Try datoVOtmp.iddescompuestomaterial = dato["iddescompuestomaterial"]
+Try datoVOtmp.idpresupuesto = dato["idpresupuesto"]
+Try datoVOtmp.idmaterial = dato["idmaterial"]
+Try datoVOtmp.tipo = dato["tipo"]
+Try datoVOtmp.textocorto = dato["textocorto"]
+Try datoVOtmp.precio = dato["precio"]
+Try datoVOtmp.medicion = dato["medicion"]
+Try datoVOtmp.total = dato["total"]
+Return datoVOtmp
+End

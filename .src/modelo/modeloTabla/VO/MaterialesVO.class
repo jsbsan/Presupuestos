@@ -1,0 +1,197 @@
+' Gambas class file
+
+Property idmaterial As Integer
+Private hidmaterial As Integer
+
+Property fecha As Date
+Private hfecha As Date
+
+Property textocorto As String
+Private htextocorto As String
+
+Property textolargo As String
+Private htextolargo As String
+
+Property lugarcompra As String
+Private hlugarcompra As String
+
+Property precio As Float
+Private hprecio As Float
+
+Property comentario As String
+Private hcomentario As String
+
+Property campo As String[]
+Private hcampo As New String[]
+
+Property campotipo As String[]
+Private hcampotipo As New String[]
+
+Property campovisible As String[]
+Private hcampovisible As New String[]
+
+Private Function idmaterial_read() As Integer
+
+  Return hidmaterial
+
+End
+
+Private Sub idmaterial_write(Valor As Integer)
+
+  hidmaterial = Valor
+
+End
+
+Private Function fecha_read() As Date
+
+  Return hfecha
+
+End
+
+Private Sub fecha_write(Valor As Date)
+
+  hfecha = Valor
+
+End
+
+Private Function textocorto_read() As String
+
+  Return htextocorto
+
+End
+
+Private Sub textocorto_write(Valor As String)
+
+  htextocorto = Valor
+
+End
+
+Private Function textolargo_read() As String
+
+  Return htextolargo
+
+End
+
+Private Sub textolargo_write(Valor As String)
+
+  htextolargo = Valor
+
+End
+
+Private Function lugarcompra_read() As String
+
+  Return hlugarcompra
+
+End
+
+Private Sub lugarcompra_write(Valor As String)
+
+  hlugarcompra = Valor
+
+End
+
+Private Function precio_read() As Float
+
+  Return hprecio
+
+End
+
+Private Sub precio_write(Valor As Float)
+
+  hprecio = Valor
+
+End
+
+Private Function comentario_read() As String
+
+  Return hcomentario
+
+End
+
+Private Sub comentario_write(Valor As String)
+
+  hcomentario = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function Copia(Optional dato As MaterialesVO) As MaterialesVO
+
+  Dim datoVOtmp As New MaterialesVO
+  Dim datoVOtmpOriginal As MaterialesVO
+
+  If IsNull(dato) Then
+    dato = Me 'se copia a si mismo
+  Endif
+  datoVOtmp.idmaterial = dato.idmaterial
+  datoVOtmp.fecha = dato.fecha
+  datoVOtmp.textocorto = dato.textocorto
+  datoVOtmp.textolargo = dato.textolargo
+  datoVOtmp.lugarcompra = dato.lugarcompra
+  datoVOtmp.precio = dato.precio
+  datoVOtmp.comentario = dato.comentario
+  Return datoVOtmp
+
+End
+
+Public Function ConvertirVOaColeccion(dato As MaterialesVO) As Collection
+
+  Dim colecciontmp As New Collection
+  colecciontmp.add(dato.idmaterial, "idmaterial")
+  colecciontmp.add(dato.fecha, "fecha")
+  colecciontmp.add(dato.textocorto, "textocorto")
+  colecciontmp.add(dato.textolargo, "textolargo")
+  colecciontmp.add(dato.lugarcompra, "lugarcompra")
+  colecciontmp.add(dato.precio, "precio")
+  colecciontmp.add(dato.comentario, "comentario")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As MaterialesVO
+
+  Dim datoVOtmp As New MaterialesVO
+  Try datoVOtmp.idmaterial = dato["idmaterial"]
+  Try datoVOtmp.fecha = dato["fecha"]
+  Try datoVOtmp.textocorto = dato["textocorto"]
+Try datoVOtmp.textolargo = dato["textolargo"]
+Try datoVOtmp.lugarcompra = dato["lugarcompra"]
+Try datoVOtmp.precio = dato["precio"]
+Try datoVOtmp.comentario = dato["comentario"]
+Return datoVOtmp
+End

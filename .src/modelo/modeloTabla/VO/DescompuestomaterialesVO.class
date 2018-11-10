@@ -1,0 +1,215 @@
+' Gambas class file
+
+Property iddescompuestomaterial As Integer
+Private hiddescompuestomaterial As Integer
+
+Property idpresupuesto As Integer
+Private hidpresupuesto As Integer
+
+Property idmaterial As Integer
+Private hidmaterial As Integer
+
+Property medicion As Float
+Private hmedicion As Float
+
+Property precio As Float
+Private hprecio As Float
+
+Property total As Float
+Private htotal As Float
+
+Property comentario As String
+Private hcomentario As String
+
+Property idtipo As Integer
+Private hidtipo As Integer
+
+Property campo As String[]
+Private hcampo As New String[]
+
+Property campotipo As String[]
+Private hcampotipo As New String[]
+
+Property campovisible As String[]
+Private hcampovisible As New String[]
+
+Private Function iddescompuestomaterial_read() As Integer
+
+  Return hiddescompuestomaterial
+
+End
+
+Private Sub iddescompuestomaterial_write(Valor As Integer)
+
+  hiddescompuestomaterial = Valor
+
+End
+
+Private Function idpresupuesto_read() As Integer
+
+  Return hidpresupuesto
+
+End
+
+Private Sub idpresupuesto_write(Valor As Integer)
+
+  hidpresupuesto = Valor
+
+End
+
+Private Function idmaterial_read() As Integer
+
+  Return hidmaterial
+
+End
+
+Private Sub idmaterial_write(Valor As Integer)
+
+  hidmaterial = Valor
+
+End
+
+Private Function medicion_read() As Float
+
+  Return hmedicion
+
+End
+
+Private Sub medicion_write(Valor As Float)
+
+  hmedicion = Valor
+
+End
+
+Private Function precio_read() As Float
+
+  Return hprecio
+
+End
+
+Private Sub precio_write(Valor As Float)
+
+  hprecio = Valor
+
+End
+
+Private Function total_read() As Float
+
+  Return htotal
+
+End
+
+Private Sub total_write(Valor As Float)
+
+  htotal = Valor
+
+End
+
+Private Function comentario_read() As String
+
+  Return hcomentario
+
+End
+
+Private Sub comentario_write(Valor As String)
+
+  hcomentario = Valor
+
+End
+
+Private Function idtipo_read() As Integer
+
+  Return hidtipo
+
+End
+
+Private Sub idtipo_write(Valor As Integer)
+
+  hidtipo = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function Copia(Optional dato As DescompuestomaterialesVO) As DescompuestomaterialesVO
+
+  Dim datoVOtmp As New DescompuestomaterialesVO
+  Dim datoVOtmpOriginal As DescompuestomaterialesVO
+
+  If IsNull(dato) Then
+    dato = Me 'se copia a si mismo
+  Endif
+  datoVOtmp.iddescompuestomaterial = dato.iddescompuestomaterial
+  datoVOtmp.idpresupuesto = dato.idpresupuesto
+  datoVOtmp.idmaterial = dato.idmaterial
+  datoVOtmp.medicion = dato.medicion
+  datoVOtmp.precio = dato.precio
+  datoVOtmp.total = dato.total
+  datoVOtmp.comentario = dato.comentario
+  datoVOtmp.idtipo = dato.idtipo
+  Return datoVOtmp
+
+End
+
+Public Function ConvertirVOaColeccion(dato As DescompuestomaterialesVO) As Collection
+
+  Dim colecciontmp As New Collection
+  colecciontmp.add(dato.iddescompuestomaterial, "iddescompuestomaterial")
+  colecciontmp.add(dato.idpresupuesto, "idpresupuesto")
+  colecciontmp.add(dato.idmaterial, "idmaterial")
+  colecciontmp.add(dato.medicion, "medicion")
+  colecciontmp.add(dato.precio, "precio")
+  colecciontmp.add(dato.total, "total")
+  colecciontmp.add(dato.comentario, "comentario")
+  colecciontmp.add(dato.idtipo, "idtipo")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As DescompuestomaterialesVO
+
+  Dim datoVOtmp As New DescompuestomaterialesVO
+  Try datoVOtmp.iddescompuestomaterial = dato["iddescompuestomaterial"]
+  Try datoVOtmp.idpresupuesto = dato["idpresupuesto"]
+  Try datoVOtmp.idmaterial = dato["idmaterial"]
+  Try datoVOtmp.medicion = dato["medicion"]
+Try datoVOtmp.precio = dato["precio"]
+Try datoVOtmp.total = dato["total"]
+Try datoVOtmp.comentario = dato["comentario"]
+Try datoVOtmp.idtipo = dato["idtipo"]
+Return datoVOtmp
+End

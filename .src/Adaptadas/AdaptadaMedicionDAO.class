@@ -1,0 +1,30 @@
+' Gambas class file
+
+Inherits MedicionDAO
+
+Public Function GeneradorCodigoFormulario(tipo As String, Optional datosEditar As MedicionVO) As String
+
+  Dim codigocampos As String
+
+  If tipo = "registrar" Then
+    codigocampos &= "null|id|null;"
+    codigocampos &= "valuebox|iddescompuesto|" & ("iddescompuesto") & "|0|2;"
+    codigocampos &= "textbox|descripcion|" & ("descripcion") & "|;"
+    codigocampos &= "valuebox|numeroveces|" & ("numeroveces") & "|0;"
+    codigocampos &= "valuebox|largo|" & ("largo") & "|0;"
+    codigocampos &= "valuebox|ancho|" & ("ancho") & "|0;"
+    codigocampos &= "valuebox|alto|" & ("alto") & "|0;"
+    codigocampos &= "valuebox|total|" & ("total") & "|0|2;"
+  Else
+    codigocampos &= "null|id|null;"
+    codigocampos &= "valuebox|iddescompuesto|" & ("iddescompuesto") & "|" & datosEditar.iddescompuesto & "|2;"
+    codigocampos &= "textbox|descripcion|" & ("descripcion") & "|" & datosEditar.descripcion & ";"
+    codigocampos &= "valuebox|numeroveces|" & ("numeroveces") & "|" & datosEditar.numeroveces & ";"
+    codigocampos &= "valuebox|largo|" & ("largo") & "|" & datosEditar.largo & ";"
+    codigocampos &= "valuebox|ancho|" & ("ancho") & "|" & datosEditar.ancho & ";"
+    codigocampos &= "valuebox|alto|" & ("alto") & "|" & datosEditar.alto & ";"
+    codigocampos &= "valuebox|total|" & ("total") & "|" & datosEditar.total & "|2;"
+  Endif
+  Return codigocampos
+
+End

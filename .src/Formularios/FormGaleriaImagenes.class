@@ -1,0 +1,354 @@
+' Gambas class file
+
+Private idpresupuesto As Integer
+Private mostrarDirectorio As Boolean = True
+
+Private manejadorImagenes As New ImagenesDAO
+
+Private nombrePresupuesto As String
+
+Public Sub Form_Open()
+
+  HPanelAntesDelTrabajo.drop = True 'para que acepte soltar elementos...
+  HPanelDespuesDelTrabajo.drop = True 'para que acepte soltar elementos...
+  HPanelOtras.drop = True 'para que acepte soltar elementos...
+  HSplit1.Layout = [1, 0]
+
+  'carga las imagenes que haya de ese presupuesto
+  rellenar(1) 'antes
+  rellenar(2) 'despues
+  rellenar(3) 'otros
+  Me.center
+
+End
+
+Public Sub rellenar(modo As Integer)
+
+  Dim sql As String
+  Dim hresult As Result
+  Dim c As New Conexion
+
+  c.conexion()
+  sql = "select * from Imagenes where idpresupuesto=" & idpresupuesto & " and tipo=" & Str$(modo)
+  hresult = c.hconn.Exec(sql)
+
+  While hresult.Available
+
+    creaDibujo(modo, hResult["ruta"])
+
+    hresult.MoveNext
+
+  Wend
+
+End
+
+Public Sub titulo(cadena As String, id As Integer)
+
+  idpresupuesto = id
+  Me.Title = ("Galeria: ") & cadena
+  nombrePresupuesto = cadena
+
+End
+
+Public Sub annadedatos(nombre As String, modo As Integer)
+
+  Dim resultado As Boolean = True
+  Dim NombreBaseDatos As String
+  Dim tmpConexion As New Conexion
+  Dim nombrenuevo As String
+
+  If Not Exist(User.Home & "/PresupuestosTrabajosPinturas") Then
+    Mkdir User.Home & "/PresupuestosTrabajosPinturas"
+  Endif
+  If Not Exist(User.Home & "/PresupuestosTrabajosPinturas/imagenes") Then
+    Mkdir User.Home & "/PresupuestosTrabajosPinturas/imagenes"
+  Endif
+
+  ' If Not Exist(User.Home & "/PresupuestosTrabajosPinturas/imagenes/mini") Then
+  '   Mkdir User.Home & "/PresupuestosTrabajosPinturas/imagenes/mini"
+  ' Endif
+
+  NombreBaseDatos = tmpConexion.NombreBaseDatos
+
+  'nombre -> este fichero habria que copiarlo a la ruta de la base de datos, cambiarle de nombre (añadiendole el id del presupuesto)
+
+  nombrenuevo = User.home & "/PresupuestosTrabajosPinturas/imagenes/" & file.BaseName(nombre) & Str$(Format(Now, "_yyyy-mm-dd_hhnnss")) & "." & file.Ext(nombre)
+
+  If Exist(nombrenuevo) Then
+    Message.Info(("Existe un nombre igual a ese archivo ya almacenado, cambie de nombre el archivo: ") & nombre)
+    Return
+  Endif
+
+  Copy nombre To nombrenuevo
+
+  'añadir la información a la base de datos
+  addRegistro(modo, nombrenuevo)
+
+  'se añadirá a la base de datos
+  creaDibujo(modo, nombrenuevo)
+
+  Return
+
+End
+
+Public Sub addRegistro(modo As Integer, nombrenuevo As String)
+
+  Dim tmpImagenVo As New ImagenesVO
+
+  tmpImagenVo.ruta = nombrenuevo
+  tmpImagenVo.tipo = modo
+  tmpImagenVo.idpresupuesto = idpresupuesto
+
+  manejadorImagenes.registrar(tmpImagenVo)
+
+End
+
+Public Sub creaDibujo(modo As Integer, nombrenuevo As String)
+  '------------------------------------------------------
+  'Creando entorno: añadiendo Panel para cada imagen
+  '------------------------------------------------------
+
+  Dim tmpPicturebox As PictureBox
+  Dim himg As Image
+
+  Dim tmpPanel As HPanel
+  Dim TmpMini As Panel
+  Dim c As CheckBox
+
+  If Not Exist(nombrenuevo) Then
+    'no existe el archivo !!!
+    Return
+  Endif
+
+  Select Case modo
+    Case 1
+      '  "antes"       tipo = 1
+      tmpPanel = HPanelAntesDelTrabajo
+    Case 2
+      ' "despues"      tipo = 2
+      tmpPanel = HPanelDespuesDelTrabajo
+    Case 3
+      ' "otros"        tipo = 3
+      tmpPanel = HPanelOtras
+  End Select
+
+  TmpMini = New Panel(tmpPanel)
+  tmpmini.w = 150
+  tmpmini.h = 150
+  tmpmini.Border = 2
+
+  ' c = New CheckBox(tmpmini)
+  ' c.x = 0
+  ' c.y = 110
+  ' c.w = 100
+  ' c.h = 30
+  ' c.text = "seleccinado"
+
+  tmpPicturebox = New PictureBox(tmpMini) As "ObservarImagenes"
+  tmpPicturebox.w = 50
+  tmpPicturebox.h = 50
+  tmpPicturebox.x = 10
+  tmpPicturebox.y = 110
+  tmpPicturebox.Picture = Picture["icon:/32/edit"]
+  tmpPicturebox.tag = [modo, nombrenuevo, "edit"]
+
+  tmpPicturebox = New PictureBox(tmpMini) As "ObservarImagenes"
+  tmpPicturebox.w = 50
+  tmpPicturebox.h = 50
+  tmpPicturebox.x = 60
+  tmpPicturebox.y = 110
+  tmpPicturebox.Picture = Picture["./imagenes/gimp.png"] 'Picture[Application.Path & "/imagenes/gimp.png"]
+  tmpPicturebox.tag = [modo, nombrenuevo, "gimp"] 'edita con gimp la imagen
+
+  tmpPicturebox = New PictureBox(tmpMini) As "ObservarImagenes"
+  tmpPicturebox.w = 50
+  tmpPicturebox.h = 50
+  tmpPicturebox.x = 110
+  tmpPicturebox.y = 110
+  tmpPicturebox.tag = [modo, nombrenuevo, "erase", tmpMini]
+  tmpPicturebox.Picture = Picture["icon:/32/erase"]
+
+  'crea un picturebox, con la imagen cargada
+  tmpPicturebox = New PictureBox(tmpMini)
+  tmpPicturebox.w = 145
+  tmpPicturebox.h = 100
+
+  tmpPicturebox.x = 1
+  tmpPicturebox.y = 1
+  tmpPicturebox.Border = 1
+  tmpPicturebox.tag = nombrenuevo
+  himg = Image.Load(nombrenuevo)
+
+  tmpPicturebox.picture = himg.Picture
+  tmpPicturebox.Stretch = True
+
+  tmpPanel.Refresh()
+
+End
+
+Public Function InsertarDatosSoltados(datos As String[]) As Boolean
+
+  Dim a As Integer
+  Dim cadena As New String[]
+
+  'solo procesar las lista de ficheros (solo texto)
+
+  cadena = datos
+
+  For a = 0 To cadena.count - 1
+    annadedatos(cadena[a], TabStripImagenes.index + 1) 'añado a panel de antes
+  Next
+
+  Return True
+
+End
+
+Public Sub ButtonMostrar_Click()
+
+  If mostrarDirectorio = True Then
+    ButtonMostrar.Text = ("Ocultar")
+    HSplit1.Layout = [1, 1]
+    mostrarDirectorio = False
+  Else
+    ButtonMostrar.Text = ("Mostrar")
+    HSplit1.Layout = [1, 0]
+    mostrarDirectorio = True
+
+  Endif
+
+End
+
+Public Sub ButtonAddFicheros_Click()
+
+  Dim listadeficheros As String[]
+  Dim listaDos As New String[]
+  Dim a As Integer
+
+  listadeficheros = FileChooserFicheros.SelectedPaths
+
+  'comprobar que son ficheros de imagen: jpg,jpeg, bmp, png
+  For a = 0 To listadeficheros.count - 1
+    If InStr("jpg,jpeg,bmp,png", File.Ext(listadeficheros[a])) <> 0 Then
+      listaDos.Add(listadeficheros[a])
+    Else
+      'no es un archivo grafico que puedo cargar
+      Message.Info(("El archivo\n") & " " & listadeficheros[A] & " " & ("\n no se puede añadir, no es un fichero de imagen válido"))
+    Endif
+
+  Next
+
+  InsertarDatosSoltados(listaDos)
+
+End
+
+Public Sub ButtonCrearDirectorio_Click()
+  ''TODO: realizar copia de ficheros de imagen del presupuesto
+  'seleccionar una carpeta o crear una nueva
+
+  Dialog.Title = Me.Title & " " & (("Selecciones una carpeta o creala"))
+  If Not Exist(User.home &/ "GaleriaPresupuesto") Then
+
+    Mkdir (User.home &/ "GaleriaPresupuesto")
+  Endif
+
+  Dialog.path = User.home &/ "GaleriaPresupuesto"
+  If Dialog.SelectDirectory() Then
+    'ha cancelado la opcion
+    Return
+  Endif
+  'crear subcarpetas Antes Despues Otros
+  If Exist(Dialog.path) Then
+    'ok, no hago nada
+  Else
+    Try Mkdir Dialog.Path
+    If Error Then
+      Message.Error(("No puedo crear esa ruta, debe seleccionar otra"))
+      Return
+    Endif
+  Endif
+  CopiarOrdenadamenteLasImagenes(Dialog.path)
+
+  'obtener listado de fichero tipo 1,2,3
+  'copiar los archivos a dichas carpeta
+
+End
+
+Public Sub CopiarOrdenadamenteLasImagenes(ruta As String)
+
+  Dim sql As String
+  Dim hresult As Result
+  Dim c As New Conexion
+  Dim carpeta As String
+  Dim modo As Integer
+
+  Try Mkdir ruta & "/" & "Antes"
+  Try Mkdir ruta & "/" & "Despues"
+  Try Mkdir ruta & "/" & "Otros"
+  Wait 0.05
+  c.conexion()
+  For modo = 1 To 3
+
+    sql = "select * from Imagenes where idpresupuesto=" & idpresupuesto & " and tipo=" & Str$(modo)
+    hresult = c.hconn.Exec(sql)
+
+    While hresult.Available
+      Select Case modo
+        Case 1
+          carpeta = "Antes"
+        Case 2
+          carpeta = "Despues"
+        Case 3
+          carpeta = "Otros"
+      End Select
+      Print ruta & "/" & carpeta & "/" & File.Name(hResult["ruta"]);
+      Try Copy hResult["ruta"] To ruta & "/" & carpeta & "/" & File.Name(hResult["ruta"])
+      If Error Then
+        Print " no copiado, error :", Error.Text
+      Else
+        Print " copiado"
+      Endif
+      hresult.MoveNext
+
+    Wend
+  Next
+  c.desconectar()
+  Message.Info(("Archivos copiados"))
+
+End
+
+Public Sub ObservarImagenes_MouseDown()
+
+  Dim hresult As Result
+  Dim c As New Conexion
+  Dim sql As String
+  Dim respuesta As Integer
+
+  Print Last.tag[0], Last.tag[1], Last.tag[2]
+
+  '[modo, nombrenuevo, "edit"]
+  '[modo, nombrenuevo, "erase"]
+
+  Select Case Last.tag[2]
+    Case "edit"
+      Desktop.Open(Last.tag[1])
+    Case "erase"
+
+      respuesta = Message.Question(("¿Seguro que quiere borrarlo?"), ("Si, borralo"), ("No, cancelar"))
+      If respuesta = 1 Then
+        'borrar archivo
+        Try Kill Last.tag[1]
+
+        'eliminarlo de la base de dato
+
+        c.conexion()
+        sql = "Delete  from Imagenes where ruta='" & Last.tag[1] & "'"
+        hresult = c.hconn.Exec(sql)
+        'borro el objeto en la pantalla
+        Last.tag[3].delete
+      Endif
+    Case "gimp"
+      '  Exec ["gimp", "\"" & Last.tag[1] & "\""]
+      Exec ["gimp", Last.tag[1]]
+  End Select
+
+End

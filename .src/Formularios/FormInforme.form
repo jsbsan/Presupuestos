@@ -1,0 +1,61 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,69,46)
+  Icon = Picture["icon:/22/pdf"]
+  Resizable = False
+  { RadioButtonCalculado RadioButton
+    MoveScaled(12,9,18,4)
+    Text = ("Calculado")
+    Value = True
+  }
+  { Label1 Label
+    MoveScaled(2,5,28,4)
+    Text = ("Valor del Presupuesto:")
+  }
+  { RadioButtonAsignadoManualmente RadioButton
+    MoveScaled(32,9,29,4)
+    Text = ("Asignado Manualmente")
+  }
+  { CheckBoxMediciones CheckBox
+    MoveScaled(2,28,65,4)
+    Text = ("Imprimir listado de mediciones")
+    Value = CheckBox.True
+  }
+  { CheckBoxTextosDescriptivos CheckBox
+    MoveScaled(2,18,65,4)
+    Text = ("Imprimir textos largos de labores (definidos en la base de datos)")
+    Value = CheckBox.True
+  }
+  { CheckBoxComentariosLabores CheckBox
+    MoveScaled(2,33,65,4)
+    Text = ("comentarios de labores (definidos en cada presupuesto)")
+    Value = CheckBox.True
+  }
+  { Label2 Label
+    MoveScaled(1,0,64,5)
+    Font = Font["Arial,Bold,Italic,Underline,+3"]
+    Text = ("INFORME DE PRESUPUESTO")
+    Alignment = Align.Center
+  }
+  { ButtonHtml Button
+    MoveScaled(15,39,36,6)
+    Text = ("Generar informe")
+    Picture = Picture["icon:/22/pdf"]
+  }
+  { ButtongenerarPDF Button
+    MoveScaled(61,39,8,6)
+    Visible = False
+    Picture = Picture["icon:/22/pdf"]
+  }
+  { CheckBoxResumenMedicionPrecioTotal CheckBox
+    MoveScaled(2,24,61,2)
+    Text = ("imprimir resumen de medicion, precio y total")
+    Value = CheckBox.True
+  }
+  { CheckBoxCategoriySubcategoria CheckBox
+    MoveScaled(2,14,61,3)
+    Text = ("Imprimir categoria y subcategoria de la labor")
+    Value = CheckBox.True
+  }
+}

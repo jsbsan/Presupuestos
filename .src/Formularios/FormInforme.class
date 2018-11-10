@@ -1,0 +1,361 @@
+' Gambas class file
+
+Public idpresupuesto As Integer
+Public manejadorPresupuesto As New PresupuestoDAO
+Public datosPresupuesto As PresupuestoVO
+Private manejadorCliente As New AdaptadoClienteDAO
+Private datosCliente As ClienteVO
+Private moneda As String
+
+Private formatoSalida As String
+
+Public Sub Form_Open()
+
+  moneda = Settings["Moneda"]
+  Me.Center()
+
+End
+
+Public Sub Generar()
+
+  Dim fuente As String
+  Dim documento As String
+  Dim fl As String = "<br>"
+
+  Dim textoMaterial As String
+  Dim TextoDescompuestoMaterial As String
+
+  Application.Busy = +1
+
+  datosPresupuesto = manejadorPresupuesto.ExtraerRegistro("idpresupuesto", idpresupuesto)
+
+  'leer datos del cliente, nombre, clave, telefono
+  datosCliente = manejadorCliente.ExtraerRegistro("idcliente", datosPresupuesto.idcliente)
+
+  'documento &= "<p style=\"font-size:1\">"
+  documento &= "<FONT FACE=\"courier new\" size=2>"
+  documento &= "<center><h2>Presupuesto - Estimate:<br> " & datosPresupuesto.descripcioncorta & "</h2></center> " & fl
+
+  documento &= "<hr>"
+  documento &= "<table>"
+  documento &= "<tr><td><b>" & "Empresa (Owner):</b> " & settings["Empresa"] & "</td><td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>"
+  documento &= "<td><b>" & "Cliente (Customer):</b> " & datosCliente.nombre & "</td></tr>"
+
+  documento &= "<tr><td><b>" & "Dirección (Adress): </b>" & settings["Direccion"] & "</td><td></td>"
+  documento &= "<td><b>" & "Domicilio (Address): </b>" & datosCliente.domicilio & "</td></tr>"
+
+  documento &= "<tr><td><b>" & "Teléfono (Phone):</b>  " & settings["Telefono"] & "</td><td></td>"
+  documento &= "<td><b>" & "Teléfono (Phone):</b>  " & datosCliente.telefono & "</td></tr>"
+
+  documento &= "<tr><td><b>" & "Email:</b> " & settings["Email"] & "</td><td>            </td>"
+  documento &= "<td><b>" & "Email:</b> " & datosCliente.email & "</td></tr>"
+
+  documento &= "</table>"
+
+  documento &= "<br>"
+  documento &= "Trabajo (Job) ID#=" & idpresupuesto & " | " & datosPresupuesto.claveasignada & "</center>" & fl
+  documento &= "Fecha (Date): " & Format(datosPresupuesto.fecha, "dd/mm/yyyy") & "</center>" & fl
+  documento &= "<hr>"
+
+  'notas especiales
+  documento &= "<b>" & "Notas especiales (special notes):</b>" & fl
+  documento &= Replace(datosPresupuesto.comentario, "\n", "<br>") & fl
+
+  'descripcion general
+  documento &= "<b>" & " Descripcion general (general description):</b>" & fl
+  documento &= Replace(datosPresupuesto.descripciongeneral, "\n", "<br>") & fl
+
+  documento &= "<b><u><center>" & " Trabajos (Jobs) </center></u></b>" & fl
+
+  'repetir por todos las las labores del presupuesto
+
+  documento &= rellenarLabores(datosPresupuesto.idpresupuesto)
+
+  textoMaterial = "<b><u><center>" & " Materiales (Materials) </center></u></b> " & fl
+  'repetir por todos las las labores del presupuesto
+
+  TextoDescompuestoMaterial = rellenarMateriales(datosPresupuesto.idpresupuesto)
+  If TextoDescompuestoMaterial <> "" Then
+    documento &= textoMaterial & TextoDescompuestoMaterial
+  Endif
+
+  'poner valoración del presupuesto, segun se haya elegido Presupuesto Valorado o Prespuesto Fijado
+
+  documento &= "<h3>Labor y todos los materiales (all Labor, Paint, Materials):"
+
+  If RadioButtonAsignadoManualmente.Value = True Then
+    documento &= "<b>  " & moneda & Formato(datosPresupuesto.valorasignado, ",#.#0") & "</b>" & fl
+  Else
+    documento &= "<b>  " & moneda & Formato(datosPresupuesto.valorcalculado, ",#.#0") & "</b>" & fl
+
+  Endif
+  documento &= "</h3>"
+
+  documento &= fl
+  documento &= "Signature Of Authorized: _________________________________ Date: _______________" & fl
+  documento &= "Empresa (Owners):_________________________________________ Date: _______________" & fl
+
+  'al final del documento nota final
+  documento &= "<hr>"
+
+  documento &= Replace(settings["TextoFinal"], "\n", "<br>") & fl
+  documento &= "</FONT></p>"
+  'genero archivo
+  Fuente = File.Load("estructura.html")
+  fuente = Replace$(fuente, "CONTENIDO", documento)
+  fuente = Replace$(fuente, "TITULO", idpresupuesto & "|" & datosPresupuesto.claveasignada)
+
+  File.Save("/tmp/Presupuesto.html", fuente)
+  Wait 0.05
+
+  'imprimir en formato pdf o html
+  If formatoSalida = "pdf" Then
+
+    Exec ["wkhtmltopdf", "/tmp/Presupuesto.html", "/tmp/Presupuesto.pdf"] Wait
+
+    Application.Busy = 0
+
+    Desktop.Open("/tmp/Presupuesto.pdf")
+  Else
+    Application.Busy = 0
+    Desktop.Open("/tmp/Presupuesto.html")
+  Endif
+
+  '  Me.Close() 'cierro formulario de empresa
+
+End
+
+Public Sub rellenarLabores(idpresupuesto As Integer) As String
+
+  Dim fl As String = "<br>"
+
+  Dim misql As String
+  Dim miresultado As Result
+  Dim miconexion As New Conexion
+  Dim documento As String
+  Dim manejadorDescompuestolabores As New DescompuestolaboresDAO
+  Dim manejadorLaboral As New LaborDAO
+  Dim datotmpLabor As LaborVO
+
+  Dim manejadorSubcategoria As New SubcategoriaDAO
+  Dim datoSubcategoria As SubcategoriaVO
+
+  Dim manejadorCategoria As New CategoriaDAO
+  Dim datoCategoria As CategoriaVO
+
+  Dim ArrayDatosDescompuestoLabores As DescompuestolaboresVO[]
+  Dim datoDescompuestosLaboral As DescompuestolaboresVO
+
+  Dim subcategoriaActual As String
+  Dim categoriaActual As String
+
+  'Imprimo las labores segun el orden indicado en el descompuesto.
+  misql = "select * from Descompuestolabores where idpresupuesto=" & idpresupuesto & " order by idorden"
+
+  ArrayDatosDescompuestoLabores = manejadorDescompuestolabores.ConvertirResult(manejadorDescompuestolabores.sql(misql))
+
+  For Each datoDescompuestosLaboral In ArrayDatosDescompuestoLabores
+
+    'necesito el texto largo del idlabor
+
+    datotmpLabor = manejadorLaboral.ExtraerRegistro("idlabor", datoDescompuestosLaboral.idlabor)
+
+    If CheckBoxCategoriySubcategoria.value = True Then
+      'comprueba la categoria y subcategoria de la labor
+      'si la anterior categoria es la misma que la actual, no la escribe
+      'si la anterior subcateria es la misma que la actual, no la escribe
+
+      If datotmpLabor.IDSUBCATEGORIA = subcategoriaActual Then
+        'no escribo nada, estoy en la misma subcategoria
+      Else
+        'comprueba categoria
+        Try datoSubcategoria = manejadorSubcategoria.ExtraerRegistro("idsubcategoria", datotmpLabor.IDSUBCATEGORIA)
+        If Error Then
+          Print "Error en informe al intentar ver una subcategoria"
+        Else
+          'textos de categoria y subcategoria
+          If categoriaActual = datoSubcategoria.IDCAPITULO Then
+            'solo tengo que escribir el texto de la subcategoria, estoy en el mismo capitulo
+            documento &= "<b>" & ("Subcategoria: ") & datoSubcategoria.TEXTOSUBCATEGORIA & "</b>" & fl
+          Else
+            'tengo que escribir, categoria, subcategoria
+            datoCategoria = manejadorCategoria.ExtraerRegistro("idcategoria", datoSubcategoria.IDCAPITULO)
+            documento &= "<b>" & ("Categoria ") & ("(Category)") & (": ") & datoCategoria.TEXTOCAPITULO & "</b>" & fl
+            documento &= "<b>" & ("Subcategoria ") & ("(Subcategory)") & (": ") & datoSubcategoria.TEXTOSUBCATEGORIA & "</b>" & fl
+            subcategoriaActual = datotmpLabor.IDSUBCATEGORIA
+          Endif
+
+        Endif
+
+      Endif
+
+    Endif
+
+    documento &= "<b>" & datotmpLabor.textocorto & "</b>" & fl
+
+    If CheckBoxTextosDescriptivos.value = True Then
+      documento &= Replace(datotmpLabor.descripcion, "\n", "<br>") & fl
+    Endif
+
+    If CheckBoxComentariosLabores.value = True Then
+      If datoDescompuestosLaboral.comentario <> "" Then
+        'si no esta vacio,se imprime información
+        documento &= repiterCaracter("&nbsp", 5) & "<i>Comentario:" & fl
+        documento &= repiterCaracter("&nbsp", 8) & Replace(datoDescompuestosLaboral.comentario, "\n", "<br>") & "</i>" & fl
+      Endif
+    Endif
+
+    If CheckBoxTextosDescriptivos.value = True Then
+      documento &= GeneraMedicion(datoDescompuestosLaboral.iddescompuesto)
+    Endif
+
+    If CheckBoxResumenMedicionPrecioTotal.value = True Then
+      documento &= repiterCaracter("&nbsp", 0) & "Medición (Measurement): " & repiterCaracter("&nbsp", Len(moneda)) & Formato(datoDescompuestosLaboral.medicion, ",#.#0") & fl
+      documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosLaboral.precio, ",#.#0") & fl
+      documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosLaboral.total, ",#.#0") & fl
+    Endif
+    documento &= "<br>"
+  Next
+
+  Return documento
+
+End
+
+Public Function GeneraMedicion(iddescompuesto As Integer) As String
+
+  Dim documento As String
+
+  Dim misql As String
+  Dim miresultado As Result
+  Dim miconexion As New Conexion
+
+  Dim manejadorMedicionDAO As New MedicionDAO
+  Dim ArrayDatosMedicion As MedicionVO[]
+  Dim datosmedicion As MedicionVO
+  Dim fl As String = "<br>"
+
+  Dim documentoDesgloce As String
+
+  misql = "select * from medicion where iddescompuesto='" & iddescompuesto & "'"
+
+  ArrayDatosMedicion = manejadorMedicionDAO.ConvertirResult(manejadorMedicionDAO.sql(misql))
+
+  documento = "<table>"
+  documento &= "<tr>"
+  documento &= "<td> <u>" & ("Comentario") & "</u></td>"
+
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Número") & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Largo") & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Ancho") & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Alto") & "</u></td>"
+  documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Total") & "</u></td>"
+  documento &= "</tr>"
+
+  For Each datosmedicion In ArrayDatosMedicion
+
+    documentoDesgloce &= "<tr>"
+    documentoDesgloce &= "<td> " & datosmedicion.descripcion & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.numeroveces, ",#.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.largo, ",#.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.ancho, ",#.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.alto, ",#.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.total, ",#.#0") & "</td>"
+    documentoDesgloce &= "</tr>"
+
+  Next
+  If documentoDesgloce = "" Then Return "" 'no hay desgloce de medicion
+  documento &= documentoDesgloce & "</table>"
+  Return documento
+
+End
+
+Public Function rellenarMateriales(idpresupuesto As Integer) As String
+
+  Dim fl As String = "<br>"
+
+  Dim misql As String
+  Dim miresultado As Result
+  Dim miconexion As New Conexion
+  Dim documento As String
+  Dim manejadorDescompuestoMateriales As New DescompuestomaterialesDAO
+  Dim manejadorMaterial As New MaterialesDAO
+  Dim datotmpMaterial As MaterialesVO
+
+  Dim ArrayDatosDescompuestoMateriales As DescompuestomaterialesVO[]
+  Dim datoDescompuestosMateriales As DescompuestomaterialesVO
+
+  misql = "select * from Descompuestomateriales where idpresupuesto=" & idpresupuesto
+
+  ArrayDatosDescompuestoMateriales = manejadorDescompuestoMateriales.ConvertirResult(manejadorDescompuestoMateriales.sql(misql))
+
+  For Each datoDescompuestosMateriales In ArrayDatosDescompuestoMateriales
+
+    'necesito el texto largo del idlabor
+
+    datotmpMaterial = manejadorMaterial.ExtraerRegistro("idmaterial", datoDescompuestosMateriales.idmaterial)
+    documento &= "<b>" & datotmpMaterial.textocorto & "</b>" & fl
+    If CheckBoxTextosDescriptivos.value = True Then
+
+      documento &= Replace(datotmpMaterial.textolargo, "\n", "<br>") & fl
+    Endif
+
+    If CheckBoxResumenMedicionPrecioTotal.value = True Then
+
+      documento &= repiterCaracter("&nbsp", 0) & "Medición (Measurement):" & repiterCaracter("&nbsp", Len(moneda) + 1) & Formato(datoDescompuestosMateriales.medicion, ",#.#0") & fl
+      documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosMateriales.precio, ",#.#0") & fl
+      documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosMateriales.total, ",#.#0") & fl
+    Endif
+    documento &= "<br>"
+  Next
+
+  Return documento
+
+End
+
+'--------------------- funciones comunes ------------------------------------
+Public Function repiterCaracter(cadena As String, n As Integer) As String
+
+  Dim a As Integer
+  Dim c As String = ""
+
+  For a = 0 To n - 1
+    c &= cadena
+  Next
+
+  c = Replace(c, "&bbsp", "&nbsp")
+  c = Replace(c, "&sbsp", "&nbsp")
+
+  Return c
+
+End
+
+Public Function Formato(numero As Variant, plantillas As String) As String
+
+  Dim texto As String
+
+  If numero = 0 Then
+    Return ""
+  Endif
+  texto = Replace$(Right$(repiterCaracter(" ", 11) & Format$(numero, plantillas), 11), " ", "&nbsp")
+
+  Return texto
+
+End
+
+Public Sub ButtonHtml_Click()
+
+  formatoSalida = "html"
+  Application.Busy = 1
+
+  Generar()
+  Application.Busy = 0
+  Me.Close()
+
+End
+
+Public Sub ButtongenerarPDF_Click()
+
+  formatoSalida = "pdf"
+  Generar()
+
+End

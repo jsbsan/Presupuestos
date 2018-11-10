@@ -1,0 +1,50 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,83,35)
+  Icon = Picture["imagenes/bote-de-pintura.png"]
+  Arrangement = Arrange.Vertical
+  { MenuMateriales Menu
+    Text = ("Menu1")
+    Visible = False
+    { Materiales Menu
+      Text = ("Materiales")
+    }
+    { Menu2 Menu
+    }
+    { AddMat Menu
+      Text = ("Añadir Materiales")
+      Picture = Picture["icon:/22/add"]
+    }
+    { MenuEditar Menu
+      Text = ("Editar")
+      Picture = Picture["icon:/22/edit"]
+    }
+    { Menu4 Menu
+    }
+    { MenuBorrar Menu
+      Text = ("Borrar")
+      Picture = Picture["icon:/22/erase"]
+    }
+  }
+  { HBox1 HBox
+    MoveScaled(1,1,81,5)
+    { Label1 Label
+      MoveScaled(1,1,21,3)
+      Text = ("Filtro de Materiales:")
+    }
+    { TextBoxBusquedaMateriales TextBox
+      MoveScaled(21,1,40,3)
+    }
+    { ButtonQuitarFiltro Button
+      MoveScaled(64,0,8,5)
+      ToolTip = ("quitar filtro de materiales")
+      Picture = Picture["icon:/22/cancel"]
+    }
+  }
+  { GridViewMateriales GridView
+    MoveScaled(10,12,50,16)
+    Expand = True
+    PopupMenu = "MenuMateriales"
+  }
+}

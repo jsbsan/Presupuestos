@@ -1,0 +1,162 @@
+' Gambas class file
+
+Public FormularioPresupuesto As FMainListaPresupuestos
+
+Public Sub Form_Open()
+
+  TextLabelVersion.Text = "Version " & Application.Version
+
+  'lectura de datos iniciales
+  textboxEmpresa.text = settings["Empresa", ""]
+  textboxDireccion.text = settings["Direccion", ""]
+  textboxTelefono.text = settings["Telefono", ""]
+  textboxEmail.text = settings["Email", ""]
+  textboxTextoFinal.text = settings["TextoFinal", ""]
+
+  ' ValueBoxMinutosAutoGuardados.value = settings["minutos", 10]
+  'TextBoxClaveSuperUsuario.text = settings["contrasena", ""]
+  '  CheckBoxActivarModoRamDisk.value = settings["RamDisk", False]
+  ' ValueBoxMemoriaMB.Value = Settings["EspacioRamDisk"]
+
+  TextBoxMoneda.Text = Settings["Moneda", "$"]
+  Me.center
+
+End
+
+Public Sub ButtonGuardarDatosEmpresa_Click()
+
+  settings["Empresa"] = textboxEmpresa.text
+  settings["Direccion"] = textboxDireccion.text
+  settings["Telefono"] = textboxTelefono.text
+  settings["Email"] = textboxEmail.text
+  settings["TextoFinal"] = textboxTextoFinal.text
+  Settings["Moneda"] = TextBoxMoneda.Text
+
+End
+
+Public Sub ButtonGuardarRamDisk_Click()
+
+  Dim valorminimo As Integer
+
+  ' settings["minutos"] = ValueBoxMinutosAutoGuardados.Value
+  '  settings["contrasena"] = TextBoxClaveSuperUsuario.text
+  ' settings["RamDisk"] = CheckBoxActivarModoRamDisk.value
+
+  ''TODO: comprobar el tamaño del archivo de base de datos, multiplicar x2 el tamaño, redondeo hacia arriba
+  ' valorminimo = sizeFichero()
+  ' If valorminimo > ValueBoxMemoriaMB.Value Then
+  '   '  Message.Info(("El tamaño del disco Ram es menor al recomendado. Lo creare con " & Str$(valorminimo) & " mb de tamaño"))
+  '   Settings["EspacioRamDisk"] = valorminimo
+  ' Else
+  '   Settings["EspacioRamDisk"] = ValueBoxMemoriaMB.Value
+  ' Endif
+
+End
+
+Public Function sizeFichero() As Integer
+
+  Dim t As Integer
+  Dim cadenas As String[]
+  Dim texto As String
+
+  Shell "ls -l " & User.Home & "/PresupuestosTrabajosPinturas/PresupuestosPintura.sqlite" To texto
+
+  cadenas = Split(texto, " ")
+
+  t = Round(Val(cadenas[4]) / 1000000, 0) * 2
+  If t < 5 Then t = 5 'valor minimo
+
+  Return t
+
+End
+
+Public Sub TextLabel2_MouseDown()
+
+End
+
+Public Sub LabelPaginaWebDelProyecto_MouseDown()
+
+  Desktop.open("http://www.presupuestosobras.blogspot.com.es")
+
+End
+
+Public Sub ButtonUpdate_Click()
+
+  ModuleUpdate.comprobar("propuestapintura", Application.Version, "http://seguimientodeapuestas.blogspot.com.es/2015/02/propuestapintura.html")
+
+End
+
+Public Sub ButtonConfigurarPrograma_Click()
+
+End
+
+Public Sub ButtonRealizarCopiaSeguridad_Click()
+
+  Dim miconexion As New Conexion
+  Dim nombrebasedatosfecha As String
+  Dim con As New Conexion
+  ''  CREAR COPIA SEGURIDAD
+  'ELEGIR RUTA
+  Dialog.Title = ("Crear copia de seguridad")
+  If Not Dialog.SelectDirectory() Then
+
+    con.conexion()
+    con.hconn.Exec("vacuum") 'compacta la base de datos
+    con.desconectar()
+    Wait 0.10
+
+    'HACER COPIA, CAMBIO EL NOMBRE (PONER FECHA)
+    nombrebasedatosfecha = File.Name(Replace$(miconexion.NombreBaseDatos, ".sqlite", "") & Format(Now, "-yyyy-mm-dd_hh_nn_ss") & ".tar.gz")
+
+    Message.Info(("Se va a copiar la base de datos, con el nombre:") & "\n" & Replace(nombrebasedatosfecha, ".tar.gz", ".pres") & "\n" & ("en la ruta") & "\n" & Dialog.path)
+
+    Shell "cd " & File.dir(miconexion.NombreBaseDatos) & ";tar czvf \"" & nombrebasedatosfecha & "\" ./*" Wait
+    'Shell "cd " & File.dir(miconexion.NombreBaseDatos) & ";tar czvf \"" & nombrebasedatosfecha & "\" ./" & File.Name(nombrebasedatosfecha)
+
+    Try Move File.dir(miconexion.NombreBaseDatos) & "/" & nombrebasedatosfecha To Dialog.path & "/" & Replace(nombrebasedatosfecha, ".tar.gz", ".pres")
+    If Error Then
+      Message.Error(("Ha habido un error al intentar copiar la base de datos" & "\n" & Error.Text))
+    Else
+      Wait 0.2
+      Message.Info(("Copia realizada"))
+    Endif
+  Endif
+
+End
+
+Public Sub ButtonRestaurarCopiaSeguridad_Click()
+
+  Dim miconexion As New Conexion
+  Dim res As Integer
+
+  res = Message.Question(("Al restaurar una copia de seguridad, se borrarán los datos actuales!!!"), ("Continuar"), ("Cancelar"))
+
+  If res = 2 Then Return 'cancelar la restauracion del fichero
+
+  Dialog.Title = ("Restaurar una copia de seguridad")
+  Dialog.Filter = ["*.pres", "Bases de Datos Presupuestos"]
+  If Not Dialog.OpenFile() Then
+
+    'borro directorio y ficheros
+    Try Kill Replace(miconexion.NombreBaseDatos, ".sqlite", "") & ".bak"
+    Try Kill File.dir(miconexion.NombreBaseDatos) & "/imagenes/*"
+    Wait 0.2
+    Try Rmdir File.dir(miconexion.NombreBaseDatos) & "/imagenes"
+
+    'copia del archivo comprimido
+    Try Copy Dialog.Path To Replace(miconexion.NombreBaseDatos, ".sqlite", ".tar.gz")
+
+    Shell "cd " & File.dir(miconexion.NombreBaseDatos) & ";tar xzvf " & File.Name(Replace(miconexion.NombreBaseDatos, ".sqlite", ".tar.gz")) Wait
+    Try Kill Replace(miconexion.NombreBaseDatos, ".sqlite", ".tar.gz")
+
+    If Error Then
+      Message.Error(("Se ha producido un error al intentar copiar el archivo"))
+    Endif
+    'actualizar  formulario
+    FormularioPresupuesto.actualizarRegilla()
+
+    Message.Info(("Restauración realizada"))
+
+  Endif
+
+End

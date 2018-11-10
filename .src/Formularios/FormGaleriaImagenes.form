@@ -1,0 +1,98 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,109,70)
+  Icon = Picture["icon:/22/image"]
+  Arrangement = Arrange.Vertical
+  { HBox1 HBox
+    MoveScaled(0,0,86,6)
+    { ButtonCrearDirectorio Button
+      MoveScaled(5,1,43,4)
+      AutoResize = True
+      Text = ("Crear Directorio con las imágenes de este presupuesto")
+      Picture = Picture["icon:/22/new-dir"]
+    }
+    { Panel2 Panel
+      MoveScaled(50,2,5,3)
+      Expand = True
+      AutoResize = True
+    }
+    { ButtonMostrar Button
+      MoveScaled(59,1,9,4)
+      Expand = True
+      AutoResize = True
+      Text = ("Mostrar")
+      Picture = Picture["icon:/22/directory"]
+    }
+    { Panel3 Panel
+      MoveScaled(70,1,5,3)
+      Expand = True
+      AutoResize = True
+    }
+  }
+  { HSplit1 HSplit
+    MoveScaled(0,8,106,57)
+    Expand = True
+    { TabStripImagenes TabStrip
+      MoveScaled(6,8,56,45)
+      Expand = True
+      Arrangement = Arrange.Fill
+      Count = 3
+      Index = 0
+      Text = ("Antes del Trabajo")
+      { ScrollView2 ScrollView
+        MoveScaled(0,0,54,38)
+        Expand = True
+        Arrangement = Arrange.Fill
+        { HPanelAntesDelTrabajo HPanel
+          MoveScaled(1,1,43,29)
+          Expand = True
+          AutoResize = True
+        }
+      }
+      Index = 1
+      Text = ("Despues de acabar el trabajo")
+      { ScrollView1 ScrollView
+        MoveScaled(0,1,54,38)
+        Expand = True
+        Arrangement = Arrange.Fill
+        { HPanelDespuesDelTrabajo HPanel
+          MoveScaled(1,1,43,29)
+          Expand = True
+          AutoResize = True
+        }
+      }
+      Index = 2
+      Text = ("Otras")
+      { ScrollView3 ScrollView
+        MoveScaled(0,0,54,38)
+        Expand = True
+        Arrangement = Arrange.Fill
+        { HPanelOtras HPanel
+          MoveScaled(1,1,43,29)
+          Expand = True
+          AutoResize = True
+        }
+      }
+      Index = 0
+    }
+    { Panel4 Panel
+      MoveScaled(69,8,37,51)
+      Arrangement = Arrange.Vertical
+      { FileChooserFicheros FileChooser
+        MoveScaled(3,2,30,34)
+        Expand = True
+        Multi = True
+        ShowDetailed = True
+        ReadOnly = True
+      }
+      { ButtonAddFicheros Button
+        MoveScaled(6,42,20,4)
+        Font = Font["Arial,Bold,Italic"]
+        Background = &H0000FF&
+        Text = ("Pasar Archivos")
+        Picture = Picture["icon:/22/left"]
+      }
+    }
+  }
+}

@@ -1,0 +1,125 @@
+' Gambas class file
+
+Inherits VistaDescomLaboresDAO
+
+Public Sub Observar_Data(row As Integer, column As Integer)
+
+  Dim estado As ClassEstadosYTiposPrecios
+  Dim f As New Font
+  Dim datocontenido As Variant
+
+  f.name = "Sans"
+  f.size = Me.sizefont
+
+  '-------------------------------------------
+  'colores....filas impar / par ge regillas
+  '-------------------------------------------
+  If row Mod 2 = 0 Then
+    Me.gridviewPropio.Data.Background = Me.ColorFilaImPar
+  Else
+    Me.gridviewPropio.Data.Background = Me.ColorFilaPar
+  Endif
+
+  Me.hresultadoNuevo.MoveTo(row)
+
+  'comprobar si hay datos en TAG
+  If IsNull(Me.gridviewPropio.tag) Then
+    Try datocontenido = Me.hresultadoNuevo[Replace(Me.gridviewPropio.columns[column].text, "_", ".")]
+    If Error Then
+      Print "warning !!: nombre de campo que no encuentro " & Me.GridViewPropio.tag[column] & " en la tabla/vista"
+    Endif
+
+    If IsDate(Str$(datocontenido)) Then
+      Me.gridviewPropio.Data.text = Format(Date(datocontenido), Me.formatofecha)
+    Else
+      If IsBoolean(Str$(datocontenido)) Then
+        If datocontenido Then
+          Me.gridviewPropio.data.picture = picture[Me.iconoTrue]
+        Else
+          Me.gridviewPropio.data.picture = picture[Me.iconoFalse]
+        Endif
+      Else
+        'añadido para escribir las columnas que contengan números  y que no sea tipo Id el campo
+        If IsNumber(Str$(datocontenido)) And Me.NoesTipoId(Me.GridViewPropio.tag[column]) Then
+          Me.gridviewPropio.Data.text = Format$(datocontenido, ",#.#0")
+          Me.gridviewPropio.Data.Alignment = Align.Right
+        Else
+          Me.gridviewPropio.Data.text = datocontenido
+        Endif
+      Endif
+    Endif
+    ''hay datos en  TAG
+  Else
+    Try datocontenido = Me.hresultadoNuevo[Replace(Me.GridViewPropio.tag[column], "_", ".")]
+    If Error Then
+      Print "warning !!: nombre de campo que no encuentro " & Me.GridViewPropio.tag[column] & " en la tabla/vista"
+    Endif
+
+    'poner texto de ESTADO usando la clase ClassEstadosYTiposPrecios
+    If Me.GridViewPropio.tag[column] = "tipo" Then
+      estado = New ClassEstadosYTiposPrecios
+      estado.carga()
+
+      Me.gridviewPropio.data.picture = Picture[estado.iconoestado[datocontenido]]
+      Return
+    Endif
+    '-------- resto de datos en columnas: ----------------
+
+    If IsDate(Str$(datocontenido)) Then
+      Me.gridviewPropio.Data.text = Format(Date(datocontenido), Me.formatofecha)
+    Else
+      If IsBoolean(Str$(datocontenido)) Then
+        If datocontenido Then
+          Me.gridviewPropio.data.picture = picture[Me.iconoTrue]
+        Else
+          Me.gridviewPropio.data.picture = picture[Me.iconoFalse]
+        Endif
+      Else
+
+        'añadido para escribir las columnas que contengan números  y que no sea tipo Id el campo
+        If IsNumber(Str$(datocontenido)) And Me.NoesTipoId(Me.GridViewPropio.tag[column]) Then
+          Me.gridviewPropio.Data.text = Format$(datocontenido, ",#.#0")
+          Me.gridviewPropio.Data.Alignment = Align.Right
+        Else
+          Me.gridviewPropio.Data.text = datocontenido
+        Endif
+
+      Endif
+    Endif
+  Endif
+
+End
+
+Public Function filaSeleccionadaVOarriba() As VistaDescomLaboresVO
+
+  Dim colecciontmp As New Collection
+  Dim fila As Integer
+  Dim idbuscado As Integer
+  Dim objTempVO As New VistaDescomLaboresVO
+
+  Try fila = Me.gridviewPropio.row - 1
+  If Error Or If FILA = -1 Then
+    Return Null
+  Endif
+  idbuscado = Val(Replace$(Me.gridviewPropio[fila, 0].text, ".", ","))
+  objTempVO = Me.ConvertirResult(Me.BuscarIgual(idbuscado, "iddescompuesto"))[0]
+  Return objTempVO
+
+End
+
+Public Function filaSeleccionadaVOabajo() As VistaDescomLaboresVO
+
+  Dim colecciontmp As New Collection
+  Dim fila As Integer
+  Dim idbuscado As Integer
+  Dim objTempVO As New VistaDescomLaboresVO
+
+  Try fila = Me.gridviewPropio.row + 1
+  If Error Or If (Me.gridviewPropio.rows.count - 1) < fila Then
+    Return Null
+  Endif
+  idbuscado = Val(Replace$(Me.gridviewPropio[fila, 0].text, ".", ","))
+  objTempVO = Me.ConvertirResult(Me.BuscarIgual(idbuscado, "iddescompuesto"))[0]
+  Return objTempVO
+
+End

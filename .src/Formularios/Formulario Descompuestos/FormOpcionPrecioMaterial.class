@@ -1,0 +1,62 @@
+' Gambas class file
+
+Public TextoUnidad As String
+Public PrecioBD As Float
+Public Medicion As Float
+Public respuesta As Integer
+Public preciofinal As Float
+Public eleccion As Integer
+Public Personalizado As Float
+
+Public Sub Form_Open()
+
+  Me.Title = ("Elegir Precio")
+  Me.Center()
+
+End
+
+Public Sub ButtonCancelar_Click()
+
+  respuesta = 0
+  Me.Close()
+
+End
+
+Public Function Mostrar() As Float[]
+
+  Label1.text = TextoUnidad
+  RadioButton1.Text = ("Precio material") & " (" & PrecioBD & ")"
+
+  If eleccion = 5 Then
+    RadioButton1.value = True 'se trata de poner la eleccion al editar
+    ValueBoxMedicion.value = medicion
+  Endif
+  If eleccion = 4 Then
+    RadioButton4.value = True
+    ValueBoxPrecio.value = Personalizado
+    ValueBoxMedicion.value = medicion
+  Endif
+
+  Me.Showmodal()
+
+  Return [Respuesta, preciofinal, medicion]
+
+End
+
+Public Sub ButtonAceptar_Click()
+
+  If RadioButton1.value = True Then
+    respuesta = 5
+    preciofinal = PrecioBD
+  Endif
+
+  If RadioButton4.value = True Then
+    respuesta = 4
+    preciofinal = ValueBoxPrecio.Value
+  Endif
+
+  medicion = ValueBoxMedicion.Value
+
+  Me.Close()
+
+End

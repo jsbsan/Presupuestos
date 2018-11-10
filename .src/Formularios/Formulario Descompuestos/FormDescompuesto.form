@@ -1,0 +1,146 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,99,64)
+  Icon = Picture["imagenes/arbol.png"]
+  Arrangement = Arrange.Vertical
+  { MenuDescompuestoLabores Menu
+    Text = ("MenuDescompuestoLabores")
+    Visible = False
+    { SubirDescompuesto Menu
+      Text = ("Subir")
+      Picture = Picture["icon:/22/up"]
+    }
+    { BajarPrecio Menu
+      Text = ("Bajar")
+      Picture = Picture["icon:/22/down"]
+    }
+    { Menu6 Menu
+    }
+    { EditarLabores Menu
+      Text = ("Editar")
+      Picture = Picture["icon:/22/edit"]
+    }
+    { Menu1 Menu
+    }
+    { BorrarLabores Menu
+      Text = ("Borrar")
+      Picture = Picture["icon:/22/erase"]
+    }
+  }
+  { MenuMedicion Menu
+    Text = ("Medicion")
+    Visible = False
+    { addmedicion Menu
+      Text = ("Añadir")
+      Picture = Picture["icon:/22/add"]
+    }
+    { editarmedicion Menu
+      Text = ("Editar")
+      Picture = Picture["icon:/22/edit"]
+    }
+    { Menu2 Menu
+    }
+    { BorrarMedicion Menu
+      Text = ("Borrar")
+      Picture = Picture["icon:/22/erase"]
+    }
+  }
+  { MenuDescompuestoMateriales Menu
+    Text = ("Materiales")
+    Visible = False
+    { EditarMaterial Menu
+      Text = ("Editar")
+      Picture = Picture["icon:/22/edit"]
+    }
+    { Menu3 Menu
+    }
+    { BorraMaterial Menu
+      Text = ("Borrar")
+      Picture = Picture["icon:/22/erase"]
+    }
+  }
+  { HBox1 HBox
+    MoveScaled(2,1,87,5)
+    { ButtonPresupuesto Button
+      MoveScaled(4,0,25,5)
+      Font = Font["Arial,-2"]
+      Expand = True
+      Text = ("Presupuesto:")
+      Picture = Picture["imagenes/dinero.png"]
+    }
+    { Panel1 Panel
+      MoveScaled(26,0,3,4)
+    }
+    { ButtonBaseDedatosLabores Button
+      MoveScaled(30,0,19,5)
+      Font = Font["Arial,-2"]
+      Text = ("Labores")
+      Picture = Picture["imagenes/cascopeque.png"]
+    }
+    { ButtonBaseDedatosMateriales Button
+      MoveScaled(53,0,16,4)
+      Font = Font["Arial,-2"]
+      Text = ("Materiales")
+      Picture = Picture["imagenes/bote-de-pinturapeque.png"]
+    }
+  }
+  { VSplit1 VSplit
+    MoveScaled(4,10,69,58)
+    Expand = True
+    { TabStripLaboralesMateriales TabStrip
+      MoveScaled(4,2,66,25)
+      Arrangement = Arrange.Vertical
+      Count = 2
+      Index = 0
+      Text = ("Labores")
+      Picture = Picture["imagenes/casco.png"]
+      { GridViewLabores GridView
+        MoveScaled(1,2,57,13)
+        Expand = True
+        PopupMenu = "MenuDescompuestoLabores"
+      }
+      Index = 1
+      Text = ("Materiales")
+      Picture = Picture["imagenes/bote-de-pintura.png"]
+      { GridViewMateriales GridView
+        MoveScaled(1,2,37,17)
+        Expand = True
+        PopupMenu = "MenuDescompuestoMateriales"
+      }
+      Index = 0
+    }
+    { VBox1 VBox
+      MoveScaled(2,28,60,20)
+      { LabelUnidadSeleccinada Label
+        MoveScaled(3,0,54,4)
+        Font = Font["Arial,Bold"]
+        AutoResize = True
+        Alignment = Align.Center
+      }
+      { TabStripMedicionComentario TabStrip
+        MoveScaled(3,7,63,25)
+        Expand = True
+        Arrangement = Arrange.Fill
+        Count = 2
+        Index = 0
+        Text = ("Medicion")
+        Picture = Picture["icon:/22/calculator"]
+        { GridViewMedicion GridView
+          MoveScaled(2,4,58,8)
+          Expand = True
+          PopupMenu = "MenuMedicion"
+        }
+        Index = 1
+        Text = ("Comentario")
+        Picture = Picture["icon:/22/text"]
+        { TextLabelComentario TextLabel
+          MoveScaled(6,3,22,7)
+          Background = &HFFFFFF&
+          Border = Border.Plain
+        }
+        Index = 0
+      }
+    }
+  }
+}

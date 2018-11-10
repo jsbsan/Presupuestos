@@ -1,0 +1,212 @@
+' Gambas class file
+
+Property id As String
+Private hid As String
+
+Property idpresupuesto As String
+Private hidpresupuesto As String
+
+Property iddescompuesto As String
+Private hiddescompuesto As String
+
+Property descripcion As String
+Private hdescripcion As String
+
+Property numeroveces As String
+Private hnumeroveces As String
+
+Property largo As String
+Private hlargo As String
+
+Property ancho As String
+Private hancho As String
+
+Property alto As String
+Private halto As String
+
+Property medicion_total As String
+Private hmedicion_total As String
+
+Property campo As String[]
+Private hcampo As New String[]
+
+Property campotipo As String[]
+Private hcampotipo As New String[]
+
+Property campovisible As String[]
+Private hcampovisible As New String[]
+
+Private Function id_read() As String
+
+  Return hid
+
+End
+
+Private Sub id_write(Valor As String)
+
+  hid = Valor
+
+End
+
+Private Function idpresupuesto_read() As String
+
+  Return hidpresupuesto
+
+End
+
+Private Sub idpresupuesto_write(Valor As String)
+
+  hidpresupuesto = Valor
+
+End
+
+Private Function iddescompuesto_read() As String
+
+  Return hiddescompuesto
+
+End
+
+Private Sub iddescompuesto_write(Valor As String)
+
+  hiddescompuesto = Valor
+
+End
+
+Private Function descripcion_read() As String
+
+  Return hdescripcion
+
+End
+
+Private Sub descripcion_write(Valor As String)
+
+  hdescripcion = Valor
+
+End
+
+Private Function numeroveces_read() As String
+
+  Return hnumeroveces
+
+End
+
+Private Sub numeroveces_write(Valor As String)
+
+  hnumeroveces = Valor
+
+End
+
+Private Function largo_read() As String
+
+  Return hlargo
+
+End
+
+Private Sub largo_write(Valor As String)
+
+  hlargo = Valor
+
+End
+
+Private Function ancho_read() As String
+
+  Return hancho
+
+End
+
+Private Sub ancho_write(Valor As String)
+
+  hancho = Valor
+
+End
+
+Private Function alto_read() As String
+
+  Return halto
+
+End
+
+Private Sub alto_write(Valor As String)
+
+  halto = Valor
+
+End
+
+Private Function medicion_total_read() As String
+
+  Return hmedicion_total
+
+End
+
+Private Sub medicion_total_write(Valor As String)
+
+  hmedicion_total = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function ConvertirVOaColeccion(dato As VistaMedicionVO) As Collection
+
+  Dim colecciontmp As New Collection
+  colecciontmp.add(dato.id, "id")
+  colecciontmp.add(dato.idpresupuesto, "idpresupuesto")
+  colecciontmp.add(dato.iddescompuesto, "iddescompuesto")
+  colecciontmp.add(dato.descripcion, "descripcion")
+  colecciontmp.add(dato.numeroveces, "numeroveces")
+  colecciontmp.add(dato.largo, "largo")
+  colecciontmp.add(dato.ancho, "ancho")
+  colecciontmp.add(dato.alto, "alto")
+  colecciontmp.add(dato.medicion_total, "medicion_total")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As VistaMedicionVO
+
+  Dim datoVOtmp As New VistaMedicionVO
+  Try datoVOtmp.id = dato["id"]
+Try datoVOtmp.idpresupuesto = dato["idpresupuesto"]
+Try datoVOtmp.iddescompuesto = dato["iddescompuesto"]
+Try datoVOtmp.descripcion = dato["descripcion"]
+Try datoVOtmp.numeroveces = dato["numeroveces"]
+Try datoVOtmp.largo = dato["largo"]
+Try datoVOtmp.ancho = dato["ancho"]
+Try datoVOtmp.alto = dato["alto"]
+Try datoVOtmp.medicion_total = dato["medicion_total"]
+Return datoVOtmp
+End

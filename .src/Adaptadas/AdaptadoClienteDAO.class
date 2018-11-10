@@ -1,0 +1,26 @@
+' Gambas class file
+
+Inherits ClienteDAO
+
+Public Function GeneradorCodigoFormulario(tipo As String, Optional datosEditar As ClienteVO) As String
+
+  Dim codigocampos As String
+
+  If tipo = "registrar" Then
+    codigocampos &= "null|idcliente|null;"
+    codigocampos &= "textbox|nombre|" & ("nombre") & "|;"
+    codigocampos &= "textbox|telefono|" & ("telefono") & "|;"
+    codigocampos &= "textbox|email|" & ("email") & "|;"
+    codigocampos &= "textarea|domicilio|" & ("domicilio") & "|;"
+    codigocampos &= "textarea|comentario|" & ("comentario") & "|;"
+  Else
+    codigocampos &= "null|idcliente|null;"
+    codigocampos &= "textbox|nombre|" & ("nombre") & "|" & datosEditar.nombre & ";"
+    codigocampos &= "textbox|telefono|" & ("telefono") & "|" & datosEditar.telefono & ";"
+    codigocampos &= "textbox|email|" & ("email") & "|" & datosEditar.email & ";"
+    codigocampos &= "textarea|domicilio|" & ("domicilio") & "|" & datosEditar.domicilio & ";"
+    codigocampos &= "textarea|comentario|" & ("comentario") & "|" & datosEditar.comentario & ";"
+  Endif
+  Return codigocampos
+
+End

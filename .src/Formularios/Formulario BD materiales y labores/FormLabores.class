@@ -1,0 +1,441 @@
+' Gambas class file
+
+Private manejadorCategoria As New CategoriaDAO
+
+Private manejadorSubcategoria As New VistaSubcategoriaDAO
+Private manejadorSubcategoriaAux As New AdaptadaSubcategoriaDAO
+
+Private manejadorLabores As New AdaptadaLaborDAO
+
+Private manejarBusquedaLabores As New AdaptadaLaborDAO
+Private manejarVistaBusquedaLabores As New VistaLaborDAO
+
+Private tmpDAO As New AdaptadaSubcategoriaDAO
+
+Public Sub Form_Open()
+
+  Me.Title = ("Labores")
+
+  Me.w = Screen.W / 2 - 25
+  Me.h = Screen.h / 2 - 50
+  Me.x = 0
+  Me.y = Screen.h / 2 + 50
+
+  manejadorCategoria.ocultaId = "id*"
+
+  manejadorCategoria.MostrarGridView(GridViewCategoria)
+
+  manejarVistaBusquedaLabores.ocultaId = "id*"
+  manejadorLabores.ocultaId = "id*"
+
+  coloresGrid(manejadorCategoria)
+  coloresGrid(manejadorSubcategoria)
+  coloresGrid(manejadorLabores)
+  'coloresGrid(manejarBusquedaLabores)
+  coloresGrid(manejarVistaBusquedaLabores)
+
+  TabStrip1.index = 2
+
+End
+
+Public Sub coloresGrid(obj As Object)
+
+  obj.ColorFilaImPar = Color.cyan
+  obj.ColorFilaPar = Color.White
+
+End
+
+'-----------------------------------------------------------------
+'cambio de pestaña: Recarga de Combobox...
+'-----------------------------------------------------------------
+Public Sub TabStrip1_Arrange()
+
+  Dim tmpCategoriaVO As CategoriaVO
+  Dim ArrayCategoriavo As CategoriaVO[]
+  ''NOTE: Hacer click en una pestaña del tabscript
+
+  Select Case TabStrip1.index
+    Case 1 'Paso a la  Pestaña Subcategoria
+
+      'cargar combobox:
+      ComboBoxCategoria.Clear()
+
+      ArrayCategoriavo = manejadorCategoria.ConvertirResult(manejadorCategoria.contenido())
+
+      For Each tmpCategoriaVO In ArrayCategoriavo
+        ComboBoxCategoria.Add(tmpCategoriaVO.idcategoria & " | " & tmpCategoriaVO.textocapitulo)
+      Next
+      ButtonBuscar_Click()
+
+    Case 2 'Paso a la  Pestaña Labores
+
+      ComboBoxLaboresCategoria.Clear()
+      ComboBoxLaboresSubcategoria.Clear()
+      ArrayCategoriavo = manejadorCategoria.ConvertirResult(manejadorCategoria.contenido())
+      For Each tmpCategoriaVO In ArrayCategoriavo
+        ComboBoxLaboresCategoria.Add(tmpCategoriaVO.idcategoria & " | " & tmpCategoriaVO.textocapitulo)
+      Next
+      ComboBoxLaboresCategoria_Click() 'pulso para que se carguen la subcategorias
+
+    Case 3 ' mostrar labores en busqueda..
+      TextBoxBusquedaContenido_KeyPress()
+
+  End Select
+
+End
+
+' ---------------------------------
+' Menu de Categorias
+' ---------------------------------
+
+Public Sub addCategoria_Click()
+
+  manejadorCategoria.FormularioTitulo = ("Añadir Categoria")
+  manejadorCategoria.FormularioRegistrar(1)
+  manejadorCategoria.MostrarGridView(GridViewCategoria)
+
+End
+
+Public Sub EditarCategoria_Click()
+
+  'creamos un objeto para trabajar con los datos de la fila seleccionada del gridviewTablaGeneral
+  Dim tmpVO As New CategoriaVO
+  'obtener el VO del registro seleccionado
+  tmpVO = manejadorCategoria.filaSeleccionadaVO()
+  If Not IsNull(tmpVO) Then
+    manejadorCategoria.FormularioTitulo = ("Editar Categoria")
+    'si hay una fila seleccionada, abrimos formularios para editar datos....
+    manejadorCategoria.FormularioModificarRegistroIdcategoria(tmpVO.idcategoria, tmpvO, 1)
+    'mostramos gridview actualizados
+    manejadorCategoria.MostrarGridView(GridViewCategoria)
+
+  Endif
+
+End
+
+Public Sub BorrarCategoria_Click()
+
+  Dim mSubcategoria As New SubcategoriaDAO
+  Dim resultado As Result
+  'solo se pueden borrar categorias, que no tengan subcategorias asignadas...
+  'creamos un objeto para trabajar con los datos de la fila seleccionada del gridviewTablaGeneral
+  Dim tmpVO As New CategoriaVO
+  'obtener el VO del registro seleccionado
+  tmpVO = manejadorCategoria.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+    '¿es usado en una subcategoria?
+    resultado = mSubcategoria.BuscarIgualIdcapitulo(tmpvO.idcategoria)
+
+    If resultado.count <> 0 Then
+      Message.Info(("No se puede borrar una Categoria que se esta usando"))
+      Return
+    Else
+      manejadorCategoria.BorrarIdcategoria(tmpVO.idcategoria)
+      'mostramos gridview actualizados
+      manejadorCategoria.MostrarGridView(GridViewCategoria)
+
+    Endif
+
+  Endif
+
+End
+
+' ---------------------------------
+' Menu de SubCategorias
+' ---------------------------------
+
+Public Sub AgregarSubcategoria_Click()
+  'ejemplo de registrar con datos ya iniciales...
+
+  'comprobar Categoria...
+  If ComboBoxCategoria.text <> "" Then
+
+    manejadorSubcategoriaAux.FormularioTitulo = ("Añadiendo Subcategoria")
+    manejadorSubcategoriaAux.FormularioRegistrar(1)
+
+    ButtonBuscar_Click()
+  Else
+
+    Message.Info(("Falta indicar categoria"))
+  Endif
+
+End
+
+Public Sub EditarSubcategoria_Click()
+
+  Dim tmpVO As New VistaSubcategoriaVO
+  Dim tmpVO1 As New SubcategoriaVO
+
+  tmpVO = manejadorSubcategoria.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+    'elijo una fila de una vista, y abro el editor con tabla DAO
+    tmpVO1 = tmpDAO.ConvertirResult(manejadorSubcategoriaAux.BuscarIgualIdsubcategoria(tmpVO.id))[0]
+    tmpDAO.FormularioTitulo = ("Editando Subcategoria")
+    tmpDAO.FormularioModificarRegistroIdsubcategoria(tmpVO1.idsubcategoria, tmpVO1, 1)
+    ButtonBuscar_Click()
+  Endif
+
+End
+
+Public Sub BorrarSubcategoria_Click()
+
+  Dim manejadorSubcategoriaTmp As New SubcategoriaDAO
+  'si esta usado en algun "labor", no se puede borrar
+  Dim resultado As Result
+
+  'solo se pueden borrar categorias, que no tengan subcategorias asignadas...
+  'creamos un objeto para trabajar con los datos de la fila seleccionada del gridviewTablaGeneral
+  Dim tmpVO As New VistaSubcategoriaVO
+  'obtener el VO del registro seleccionado
+  tmpVO = manejadorSubcategoria.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+    '¿es usado en una subcategoria?
+    resultado = manejadorLabores.BuscarIgualIdsubcategoria(tmpVO.id)
+    If resultado.count <> 0 Then
+      Message.Info(("No se puede borrar una Subcategoria que se esta usando"))
+      Return
+    Else
+
+      manejadorSubcategoriaTmp.BorrarIdsubcategoria(tmpVO.id)
+      'mostramos gridview actualizados
+      ButtonBuscar_Click()
+
+    Endif
+
+  Endif
+
+End
+
+Public Sub ButtonBuscar_Click()
+
+  Dim categoria As String
+
+  Try categoria = Trim(Split(ComboBoxCategoria.text, "|")[1])
+
+  If Error Or categoria = "" Then
+  Else
+
+    manejadorSubcategoria.MostrarGridView(GridViewSubCategoria,, manejadorSubcategoria.BuscarIgualTextocapitulo(categoria))
+
+  Endif
+
+End
+
+Public Sub ComboBoxCategoria_Click()
+
+  ButtonBuscar_Click()
+
+End
+'------------------------------------------ Petaña 2 LABORES --------------------------
+
+Public Sub ComboBoxLaboresCategoria_Click()
+
+  ButtonBuscarLaborCategoria_Click() 'cargo subcategorias
+
+End
+
+Public Sub ButtonBuscarLaborCategoria_Click()
+
+  Dim tmpsubCategoriaVO As SubcategoriaVO
+  Dim ArraySubCategoriaVO As SubCategoriaVO[]
+  Dim manjejadorSubcategoriaTmp As New SubcategoriaDAO
+  'cargo subcategorias
+  ComboBoxLaboresSubcategoria.Clear()
+  Try ArraySubCategoriaVO = manjejadorSubcategoriaTmp.ConvertirResult(manjejadorSubcategoriaTmp.BuscarIgualIdcapitulo(Val(Split(ComboBoxLaboresCategoria.Text, "|")[0])))
+  If Error Then Return
+  For Each tmpSubCategoriaVO In ArraySubCategoriaVO
+    ComboBoxLaboresSubcategoria.Add(tmpSubCategoriaVO.idsubcategoria & " | " & tmpSubCategoriaVO.textosubcategoria)
+  Next
+  ComboBoxLaboresSubcategoria_click() 'presento labores de esa Subcategoria
+
+End
+
+Public Sub ComboBoxLaboresSubcategoria_click()
+
+  Dim idcategoriaAbuscar As Integer
+  'actualizar labores del cuadro..
+  'mostrar labores, que tenga el IdCategoria el mismo que el comboboxLaboresSubcategoria
+  If ComboBoxLaboresSubcategoria.Text = "" Then
+    Message.Error(("Defina una subcategoria"))
+    TabStrip1.index = 1
+    Return
+  Endif
+  idcategoriaAbuscar = Val(Split(ComboBoxLaboresSubcategoria.Text, "|")[0])
+  manejadorLabores.MostrarGridView(GridViewLabores,, manejadorLabores.BuscarIgualIdsubcategoria(idcategoriaAbuscar))
+
+End
+
+Public Sub AgregarLabor_Click()
+
+  Dim idcategoriaActual As Integer
+  Dim tmpVO As New LaborVO
+  Dim ArrayTmpVo As New LaborVO[]
+  Dim hresult As Result
+  Dim realizado As Boolean
+  'esta añadido es especial, ya que se van a incluir un dato ya predefinido.
+
+  '1º creo un registro de datos
+  '2º pongo dato conocido
+  If ComboBoxLaboresSubcategoria.Text = "" Then
+    Message.Info(("Falta definir subcategoria"))
+    Return
+
+  Endif
+  '
+  idcategoriaActual = Val(Split(ComboBoxLaboresSubcategoria.Text, "|")[0])
+  tmpVO.idsubcategoria = idcategoriaActual
+  '3º añado un nuevo registro a la base de datos...
+  manejadorLabores.registrar(tmpVO)
+  '4º voy al ultimo registro
+  hresult = manejadorLabores.contenido()
+  hresult.MoveLast
+  ArrayTmpVo = manejadorLabores.ConvertirResult(hresult)
+
+  '4º edito...
+  manejadorLabores.FormularioTitulo = ("Labores")
+  realizado = manejadorLabores.FormularioModificarRegistroIdlabor(ArrayTmpVo[0].idlabor, ArrayTmpVo[0], 1)
+  '5º compruebo que el usuario no cancelo el formulario de entrada de datos
+  If realizado Then
+    'mostrar datos
+    ComboBoxLaboresSubcategoria_click()
+
+  Else
+    'el usuario cancelo el formulario , borrar el registro introducido temporalmente.
+    manejadorLabores.BorrarIdlabor(ArrayTmpVo[0].idlabor)
+  Endif
+
+End
+
+Public Sub EditarLabor_Click()
+
+  Dim tmpVO As New LaborVO
+
+  tmpVO = manejadorLabores.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+    manejadorLabores.FormularioTitulo = ("Labores")
+    manejadorLabores.FormularioModificarRegistroIdlabor(tmpVO.idlabor, tmpVO, 1)
+    ComboBoxLaboresSubcategoria_click()
+  Endif
+
+End
+
+Public Sub BorrarLabor_Click()
+
+  Dim hresult As Result
+  '
+  Dim manejadorDescompuesto As New DescompuestolaboresDAO
+  Dim tmpVO As New LaborVO
+
+  tmpVO = manejadorLabores.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+    If manejadorDescompuesto.BuscarIgualIdlabor(tmpVO.idlabor).count = 0 Then
+
+      'se puede borrar, nadie lo usa
+      manejadorLabores.BorrarIdlabor(tmpVO.idlabor)
+      ComboBoxLaboresSubcategoria_click()
+
+    Else
+      Message.info(("Solo se borrarán labores que no esten usadas en los presupuestos"))
+    Endif
+  Endif
+
+End
+
+Public Sub Form_Close()
+
+  '   settings.write(Me)
+
+End
+
+Public Sub GridViewLabores_MouseDrag()
+  'debe de estar seleccionado alguna fila
+
+  Dim tmpVO As New LaborVO
+
+  tmpVO = manejadorLabores.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+    Transito.laborCogido = tmpVO
+    GridViewLabores.Drag("labores|" & tmpVO.idlabor) ''NOTE: coger datos de labores
+
+  Endif
+
+End
+
+Public Sub TextBoxBusquedaContenido_KeyPress()
+
+  'cada vez que se escriba una letra, carga el contenido del listbox
+
+  If Len(TextBoxBusquedaContenido.text) > 2 Then
+
+    If IsLetter(Key.text) Then
+      cargaRegillaFiltrada(TextBoxBusquedaContenido.text & Key.Text)
+    Else
+
+      If Key.code = 16777219 Then
+        'pulsado la tecla de suprimir
+        cargaRegillaFiltrada(Mid$(TextBoxBusquedaContenido.text, 1, Len(TextBoxBusquedaContenido.text) - 1))
+      Endif
+    Endif
+  Else
+    rellenarGridBusqueda()
+  Endif
+
+End
+
+Public Sub rellenarGridBusqueda()
+
+  'manejarBusquedaLabores.MostrarGridView(GridViewBusquedaContenido)
+  manejarVistaBusquedaLabores.MostrarGridView(GridViewBusquedaContenido)
+
+End
+
+Public Sub cargaRegillaFiltrada(cadena As String)
+
+  'manejarBusquedaLabores.MostrarGridView(GridViewBusquedaContenido, "Select * from labor where (textocorto like '%" & cadena & "%' or descripcion like '%" & cadena & "%')")
+  manejarVistaBusquedaLabores.MostrarGridView(GridViewBusquedaContenido, "Select * from Vistalabor where (textocorto like '%" & cadena & "%' or descripcion like '%" & cadena & "%')")
+
+End
+
+Public Sub GridViewBusquedaContenido_MouseDrag()
+
+  'debe de estar seleccionado alguna fila
+
+  Dim tmpVO As New VistaLaborVO
+  Dim tmpTablaVO As New LaborVO
+
+  tmpVO = manejarVistaBusquedaLabores.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+
+    tmpTablaVO = manejadorLabores.ExtraerRegistro("idlabor", tmpVO.idlabor)
+
+    Transito.laborCogido = tmptablaVO
+    GridViewBusquedaContenido.Drag("labores|" & tmpVO.idlabor) ''NOTE: coger datos de labores
+
+  Endif
+
+End
+
+Public Sub EditarBusqueda_Click()
+
+  Dim tmpVO As New VistaLaborVO
+  Dim tmpTablaVO As New LaborVO
+
+  tmpVO = manejarVistaBusquedaLabores.filaSeleccionadaVO()
+
+  If Not IsNull(tmpVO) Then
+
+    manejarBusquedaLabores.FormularioTitulo = ("Labores")
+    tmpTablaVO = manejadorLabores.ExtraerRegistro("idlabor", tmpVO.idlabor)
+
+    manejarBusquedaLabores.FormularioModificarRegistroIdlabor(tmpVO.idlabor, tmpTablaVO, 1)
+    cargaRegillaFiltrada(TextBoxBusquedaContenido.text)
+  Endif
+
+End

@@ -1,0 +1,36 @@
+CREATE TABLE "cliente" ("idcliente" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "nombre" TEXT, "telefono" TEXT, "email" TEXT, "domicilio" TEXT, "comentario" TEXT)
+
+CREATE TABLE sqlite_sequence(name,seq)
+CREATE TABLE "unidadmedida" ("idunidadmedida" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "texto" TEXT)
+
+CREATE TABLE "estado" ("idestado" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "estado" TEXT)
+
+CREATE TABLE "subcategoria" ("idsubcategoria" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "idcapitulo" INTEGER, "textosubcategoria" TEXT)
+
+CREATE TABLE "categoria" ("idcategoria" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "textocapitulo" TEXT)
+
+CREATE TABLE "materiales" ("idmaterial" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "fecha" DATETIME, "textocorto" TEXT, "textolargo" TEXT, "lugarcompra" TEXT, "precio" FLOAT, "comentario" TEXT)
+
+CREATE TABLE "tipo" ("idtipo" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "tipo" TEXT)
+CREATE TABLE "presupuesto" ("idpresupuesto" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "idcliente" INTEGER, "idestado" INTEGER, "claveasignada" TEXT, "valorcalculado" FLOAT, "valorasignado" FLOAT, "fecha" DATETIME, "descripcioncorta" TEXT, "comentario" TEXT, "descripciongeneral" TEXT, "textogarantia" TEXT, "actualizarprecios" BOOL)
+
+CREATE TABLE "imagenes" ("idimagen" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "idpresupuesto" INTEGER, "ruta" TEXT, "tipo" INTEGER)
+
+CREATE TABLE "descompuestomateriales" ("iddescompuestomaterial" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "idpresupuesto" INTEGER, "idmaterial" INTEGER, "medicion" FLOAT, "precio" FLOAT, "total" FLOAT,"comentario" TEXT, "idtipo" INTEGER)
+
+CREATE TABLE "medicion" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "iddescompuesto" INTEGER, "descripcion" TEXT, "numeroveces" FLOAT, "largo" FLOAT, "ancho" FLOAT, "alto" FLOAT, "total" FLOAT)
+
+CREATE TABLE 'descompuestolabores' ( 'iddescompuesto' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , 'idpresupuesto' INT4, 'idlabor' INT4, 'precio' FLOAT8, 'idtipo' INT4, 'comentario' TEXT,'idorden' INT4 , 'medicion' FLOAT8, 'total' FLOAT8, 'precioenlazado' BOOL )
+
+CREATE TABLE "labor" ("idlabor" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE, "textocorto" TEXT, "precioportrabajo" FLOAT,  "preciopordia" FLOAT, "precioporhora" FLOAT, "idsubcategoria" INTEGER,"descripcion" TEXT)
+
+CREATE VIEW "VistaSubcategoria" AS select idsubcategoria as 'id',textocapitulo,textosubcategoria from subcategoria,categoria where subcategoria.idcapitulo=categoria.idcategoria
+CREATE VIEW "VistaPresupuesto" AS select idpresupuesto,cliente.nombre as "cliente", claveasignada,actualizarprecios,fecha,descripcioncorta, idestado as "estado",valorcalculado,valorasignado from cliente,presupuesto where
+presupuesto.idcliente=cliente.idcliente
+CREATE VIEW "VistaDescomMateriales" AS        select iddescompuestomaterial,idpresupuesto,descompuestomateriales.idmaterial as "idmaterial",descompuestomateriales.idtipo as "tipo",textocorto,descompuestomateriales.precio as "precio",descompuestomateriales.medicion as "medicion",descompuestomateriales.total as "total" from descompuestomateriales,materiales
+where descompuestomateriales.idmaterial=materiales.idmaterial
+CREATE VIEW "VistaLaborTemp" AS select * from labor,categoria,subcategoria where labor.idsubcategoria=subcategoria.idsubcategoria and categoria.idcategoria=subcategoria.idcapitulo
+CREATE VIEW "VistaLabor" AS SELECT idlabor,textocapitulo,textosubcategoria,textocorto,precioportrabajo,preciopordia,precioporhora,descripcion FROM VistaLaborTemp
+CREATE VIEW "VistaDescomLabores" AS select iddescompuesto,idpresupuesto,categoria.textocapitulo as "capitulo",subcategoria.textosubcategoria as "subcategoria",descompuestolabores.idtipo as "tipo",textocorto,precio,descompuestolabores.medicion as "medicion",idorden,descompuestolabores.total as "total" from descompuestolabores,labor,subcategoria,categoria
+where
+descompuestolabores.idlabor=labor.idlabor and labor.idsubcategoria=subcategoria.idsubcategoria and subcategoria.idcapitulo=categoria.idcategoria
