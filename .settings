@@ -312,7 +312,7 @@ File[53]="imagenes/configurar.png"
 File[54]="imagenes/bote-de-pinturapeque.png"
 File[55]="imagenes/arbol.png"
 File[56]=".src/modelo/modeloTabla/VO/PresupuestoVO.class:33.3"
-Active=3
+Active=87
 File[57]=".src/modelo/modeloTabla/DAO/EstadoDAO.class:0.7"
 File[58]=".src/modelo/modeloTabla/VO/EstadoVO.class:16.49"
 File[59]=".src/modelo/modeloTabla/DAO/TipoDAO.class:19.0"
@@ -343,7 +343,7 @@ File[83]=".src/ModuloPresupuesto.module:0.29"
 File[84]=".src/modelo/modeloVista/VistasDAO/VistaLaborDAO.class:0.7"
 File[85]=".src/Formularios/Formulario Descompuestos/FormDescompuesto.form"
 File[86]=".src/ClassEstadosYTiposPrecios.class:0.44"
-File[87]=".src/Adaptadas/VistaPrespuestoAdaptadaDAO.class:17.53"
+File[87]=".src/Adaptadas/VistaPrespuestoAdaptadaDAO.class:5.92"
 File[88]=".src/Formularios/FormGaleriaImagenes.form"
 Count=88
 

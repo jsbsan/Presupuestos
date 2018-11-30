@@ -2,6 +2,7 @@
 
 { Form Form
   MoveScaled(0,0,66,62)
+  Border = False
   Arrangement = Arrange.Vertical
   { PanelPrincipal Panel
     MoveScaled(3,4,57,20)
