@@ -24,6 +24,12 @@ Public Sub Form_Open()
 
   ColorButtonFondoTablas.value = Settings["colorFondoSuma", 12435143]
 
+  TextTextoPrevioPrecioEnLetra.text = Settings["textoAntesPrecioLetra", "El total del presupuesto de ejecución material asciende a la cantidad de"]
+
+  TextBoxMonedaLetra.text = Settings["MonedaLetra", "EUROS"]
+  TextBoxCONLetra.text = Settings["UnionLetra", "CON"]
+  TextBoxCentimoLetra.text = Settings["MonedaCentimoLetra", "CENTIMO"]
+
   Me.center
 
 End
@@ -172,5 +178,11 @@ Public Sub ButtonGuardarDatosFormularios_Click()
   Settings["formadoSimpleCero"] = RadioButtonFormatoSimpleCero.value
   Settings["formadoDobleCero"] = RadioButtonFormatoDobleCero.value
   Settings["colorFondoSuma"] = ColorButtonFondoTablas.value
+
+  Settings["textoAntesPrecioLetra"] = TextTextoPrevioPrecioEnLetra.text
+
+  Settings["MonedaLetra"] = TextBoxMonedaLetra.text
+  Settings["UnionLetra"] = TextBoxCONLetra.text
+  Settings["MonedaCentimoLetra"] = TextBoxCentimoLetra.text
 
 End

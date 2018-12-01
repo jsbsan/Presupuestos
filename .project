@@ -2,7 +2,7 @@
 Title=Presupuestos
 Startup=FMainListaPresupuestos
 Icon=imagenes/icono presupuestos.png
-Version=0.1.20
+Version=0.1.21
 Component=gb.image
 Component=gb.qt4
 Component=gb.form

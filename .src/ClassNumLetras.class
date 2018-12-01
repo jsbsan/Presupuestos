@@ -1,0 +1,237 @@
+' Gambas class file
+
+Property valor As Float
+Private hvalor As Float
+Property enletra As String
+Private henletra As String
+Property moneda As String
+Private hmoneda As String
+Property centimo As String
+Private hcentimo As String
+
+Property con As String
+Private hcon As String
+
+Public Const _Properties As String = "valor,moneda,centimo,enletra,con"
+
+Private Function valor_Read() As Float
+
+  Return hvalor
+
+End
+
+Private Sub valor_Write(Value As Float)
+
+  hvalor = value
+
+End
+
+Private Function enletra_Read() As String
+
+  Return henletra
+
+End
+
+Private Sub enletra_Write(Value As String)
+
+  henletra = Value '
+
+End
+
+Private Function moneda_Read() As String
+
+  Return hmoneda
+
+End
+
+Private Sub moneda_Write(Value As String)
+
+  hmoneda = Value
+
+End
+
+Private Function centimo_Read() As String
+
+  Return hcentimo
+
+End
+
+Private Sub centimo_Write(Value As String)
+
+  hcentimo = Value
+
+End
+
+Private Function con_Read() As String
+
+  Return hcon
+
+End
+
+Private Sub con_Write(Value As String)
+
+  hcon = value
+
+End
+
+Public Sub convertiraletra()
+
+  henletra = ConvierteNumero_a_letras(hvalor, hmoneda, hcentimo)
+
+End
+
+Private Function ConvierteNumero_a_letras(valor As Float, moneda As String, centimo As String) As String
+
+  Dim i As Float
+  Dim r As Float
+  Dim hastacoma As String
+  Dim texto As String
+  Dim monedaPlural As String
+  Dim mCentPlural As String
+  Dim mcent As String
+
+  moneda = Upper$(moneda)
+  mcent = Upper$(centimo)
+  monedaPlural = palabraPlural(moneda)
+  mCentPlural = palabraPlural(mCent)
+  i = Int(valor)
+  r = (valor - i) * 100
+  If i = 0 Then
+    If r = 1 Then
+      Return Num2Text(r) & " " & mCent & " "
+    Endif
+    If r > 1 Then
+      Return Num2Text(r) & " " & mCentPlural & " "
+    Endif
+  Else
+    If r = 0 Then
+      If i = 1 Then
+        Return Num2Text(i) & " " & moneda
+      Endif
+      If i > 1 Then
+        Return Num2Text(i) & " " & monedaPlural
+      Endif
+    Else
+      r = Round(r, -1) 'para tener números exactos redondeo los decimales en caso que el valor venga con más de 2 decimales.
+      r = Int(r)
+      If i = 1 Then
+        If r = 1 Then Return Num2Text(i) & " " & moneda & " " & hcon & " " & Num2Text(r) & " " & mCent
+        If r > 1 Then Return Num2Text(i) & " " & moneda & " " & hcon & " " & Num2Text(r) & " " & mCentPlural
+      Else
+        If r = 1 Then Return Num2Text(i) & " " & monedaPlural & " " & hcon & " " & Num2Text(r) & " " & mCent
+        If r > 1 Then Return Num2Text(i) & " " & monedaPlural & " " & hcon & " " & Num2Text(r) & " " & mCentPlural
+      Endif
+    Endif
+  Endif
+
+End
+'--------------------------------
+'poner plurales en castellano
+'--------------------------------
+
+Private Function palabraPlural(texto As String) As String
+
+  Dim vocal As String
+  Dim ultimaLetra As String
+
+  If texto = "" Then Return " "
+  vocal = "AEIOU"
+  ultimaLetra = Right(texto, 1)
+  If (InStr(vocal, ultimaLetra)) Then
+    Return texto & "S"
+  Else
+    Return texto & "ES"
+  Endif
+
+End
+'--------------------------------
+'escribir el numero
+'--------------------------------
+
+Private Function Num2Text(value As Long) As String
+
+  Dim texto As String
+
+  If value = 0 Then Return "CERO"
+  If value = 1 Then Return "UN"
+  If value = 2 Then Return "DOS"
+  If value = 3 Then Return "TRES"
+  If value = 4 Then Return "CUATRO"
+  If value = 5 Then Return "CINCO"
+  If value = 6 Then Return "SEIS"
+  If value = 7 Then Return "SIETE"
+  If value = 8 Then Return "OCHO"
+  If value = 9 Then Return "NUEVE"
+  If value = 10 Then Return "DIEZ"
+  If value = 11 Then Return "ONCE"
+  If value = 12 Then Return "DOCE"
+  If value = 13 Then Return "TRECE"
+  If value = 14 Then Return "CATORCE"
+  If value = 15 Then Return "QUINCE"
+  If value = 20 Then Return "VEINTE"
+  If value >= 16 And value < 20 Then
+    Return "DIECI" & Num2Text(VALUE Mod 10)
+  Endif
+
+  If value >= 21 And value <= 29 Then
+    texto = "VEINTI" & Num2Text(value - 20)
+    Return texto
+  Endif
+  If value = 30 Then Return "TREINTA"
+  If value = 40 Then Return "CUARENTA"
+  If value = 50 Then Return "CINCUENTA"
+  If value = 60 Then Return "SESENTA"
+  If value = 70 Then Return "SETENTA"
+  If value = 80 Then Return "OCHENTA"
+  If value = 90 Then Return "NOVENTA"
+  If value < 100 Then
+    texto = Num2Text(Int(value / 10) * 10) & " Y " & Num2Text(value Mod 10)
+    Return texto
+  Endif
+  If value = 100 Then Return "CIEN"
+  If value < 200 Then
+    texto = "CIENTO " & Num2Text(value - 100)
+    Return texto
+  Endif
+
+  If value = 200 Or value = 300 Or value = 400 Or value = 600 Or value = 800 Then
+    texto = Num2Text(Int(value / 100)) & "CIENTOS"
+    Return texto
+  Endif
+
+  If value = 500 Then Return "QUINIENTOS"
+  If value = 700 Then Return "SETECIENTOS"
+  If value = 900 Then Return "NOVECIENTOS"
+
+  If value < 1000 Then
+    texto = Num2Text(Int(value / 100) * 100) & " " & Num2Text(value Mod 100)
+    Return texto
+  Endif
+
+  If value = 1000 Then
+    Return "MIL"
+  Endif
+
+  If value < 2000 Then
+    Texto = "MIL " & Num2Text(value Mod 1000)
+    Return texto
+  Endif
+
+  If value < 1000000 Then
+    texto = Num2Text(Int(value / 1000)) & " MIL"
+    If (value Mod 1000) Then texto = texto & " " & Num2Text(value Mod 1000)
+    Return texto
+  Endif
+
+  If value = 1000000 Then texto = "UN MILLON"
+
+  If value < 2000000 Then
+    Texto = "UN MILLON " & Num2Text(value Mod 1000000)
+    Return texto
+  Else
+    TEXTO = Num2Text(Int(value / 1000000)) & " MILLONES " & Num2Text(value Mod 1000000)
+  Endif
+
+  Return TEXTO
+
+End Function

@@ -117,7 +117,7 @@
       Value = &HBFBFBF&
     }
     { ButtonGuardarDatosFormularios Button
-      MoveScaled(41,45,16,4)
+      MoveScaled(42,48,16,4)
       Text = ("Guardar")
       Picture = Picture["icon:/22/save"]
     }
@@ -142,6 +142,36 @@
       MoveScaled(50.1429,6.8571,8,4)
       Text = ("1.1")
       Value = True
+    }
+    { Label9 Label
+      MoveScaled(3,23,49,4)
+      Text = ("Texto que precede al precio en letras:")
+    }
+    { TextTextoPrevioPrecioEnLetra TextArea
+      MoveScaled(3,27,54,8)
+      Text = ("El total del presupuesto de ejecución material asciende a la cantidad de")
+      Wrap = True
+    }
+    { Label10 Label
+      MoveScaled(4,37,18,3)
+      Text = ("Texto Moneda:")
+    }
+    { Label12 Label
+      MoveScaled(4,47,18,3)
+      Text = ("Texto Centimo:")
+    }
+    { Label13 Label
+      MoveScaled(4,42,18,3)
+      Text = ("Texto CON:")
+    }
+    { TextBoxMonedaLetra TextBox
+      MoveScaled(23,36,18,4)
+    }
+    { TextBoxCentimoLetra TextBox
+      MoveScaled(23,47,18,4)
+    }
+    { TextBoxCONLetra TextBox
+      MoveScaled(23,42,18,4)
     }
     Index = 3
     Text = ("Copia de Seguridad")

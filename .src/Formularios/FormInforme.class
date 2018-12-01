@@ -25,6 +25,8 @@ Public Sub Generar()
   Dim textoMaterial As String
   Dim TextoDescompuestoMaterial As String
 
+  Dim num As New ClassNumLetras 'clases para pasar de Numero a Letras
+
   Application.Busy = +1
 
   datosPresupuesto = manejadorPresupuesto.ExtraerRegistro("idpresupuesto", idpresupuesto)
@@ -71,6 +73,7 @@ Public Sub Generar()
 
   documento &= rellenarLabores(datosPresupuesto.idpresupuesto)
 
+  ' en esta zona va a escribir los materiales usados, sus precios y presupuestos
   textoMaterial = "<b><u><center>" & " Materiales (Materials) </center></u></b> " & fl
   'repetir por todos las las labores del presupuesto
 
@@ -78,18 +81,44 @@ Public Sub Generar()
   If TextoDescompuestoMaterial <> "" Then
     documento &= textoMaterial & TextoDescompuestoMaterial
   Endif
-
+  '-----------------------------------------
+  'RESUMEN
+  '-----------------------------------------
   'poner valoración del presupuesto, segun se haya elegido Presupuesto Valorado o Prespuesto Fijado
 
-  documento &= "<h3>Labor y todos los materiales (all Labor, Paint, Materials):"
+  documento &= "<h3 aling=\"center" & "\">" & ("Total Presupuesto") & ": "
 
   If RadioButtonAsignadoManualmente.Value = True Then
-    documento &= "<b>  " & moneda & Formato(datosPresupuesto.valorasignado, ",#.#0") & "</b>" & fl
+    documento &= "<b>  " & Formato(datosPresupuesto.valorasignado, ",#.#0") & " " & moneda & "</b>" & fl
   Else
-    documento &= "<b>  " & moneda & Formato(datosPresupuesto.valorcalculado, ",#.#0") & "</b>" & fl
+    documento &= "<b>  " & Formato(datosPresupuesto.valorcalculado, ",#.#0") & " " & moneda & "</b>" & fl
 
   Endif
   documento &= "</h3>"
+
+  If CheckBoxPrecioLetra.VALUE = True Then
+
+    documento &= "<br>" & Settings["textoAntesPrecioLetra", "El total del presupuesto de ejecución material asciende a la cantidad de"] & " "
+
+    num.centimo = Settings["MonedaCentimoLetra", "CENTIMO"]
+    num.moneda = Settings["MonedaLetra", "EURO"]
+num.con = Settings["UnionLetra", "CON"]
+    If RadioButtonAsignadoManualmente.Value = True Then
+      num.valor = datosPresupuesto.valorasignado
+
+    Else
+      num.valor = datosPresupuesto.valorcalculado
+
+    Endif
+
+    num.convertiraletra()
+    documento &= num.enletra
+
+    documento &= "</br>"
+
+  Endif
+
+  documento &= "<br> Labores y todos los materiales (all Labor, Paint, Materials)"
 
   documento &= fl
   documento &= "Signature Of Authorized: _________________________________ Date: _______________" & fl
@@ -157,6 +186,8 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
 
   Dim FormatoContadores As String = "#" ' a javier el gusta mas. A mi me gusta "0#", para que salga 01.01.
 
+  Dim ContenidoResumen As String = "" 'esta variable contiene el contenido del resumen del capitulos del presupuesto
+
   If Settings["formadoSimpleCero", True] = True Then
     FormatoContadores = "#"
   Else
@@ -210,6 +241,9 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
               documento &= "</table>"
               documento &= "<br>"
               documento &= "<br>"
+
+              ContenidoResumen &= "<tr><td align=\"right\">" & Format(ContadorCategoria, FormatoContadores) & "</td><td>" & datoCategoria.TEXTOCAPITULO & "</td><td>" & Formato(SumaParcialCapitulo, ",#.#0") & "(" & moneda & ")" & "</td></tr>"
+
               SumaParcialCapitulo = 0
             Endif
 
@@ -301,7 +335,20 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
     documento &= "</table>"
     documento &= "<br>"
     documento &= "<br>"
+
+    ContenidoResumen &= "<tr> <td align=\"right\">" & Format(ContadorCategoria, FormatoContadores) & "</td><td>" & datoCategoria.TEXTOCAPITULO & "</td><td>" & Formato(SumaParcialCapitulo, ",#.#0") & "(" & moneda & ")" & "</td></tr>"
+
     SumaParcialCapitulo = 0
+
+  Endif
+
+  'añadir resumen final de capitulos....
+
+  If CheckBoxResumen.value = True Then
+
+    ContenidoResumen = "<br><h2>" & ("Resumen Por Capítulos") & "</h2><h3><table>" & "<tr><td>" & ("Capítulo") & "</td><td>" & ("Resumen") & "</td><td align=\"right\">" & ("Cantidad") & "(" & moneda & ")" & "<td><td></tr>" & ContenidoResumen & "</table></h3>"
+
+    documento &= ContenidoResumen
   Endif
 
   Return documento

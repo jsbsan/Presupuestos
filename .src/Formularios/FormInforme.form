@@ -1,7 +1,7 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,69,57)
+  MoveScaled(0,0,69,68)
   Icon = Picture["icon:/22/pdf"]
   Resizable = False
   { RadioButtonCalculado RadioButton
@@ -34,7 +34,7 @@
     Alignment = Align.Center
   }
   { ButtonHtml Button
-    MoveScaled(14,51,36,6)
+    MoveScaled(14,61,36,6)
     Text = ("Generar informe")
     Picture = Picture["icon:/22/pdf"]
   }
@@ -69,5 +69,15 @@
       MoveScaled(6,2,42,4)
       Text = ("Imprimir listado de mediciones")
     }
+  }
+  { CheckBoxResumen CheckBox
+    MoveScaled(3,48,47,6)
+    Text = ("Resumen final de capitulos")
+    Value = CheckBox.True
+  }
+  { CheckBoxPrecioLetra CheckBox
+    MoveScaled(3,55,48,3)
+    Text = ("Precio en letra del presupuesto (solo castellano)")
+    Value = CheckBox.True
   }
 }
