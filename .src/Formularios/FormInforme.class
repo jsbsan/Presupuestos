@@ -194,7 +194,7 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
               'es distinto a la 1º partida
               'poner sumas parciales
 
-              documento &= "<table>"
+              documento &= "<table BGCOLOR=\"" & Hex(Settings["colorFondoSuma", 12435143]) & "\" >"
               documento &= "<tr>"
               documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
 
@@ -285,7 +285,7 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
     'es distinto a la 1º partida
     'poner sumas parciales
 
-    documento &= "<table>"
+    documento &= "<table BGCOLOR=\"" & Hex(Settings["colorFondoSuma", 12435143]) & "\" >"
     documento &= "<tr>"
     documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
 

@@ -22,6 +22,8 @@ Public Sub Form_Open()
   RadioButtonFormatoSimpleCero.value = Settings["formadoSimpleCero", True]
   RadioButtonFormatoDobleCero.value = Settings["formadoDobleCero", False]
 
+  ColorButtonFondoTablas.value = Settings["colorFondoSuma", 12435143]
+
   Me.center
 
 End
@@ -33,10 +35,6 @@ Public Sub ButtonGuardarDatosEmpresa_Click()
   settings["Telefono"] = textboxTelefono.text
   settings["Email"] = textboxEmail.text
   settings["TextoFinal"] = textboxTextoFinal.text
-  Settings["Moneda"] = TextBoxMoneda.Text
-
-  Settings["formadoSimpleCero"] = RadioButtonFormatoSimpleCero.value
-  Settings["formadoDobleCero"] = RadioButtonFormatoDobleCero.value
 
 End
 
@@ -164,5 +162,15 @@ Public Sub ButtonRestaurarCopiaSeguridad_Click()
     Message.Info(("Restauración realizada"))
 
   Endif
+
+End
+
+Public Sub ButtonGuardarDatosFormularios_Click()
+
+  Settings["Moneda"] = TextBoxMoneda.Text
+
+  Settings["formadoSimpleCero"] = RadioButtonFormatoSimpleCero.value
+  Settings["formadoDobleCero"] = RadioButtonFormatoDobleCero.value
+  Settings["colorFondoSuma"] = ColorButtonFondoTablas.value
 
 End

@@ -34,7 +34,7 @@
     Alignment = Align.Center
   }
   { ButtonHtml Button
-    MoveScaled(14,50,36,6)
+    MoveScaled(14,51,36,6)
     Text = ("Generar informe")
     Picture = Picture["icon:/22/pdf"]
   }

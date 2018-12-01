@@ -9,13 +9,13 @@
   { IconPanel1 IconPanel
     MoveScaled(1,1,83,52)
     Expand = True
-    Count = 3
+    Count = 4
     Border = True
     Index = 0
     Text = ("Acerca de...")
     { PictureBox1 PictureBox
       MoveScaled(1,1,16,17)
-      Picture = Picture["imagenes/pintor.jpg"]
+      Picture = Picture["imagenes/icono presupuestos.png"]
       Stretch = True
     }
     { TextLabel1 TextLabel
@@ -106,29 +106,44 @@
       MoveScaled(1,34,36,3)
       Text = ("Texto Final en Presupuesto:")
     }
-    { TextBoxMoneda TextBox
-      MoveScaled(21.8571,24.1429,35,4)
+    Index = 2
+    Text = ("Informes")
+    { Label8 Label
+      MoveScaled(3,14,30,4)
+      Text = ("Color Fondo \"Sumas Capitulos\":")
+    }
+    { ColorButtonFondoTablas ColorButton
+      MoveScaled(36,13,18,5)
+      Value = &HBFBFBF&
+    }
+    { ButtonGuardarDatosFormularios Button
+      MoveScaled(41,45,16,4)
+      Text = ("Guardar")
+      Picture = Picture["icon:/22/save"]
     }
     { Label11 Label
-      MoveScaled(2,24,18,4)
-      Text = ("Moneda:")
+      MoveScaled(1.1429,1.8571,18,4)
+      Text = ("Simbolo de Moneda:")
       Alignment = Align.Right
     }
+    { TextBoxMoneda TextBox
+      MoveScaled(21,2,35,4)
+    }
     { Label7 Label
-      MoveScaled(2,29,39,4)
+      MoveScaled(1.1429,6.8571,39,4)
       Text = ("Formato Numeración Capitulos y Subcaptitulos")
       Alignment = Align.Right
     }
     { RadioButtonFormatoDobleCero RadioButton
-      MoveScaled(42,29,8,4)
+      MoveScaled(41.1429,6.8571,8,4)
       Text = ("01.01")
     }
     { RadioButtonFormatoSimpleCero RadioButton
-      MoveScaled(51,29,8,4)
+      MoveScaled(50.1429,6.8571,8,4)
       Text = ("1.1")
       Value = True
     }
-    Index = 2
+    Index = 3
     Text = ("Copia de Seguridad")
     { ButtonRealizarCopiaSeguridad Button
       MoveScaled(5,4,50,16)

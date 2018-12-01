@@ -1,7 +1,7 @@
 # Gambas Project File 3.0
 Title=Presupuestos
 Startup=FMainListaPresupuestos
-Icon=imagenes/pintor.jpg
+Icon=imagenes/icono presupuestos.png
 Version=0.1.20
 Component=gb.image
 Component=gb.qt4
