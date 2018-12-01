@@ -26,7 +26,7 @@ Public Sub Form_Open()
 
   TextTextoPrevioPrecioEnLetra.text = Settings["textoAntesPrecioLetra", "El total del presupuesto de ejecución material asciende a la cantidad de"]
 
-  TextBoxMonedaLetra.text = Settings["MonedaLetra", "EUROS"]
+  TextBoxMonedaLetra.text = Settings["MonedaLetra", "EURO"]
   TextBoxCONLetra.text = Settings["UnionLetra", "CON"]
   TextBoxCentimoLetra.text = Settings["MonedaCentimoLetra", "CENTIMO"]
 

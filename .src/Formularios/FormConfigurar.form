@@ -152,26 +152,30 @@
       Text = ("El total del presupuesto de ejecución material asciende a la cantidad de")
       Wrap = True
     }
-    { Label10 Label
-      MoveScaled(4,37,18,3)
-      Text = ("Texto Moneda:")
-    }
-    { Label12 Label
-      MoveScaled(4,47,18,3)
-      Text = ("Texto Centimo:")
-    }
-    { Label13 Label
-      MoveScaled(4,42,18,3)
-      Text = ("Texto CON:")
-    }
-    { TextBoxMonedaLetra TextBox
-      MoveScaled(23,36,18,4)
-    }
-    { TextBoxCentimoLetra TextBox
-      MoveScaled(23,47,18,4)
-    }
-    { TextBoxCONLetra TextBox
-      MoveScaled(23,42,18,4)
+    { Frame1 Frame
+      MoveScaled(3,36,37,17)
+      Text = ("Precio en Letra:")
+      { TextBoxMonedaLetra TextBox
+        MoveScaled(15,2,18,4)
+      }
+      { Label13 Label
+        MoveScaled(1,7,12,3)
+        Text = ("CON:")
+      }
+      { TextBoxCentimoLetra TextBox
+        MoveScaled(15,10,18,4)
+      }
+      { TextBoxCONLetra TextBox
+        MoveScaled(15,6,18,4)
+      }
+      { Label12 Label
+        MoveScaled(1,11,18,3)
+        Text = ("Centimo:")
+      }
+      { Label10 Label
+        MoveScaled(1,3,12,3)
+        Text = ("Moneda:")
+      }
     }
     Index = 3
     Text = ("Copia de Seguridad")
