@@ -2,7 +2,6 @@
 FormDescompuesto=[126,796]
 AdaptadaPresupuestoDAO=[138]
 FormLabores=[365]
-FormInforme=[]
 
 [Breakpoints]
 Count=0
@@ -313,7 +312,7 @@ File[53]="imagenes/configurar.png"
 File[54]="imagenes/bote-de-pinturapeque.png"
 File[55]="imagenes/arbol.png"
 File[56]=".src/modelo/modeloTabla/VO/PresupuestoVO.class:33.3"
-Active=89
+Active=74
 File[57]=".src/modelo/modeloTabla/DAO/EstadoDAO.class:0.7"
 File[58]=".src/modelo/modeloTabla/VO/EstadoVO.class:16.49"
 File[59]=".src/modelo/modeloTabla/DAO/TipoDAO.class:19.0"
@@ -331,7 +330,7 @@ File[70]="ejemplo rellenar datos:17.0"
 File[71]=".src/modelo/modeloVista/VistasDAO/VistaMedicionDAO.class:34.2"
 File[72]=".src/modelo/modeloTabla/VO/CategoriaVO.class:3.37"
 File[73]=".src/Adaptadas/VistaDescomMaterialesAdaptadaDAO.class:9.94"
-File[74]=".src/Adaptadas/VistaDescomLaboresAdaptadaDAO.class:22.11"
+File[74]=".src/Adaptadas/VistaDescomLaboresAdaptadaDAO.class:22.111"
 File[75]=".src/modelo/modeloTabla/DAO/ImagenesDAO.class:24.33"
 File[76]=".src/Recalculo.module:0.99"
 File[77]="imagenes/gimp.png"
