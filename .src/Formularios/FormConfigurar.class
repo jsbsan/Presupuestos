@@ -30,6 +30,8 @@ Public Sub Form_Open()
   TextBoxCONLetra.text = Settings["UnionLetra", "CON"]
   TextBoxCentimoLetra.text = Settings["MonedaCentimoLetra", "CENTIMO"]
 
+  ValueBoxCoeficiente.Value = Settings["CoeficientePrecios", 1]
+
   Me.center
 
 End
@@ -184,5 +186,11 @@ Public Sub ButtonGuardarDatosFormularios_Click()
   Settings["MonedaLetra"] = TextBoxMonedaLetra.text
   Settings["UnionLetra"] = TextBoxCONLetra.text
   Settings["MonedaCentimoLetra"] = TextBoxCentimoLetra.text
+
+End
+
+Public Sub ButtonGuardarDatosCoeficientes_Click()
+
+  Settings["CoeficientePrecios"] = ValueBoxCoeficiente.Value
 
 End

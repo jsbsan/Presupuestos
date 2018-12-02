@@ -9,7 +9,7 @@
   { IconPanel1 IconPanel
     MoveScaled(1,1,83,52)
     Expand = True
-    Count = 4
+    Count = 5
     Border = True
     Index = 0
     Text = ("Acerca de...")
@@ -178,6 +178,26 @@
       }
     }
     Index = 3
+    Text = ("Coeficientes")
+    { Label14 Label
+      MoveScaled(5,6,41,4)
+      Text = ("Coeficiente de actualización de precios:")
+    }
+    { Label15 TextLabel
+      MoveScaled(8,19,40,7)
+      Text = ("Nota:<br>\nEste coeficiente solo altera los precios a la hora de crear los informes.")
+    }
+    { ValueBoxCoeficiente ValueBox
+      MoveScaled(22,11,9,5)
+      Text = ("1")
+      Alignment = Align.Center
+    }
+    { ButtonGuardarDatosCoeficientes Button
+      MoveScaled(40,45,16,4)
+      Text = ("Guardar")
+      Picture = Picture["icon:/22/save"]
+    }
+    Index = 4
     Text = ("Copia de Seguridad")
     { ButtonRealizarCopiaSeguridad Button
       MoveScaled(5,4,50,16)

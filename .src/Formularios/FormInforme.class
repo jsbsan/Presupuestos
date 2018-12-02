@@ -9,9 +9,12 @@ Private moneda As String
 
 Private formatoSalida As String
 
+Private coeficientesPrecios As Float
+
 Public Sub Form_Open()
 
   moneda = Settings["Moneda", "$"]
+  coeficientesPrecios = Settings["CoeficientePrecios", 1]
   Me.Center()
 
 End
@@ -55,6 +58,7 @@ Public Sub Generar()
   documento &= "</table>"
 
   documento &= "<br>"
+
   documento &= "Trabajo (Job) ID#=" & idpresupuesto & " | " & datosPresupuesto.claveasignada & "</center>" & fl
   documento &= "Fecha (Date): " & Format(datosPresupuesto.fecha, "dd/mm/yyyy") & "</center>" & fl
   documento &= "<hr>"
@@ -91,7 +95,7 @@ Public Sub Generar()
   If RadioButtonAsignadoManualmente.Value = True Then
     documento &= "<b>  " & Formato(datosPresupuesto.valorasignado, ",#.#0") & " " & moneda & "</b>" & fl
   Else
-    documento &= "<b>  " & Formato(datosPresupuesto.valorcalculado, ",#.#0") & " " & moneda & "</b>" & fl
+    documento &= "<b>  " & Formato(datosPresupuesto.valorcalculado * coeficientesPrecios, ",#.#0") & " " & moneda & "</b>" & fl
 
   Endif
   documento &= "</h3>"
@@ -102,12 +106,12 @@ Public Sub Generar()
 
     num.centimo = Settings["MonedaCentimoLetra", "CENTIMO"]
     num.moneda = Settings["MonedaLetra", "EURO"]
-num.con = Settings["UnionLetra", "CON"]
+    num.con = Settings["UnionLetra", "CON"]
     If RadioButtonAsignadoManualmente.Value = True Then
       num.valor = datosPresupuesto.valorasignado
 
     Else
-      num.valor = datosPresupuesto.valorcalculado
+      num.valor = datosPresupuesto.valorcalculado * coeficientesPrecios
 
     Endif
 
@@ -306,11 +310,11 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
 
     If CheckBoxResumenMedicionPrecioTotal.value = True Then
       documento &= repiterCaracter("&nbsp", 0) & "Medición (Measurement): " & repiterCaracter("&nbsp", Len(moneda)) & Formato(datoDescompuestosLaboral.medicion, ",#.#0") & fl
-      documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosLaboral.precio, ",#.#0") & fl
-      documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosLaboral.total, ",#.#0") & fl
+      documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosLaboral.precio * coeficientesPrecios, ",#.#0") & fl
+      documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosLaboral.total * coeficientesPrecios, ",#.#0") & fl
     Endif
 
-    SumaParcialCapitulo += datoDescompuestosLaboral.total
+    SumaParcialCapitulo += datoDescompuestosLaboral.total * coeficientesPrecios
 
     documento &= "<br>"
   Next
@@ -456,8 +460,8 @@ Public Function GeneraMedicionValoradas(iddescompuesto As Integer, datoDescompue
   documentoDesgloce &= "<td>" & "</td>"
   documentoDesgloce &= "<td>" & "</td>"
   documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.medicion, ",#.#0") & "</td>"
-  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.precio, ",#.#0") & "</td>"
-  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.total, ",#.#0") & "</td>"
+  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.precio * coeficientesPrecios, ",#.#0") & "</td>"
+  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.total * coeficientesPrecios, ",#.#0") & "</td>"
   documentoDesgloce &= "</tr>"
 
   If documentoDesgloce = "" Then Return "" 'no hay desgloce de medicion
@@ -499,8 +503,8 @@ Public Function rellenarMateriales(idpresupuesto As Integer) As String
     If CheckBoxResumenMedicionPrecioTotal.value = True Then
 
       documento &= repiterCaracter("&nbsp", 0) & "Medición (Measurement):" & repiterCaracter("&nbsp", Len(moneda) + 1) & Formato(datoDescompuestosMateriales.medicion, ",#.#0") & fl
-      documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosMateriales.precio, ",#.#0") & fl
-      documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosMateriales.total, ",#.#0") & fl
+      documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosMateriales.precio * coeficientesPrecios, ",#.#0") & fl
+      documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosMateriales.total * coeficientesPrecios, ",#.#0") & fl
     Endif
     documento &= "<br>"
   Next
