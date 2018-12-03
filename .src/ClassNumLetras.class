@@ -95,7 +95,7 @@ Private Function ConvierteNumero_a_letras(valor As Float, moneda As String, cent
   monedaPlural = palabraPlural(moneda)
   mCentPlural = palabraPlural(mCent)
   i = Int(valor)
-  r = (valor - i) * 100
+  r = Round((valor - i) * 100, 0) 'redondear  los centimos
   If i = 0 Then
     If r = 1 Then
       Return Num2Text(r) & " " & mCent & " "

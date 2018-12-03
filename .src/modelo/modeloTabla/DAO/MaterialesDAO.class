@@ -732,7 +732,7 @@ Public Sub Observar_Data(row As Integer, column As Integer)
       Else
         'añadido para escribir las columnas que contengan números y que no sea tipo Id el campo
         If IsNumber(Str$(datocontenido)) And Me.NoesTipoId(Me.gridviewPropio.columns[column].text) Then
-          Me.gridviewPropio.Data.text = Format$(datocontenido, ",#.#0")
+          Me.gridviewPropio.Data.text = Format$(datocontenido, ",0.#0")
           Me.gridviewPropio.Data.Alignment = Align.Right
         Else
           Me.gridviewPropio.Data.text = datocontenido
@@ -759,7 +759,7 @@ Public Sub Observar_Data(row As Integer, column As Integer)
 
         'añadido para escribir las columnas que contengan números  y que no sea tipo Id el campo
         If IsNumber(Str$(datocontenido)) And Me.NoesTipoId(Me.GridViewPropio.tag[column]) Then
-          Me.gridviewPropio.Data.text = Format$(datocontenido, ",#.#0")
+          Me.gridviewPropio.Data.text = Format$(datocontenido, ",0.#0")
           Me.gridviewPropio.Data.Alignment = Align.Right
         Else
           Me.gridviewPropio.Data.text = datocontenido
@@ -1058,6 +1058,7 @@ End
 Public Function ExtraerRegistro(NombreCampo As String, id As Integer) As MaterialesVO
 
   Dim datosVO As MaterialesVO
+
   Try datosVO = Me.ConvertirResult(Me.BuscarIgual(id, NombreCampo))[0] 'busco en el id del campo indicado la tabla/vista
   If Error Then
     Print "warnning:", error.text, nombrecampo, id
@@ -1136,20 +1137,21 @@ Public Sub ImprimirRapidoTablaVertical()
   codigo &= "<table border=\"1\" >\n"
   For columna = 0 To gridviewPropio.columns.Max
     codigo &= "<tr>\n" ""
-    
+
     codigo &= "<td><b>" & gridviewPropio.Columns[columna].title & "</b></td>"
-    
+
     codigo &= "<td style=\"width:100%\">" & gridviewPropio[fila, columna].text & "</td>"
     codigo &= "</tr>\n" ""
-    
+
   Next
-  codigo &= "</table>\n"  
+  codigo &= "</table>\n"
   CODIGO &= "<BR><BR>"
-  
+
   contenidofichero = File.Load("estructura.html")
   contenidofichero = Replace$(contenidofichero, "TITULO", ("INFORME"))
   contenidofichero = Replace$(contenidofichero, "CONTENIDO", codigo)
   file.Save("/tmp/informe.html", contenidofichero)
   Desktop.Open("/tmp/informe.html")
   Application.Busy = 0
+
 End

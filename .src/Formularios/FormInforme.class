@@ -93,9 +93,9 @@ Public Sub Generar()
   documento &= "<h3 aling=\"center" & "\">" & ("Total Presupuesto") & ": "
 
   If RadioButtonAsignadoManualmente.Value = True Then
-    documento &= "<b>  " & Formato(datosPresupuesto.valorasignado, ",#.#0") & " " & moneda & "</b>" & fl
+    documento &= "<b>  " & Formato(datosPresupuesto.valorasignado, ",0.#0") & " " & moneda & "</b>" & fl
   Else
-    documento &= "<b>  " & Formato(datosPresupuesto.valorcalculado * coeficientesPrecios, ",#.#0") & " " & moneda & "</b>" & fl
+    documento &= "<b>  " & Formato(datosPresupuesto.valorcalculado * coeficientesPrecios, ",0.#0") & " " & moneda & "</b>" & fl
 
   Endif
   documento &= "</h3>"
@@ -239,14 +239,14 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
               documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
               documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
               documento &= "<td><u>" & "Suma Capitulo (" & moneda & "): " & "</u></td>"
-              documento &= "<td>" & Formato(SumaParcialCapitulo, ",#.#0") & "</td>"
+              documento &= "<td>" & Formato(SumaParcialCapitulo, ",0.#0") & "</td>"
 
               documento &= "</tr>"
               documento &= "</table>"
               documento &= "<br>"
               documento &= "<br>"
 
-              ContenidoResumen &= "<tr><td align=\"right\">" & Format(ContadorCategoria, FormatoContadores) & "</td><td>" & datoCategoria.TEXTOCAPITULO & "</td><td>" & Formato(SumaParcialCapitulo, ",#.#0") & "(" & moneda & ")" & "</td></tr>"
+              ContenidoResumen &= "<tr><td align=\"right\">" & Format(ContadorCategoria, FormatoContadores) & "</td><td>" & datoCategoria.TEXTOCAPITULO & "</td><td>" & Formato(SumaParcialCapitulo, ",0.#0") & "(" & moneda & ")" & "</td></tr>"
 
               SumaParcialCapitulo = 0
             Endif
@@ -309,9 +309,9 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
     Endif
 
     If CheckBoxResumenMedicionPrecioTotal.value = True Then
-      documento &= repiterCaracter("&nbsp", 0) & "Medición (Measurement): " & repiterCaracter("&nbsp", Len(moneda)) & Formato(datoDescompuestosLaboral.medicion, ",#.#0") & fl
-      documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosLaboral.precio * coeficientesPrecios, ",#.#0") & fl
-      documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosLaboral.total * coeficientesPrecios, ",#.#0") & fl
+      documento &= repiterCaracter("&nbsp", 0) & "Medición (Measurement): " & repiterCaracter("&nbsp", Len(moneda)) & Formato(datoDescompuestosLaboral.medicion, ",0.#0") & fl
+      documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosLaboral.precio * coeficientesPrecios, ",0.#0") & fl
+      documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosLaboral.total * coeficientesPrecios, ",0.#0") & fl
     Endif
 
     SumaParcialCapitulo += datoDescompuestosLaboral.total * coeficientesPrecios
@@ -333,14 +333,14 @@ Public Sub rellenarLabores(idpresupuesto As Integer) As String
     documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
     documento &= "<td>" & repiterCaracter("&nbsp", 15) & "</td>"
     documento &= "<td><u>" & "Suma Capitulo (" & moneda & "): " & "</u></td>"
-    documento &= "<td>" & Formato(SumaParcialCapitulo, ",#.#0") & "</td>"
+    documento &= "<td>" & Formato(SumaParcialCapitulo, ",0.#0") & "</td>"
 
     documento &= "</tr>"
     documento &= "</table>"
     documento &= "<br>"
     documento &= "<br>"
 
-    ContenidoResumen &= "<tr> <td align=\"right\">" & Format(ContadorCategoria, FormatoContadores) & "</td><td>" & datoCategoria.TEXTOCAPITULO & "</td><td>" & Formato(SumaParcialCapitulo, ",#.#0") & "(" & moneda & ")" & "</td></tr>"
+    ContenidoResumen &= "<tr> <td align=\"right\">" & Format(ContadorCategoria, FormatoContadores) & "</td><td>" & datoCategoria.TEXTOCAPITULO & "</td><td>" & Formato(SumaParcialCapitulo, ",0.#0") & "(" & moneda & ")" & "</td></tr>"
 
     SumaParcialCapitulo = 0
 
@@ -393,11 +393,11 @@ Public Function GeneraMedicion(iddescompuesto As Integer) As String
 
     documentoDesgloce &= "<tr>"
     documentoDesgloce &= "<td> " & datosmedicion.descripcion & "</td>"
-    documentoDesgloce &= "<td>" & Formato(datosmedicion.numeroveces, ",#.#0") & "</td>"
-    documentoDesgloce &= "<td>" & Formato(datosmedicion.largo, ",#.#0") & "</td>"
-    documentoDesgloce &= "<td>" & Formato(datosmedicion.ancho, ",#.#0") & "</td>"
-    documentoDesgloce &= "<td>" & Formato(datosmedicion.alto, ",#.#0") & "</td>"
-    documentoDesgloce &= "<td>" & Formato(datosmedicion.total, ",#.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.numeroveces, ",0.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.largo, ",0.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.ancho, ",0.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.alto, ",0.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.total, ",0.#0") & "</td>"
     documentoDesgloce &= "</tr>"
 
   Next
@@ -444,11 +444,11 @@ Public Function GeneraMedicionValoradas(iddescompuesto As Integer, datoDescompue
 
     documentoDesgloce &= "<tr>"
     documentoDesgloce &= "<td> " & datosmedicion.descripcion & "</td>"
-    documentoDesgloce &= "<td>" & Formato(datosmedicion.numeroveces, ",#.#0") & "</td>"
-    documentoDesgloce &= "<td>" & Formato(datosmedicion.largo, ",#.#0") & "</td>"
-    documentoDesgloce &= "<td>" & Formato(datosmedicion.ancho, ",#.#0") & "</td>"
-    documentoDesgloce &= "<td>" & Formato(datosmedicion.alto, ",#.#0") & "</td>"
-    documentoDesgloce &= "<td>" & Formato(datosmedicion.total, ",#.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.numeroveces, ",0.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.largo, ",0.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.ancho, ",0.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.alto, ",0.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datosmedicion.total, ",0.#0") & "</td>"
     documentoDesgloce &= "</tr>"
 
   Next
@@ -459,9 +459,9 @@ Public Function GeneraMedicionValoradas(iddescompuesto As Integer, datoDescompue
   documentoDesgloce &= "<td>" & "</td>"
   documentoDesgloce &= "<td>" & "</td>"
   documentoDesgloce &= "<td>" & "</td>"
-  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.medicion, ",#.#0") & "</td>"
-  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.precio * coeficientesPrecios, ",#.#0") & "</td>"
-  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.total * coeficientesPrecios, ",#.#0") & "</td>"
+  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.medicion, ",0.#0") & "</td>"
+  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.precio * coeficientesPrecios, ",0.#0") & "</td>"
+  documentoDesgloce &= "<td>" & Formato(datoDescompuestosLaboral.total * coeficientesPrecios, ",0.#0") & "</td>"
   documentoDesgloce &= "</tr>"
 
   If documentoDesgloce = "" Then Return "" 'no hay desgloce de medicion
@@ -502,9 +502,9 @@ Public Function rellenarMateriales(idpresupuesto As Integer) As String
 
     If CheckBoxResumenMedicionPrecioTotal.value = True Then
 
-      documento &= repiterCaracter("&nbsp", 0) & "Medición (Measurement):" & repiterCaracter("&nbsp", Len(moneda) + 1) & Formato(datoDescompuestosMateriales.medicion, ",#.#0") & fl
-      documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosMateriales.precio * coeficientesPrecios, ",#.#0") & fl
-      documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosMateriales.total * coeficientesPrecios, ",#.#0") & fl
+      documento &= repiterCaracter("&nbsp", 0) & "Medición (Measurement):" & repiterCaracter("&nbsp", Len(moneda) + 1) & Formato(datoDescompuestosMateriales.medicion, ",0.#0") & fl
+      documento &= repiterCaracter("&nbsp", 8) & "Precio (Price): " & moneda & Formato(datoDescompuestosMateriales.precio * coeficientesPrecios, ",0.#0") & fl
+      documento &= repiterCaracter("&nbsp", 17) & "Total: " & moneda & Formato(datoDescompuestosMateriales.total * coeficientesPrecios, ",0.#0") & fl
     Endif
     documento &= "<br>"
   Next

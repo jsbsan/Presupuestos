@@ -489,7 +489,7 @@ Public Sub Observar_Data(row As Integer, column As Integer)
       Else
         'añadido para escribir las columnas que contengan números y que no sea tipo Id el campo
         If IsNumber(Str$(datocontenido)) And Me.NoesTipoId(Me.gridviewPropio.columns[column].text) Then
-          Me.gridviewPropio.Data.text = Format$(datocontenido, ",#.#0")
+          Me.gridviewPropio.Data.text = Format$(datocontenido, ",0.#0")
           Me.gridviewPropio.Data.Alignment = Align.Right
         Else
           Me.gridviewPropio.Data.text = datocontenido
@@ -516,7 +516,7 @@ Public Sub Observar_Data(row As Integer, column As Integer)
 
         'añadido para escribir las columnas que contengan números  y que no sea tipo Id el campo
         If IsNumber(Str$(datocontenido)) And Me.NoesTipoId(Me.GridViewPropio.tag[column]) Then
-          Me.gridviewPropio.Data.text = Format$(datocontenido, ",#.#0")
+          Me.gridviewPropio.Data.text = Format$(datocontenido, ",0.#0")
           Me.gridviewPropio.Data.Alignment = Align.Right
         Else
           Me.gridviewPropio.Data.text = datocontenido
@@ -842,4 +842,5 @@ Public Sub ImprimirRapidoTablaVertical()
   file.Save("/tmp/informe.html", contenidofichero)
   Desktop.Open("/tmp/informe.html")
   Application.Busy = 0
+
 End
