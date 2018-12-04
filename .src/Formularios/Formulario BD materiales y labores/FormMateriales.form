@@ -14,17 +14,17 @@
     }
     { AddMat Menu
       Text = ("Añadir Materiales")
-      Picture = Picture["icon:/22/add"]
+      Picture = Picture["menus/list-add.png"]
     }
     { MenuEditar Menu
       Text = ("Editar")
-      Picture = Picture["icon:/22/edit"]
+      Picture = Picture["menus/edit-select-all.png"]
     }
     { Menu4 Menu
     }
     { MenuBorrar Menu
       Text = ("Borrar")
-      Picture = Picture["icon:/22/erase"]
+      Picture = Picture["menus/edit-delete.png"]
     }
   }
   { HBox1 HBox

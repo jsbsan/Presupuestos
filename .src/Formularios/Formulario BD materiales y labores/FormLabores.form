@@ -15,17 +15,17 @@
     }
     { addCategoria Menu
       Text = ("Agregar")
-      Picture = Picture["icon:/22/add"]
+      Picture = Picture["menus/list-add.png"]
     }
     { EditarCategoria Menu
       Text = ("Editar")
-      Picture = Picture["icon:/22/edit"]
+      Picture = Picture["menus/edit-select-all.png"]
     }
     { menu1 Menu
     }
     { BorrarCategoria Menu
       Text = ("Borrar")
-      Picture = Picture["icon:/22/erase"]
+      Picture = Picture["menus/edit-delete.png"]
     }
   }
   { MenuSubcategoria Menu
@@ -38,17 +38,17 @@
     }
     { AgregarSubcategoria Menu
       Text = ("Agregar")
-      Picture = Picture["icon:/22/add"]
+      Picture = Picture["menus/list-add.png"]
     }
     { EditarSubcategoria Menu
       Text = ("Editar")
-      Picture = Picture["icon:/22/edit"]
+      Picture = Picture["menus/edit-select-all.png"]
     }
     { Menu3 Menu
     }
     { BorrarSubcategoria Menu
       Text = ("Borrar")
-      Picture = Picture["icon:/22/erase"]
+      Picture = Picture["menus/edit-delete.png"]
     }
   }
   { MenuLabores Menu
@@ -61,17 +61,17 @@
     }
     { AgregarLabor Menu
       Text = ("Agregar")
-      Picture = Picture["icon:/22/add"]
+      Picture = Picture["menus/list-add.png"]
     }
     { EditarLabor Menu
       Text = ("Editar")
-      Picture = Picture["icon:/22/edit"]
+      Picture = Picture["menus/edit-select-all.png"]
     }
     { Menu7 Menu
     }
     { BorrarLabor Menu
       Text = ("Borrar")
-      Picture = Picture["icon:/22/erase"]
+      Picture = Picture["menus/edit-delete.png"]
     }
   }
   { EditarBusquedaGeneral Menu
@@ -79,7 +79,7 @@
     Visible = False
     { EditarBusqueda Menu
       Text = ("Edita")
-      Picture = Picture["icon:/22/edit"]
+      Picture = Picture["menus/edit-select-all.png"]
     }
   }
   { TabStrip1 TabStrip

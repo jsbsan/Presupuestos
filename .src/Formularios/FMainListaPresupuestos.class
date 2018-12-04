@@ -71,7 +71,7 @@ End
 
 Public Sub Form_Close()
 
-  Dim a As Integer
+  '  Dim a As Integer
 
   Settings.Write(Me)
   FormLabores.Close()

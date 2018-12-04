@@ -15,27 +15,27 @@
     }
     { addPresupuesto Menu
       Text = ("Añadir")
-      Picture = Picture["icon:/22/add"]
+      Picture = Picture["menus/list-add.png"]
     }
     { MenuEditar Menu
       Text = ("Editar Propiedades")
-      Picture = Picture["icon:/22/edit"]
+      Picture = Picture["menus/edit-select-all.png"]
     }
     { Menu3 Menu
     }
     { ClonarPresupuestro Menu
       Text = ("Clonar")
-      Picture = Picture["icon:/22/copy"]
+      Picture = Picture["menus/edit-copy.png"]
     }
     { Menu7 Menu
     }
     { MenuRecalculo Menu
       Text = ("Recalculo")
-      Picture = Picture["icon:/22/calculator"]
+      Picture = Picture["menus/calculadora22.png"]
     }
     { MenuInforme Menu
       Text = ("Informe")
-      Picture = Picture["icon:/22/pdf"]
+      Picture = Picture["menus/document-new.png"]
     }
     { Menu6 Menu
     }
@@ -51,7 +51,7 @@
     }
     { MenuBorrarPresupuesto Menu
       Text = ("Borrar")
-      Picture = Picture["icon:/22/erase"]
+      Picture = Picture["menus/edit-delete.png"]
     }
   }
   { HBox1 HBox

@@ -47,7 +47,7 @@ End
 
 Public Sub MenuBorrar_Click()
 
-  Dim hresult As Result
+  'im hresult As Result
 
   Dim tmpVO As New MaterialesVO
   Dim TablaDescompuestoMateriales As New DescompuestomaterialesDAO

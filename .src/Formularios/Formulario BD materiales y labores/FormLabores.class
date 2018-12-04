@@ -325,7 +325,7 @@ End
 
 Public Sub BorrarLabor_Click()
 
-  Dim hresult As Result
+  '  Dim hresult As Result
   '
   Dim manejadorDescompuesto As New DescompuestolaboresDAO
   Dim tmpVO As New LaborVO

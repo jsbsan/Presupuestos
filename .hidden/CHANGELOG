@@ -1,3 +1,6 @@
+* Tue Dec 04 2018 julio sanchez berro <jusabejusabe@gmail.com> 0.1.25
+- iconos de menus dentro del programa para que no dependa de la distribucion instalada
+
 * Mon Dec 03 2018 julio sanchez berro <jusabejusabe@gmail.com> 0.1.24
 - corregido centimo en letra que faltaba por redondeo y corregido valores 0 que no ponia
 
