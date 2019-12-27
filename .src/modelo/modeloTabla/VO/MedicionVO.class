@@ -188,6 +188,7 @@ End
 Public Function ConvertirVOaColeccion(dato As MedicionVO) As Collection
 
   Dim colecciontmp As New Collection
+
   colecciontmp.add(dato.id, "id")
   colecciontmp.add(dato.iddescompuesto, "iddescompuesto")
   colecciontmp.add(dato.descripcion, "descripcion")
@@ -203,13 +204,15 @@ End
 Public Function ConvertirColeccionaVO(dato As Collection) As MedicionVO
 
   Dim datoVOtmp As New MedicionVO
+
   Try datoVOtmp.id = dato["id"]
   Try datoVOtmp.iddescompuesto = dato["iddescompuesto"]
   Try datoVOtmp.descripcion = dato["descripcion"]
   Try datoVOtmp.numeroveces = dato["numeroveces"]
-Try datoVOtmp.largo = dato["largo"]
-Try datoVOtmp.ancho = dato["ancho"]
-Try datoVOtmp.alto = dato["alto"]
-Try datoVOtmp.total = dato["total"]
-Return datoVOtmp
+  Try datoVOtmp.largo = dato["largo"]
+  Try datoVOtmp.ancho = dato["ancho"]
+  Try datoVOtmp.alto = dato["alto"]
+  Try datoVOtmp.total = dato["total"]
+  Return datoVOtmp
+
 End

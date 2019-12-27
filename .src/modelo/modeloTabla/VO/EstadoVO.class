@@ -92,6 +92,7 @@ End
 Public Function ConvertirVOaColeccion(dato As EstadoVO) As Collection
 
   Dim colecciontmp As New Collection
+
   colecciontmp.add(dato.idestado, "idestado")
   colecciontmp.add(dato.estado, "estado")
   Return colecciontmp
@@ -101,7 +102,9 @@ End
 Public Function ConvertirColeccionaVO(dato As Collection) As EstadoVO
 
   Dim datoVOtmp As New EstadoVO
-Try datoVOtmp.idestado = dato["idestado"]
-Try datoVOtmp.estado = dato["estado"]
-Return datoVOtmp
+
+  Try datoVOtmp.idestado = dato["idestado"]
+  Try datoVOtmp.estado = dato["estado"]
+  Return datoVOtmp
+
 End

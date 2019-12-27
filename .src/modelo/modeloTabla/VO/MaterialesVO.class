@@ -172,6 +172,7 @@ End
 Public Function ConvertirVOaColeccion(dato As MaterialesVO) As Collection
 
   Dim colecciontmp As New Collection
+
   colecciontmp.add(dato.idmaterial, "idmaterial")
   colecciontmp.add(dato.fecha, "fecha")
   colecciontmp.add(dato.textocorto, "textocorto")
@@ -186,12 +187,14 @@ End
 Public Function ConvertirColeccionaVO(dato As Collection) As MaterialesVO
 
   Dim datoVOtmp As New MaterialesVO
+
   Try datoVOtmp.idmaterial = dato["idmaterial"]
   Try datoVOtmp.fecha = dato["fecha"]
   Try datoVOtmp.textocorto = dato["textocorto"]
-Try datoVOtmp.textolargo = dato["textolargo"]
-Try datoVOtmp.lugarcompra = dato["lugarcompra"]
-Try datoVOtmp.precio = dato["precio"]
-Try datoVOtmp.comentario = dato["comentario"]
-Return datoVOtmp
+  Try datoVOtmp.textolargo = dato["textolargo"]
+  Try datoVOtmp.lugarcompra = dato["lugarcompra"]
+  Try datoVOtmp.precio = dato["precio"]
+  Try datoVOtmp.comentario = dato["comentario"]
+  Return datoVOtmp
+
 End

@@ -34,4 +34,5 @@ End
 Public Sub desconectar()
 
   hconn.close()
+
 End

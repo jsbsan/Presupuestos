@@ -678,7 +678,7 @@ Public Sub actualizarValoresDescompuesto(descompuestoLaborElegido As Integer)
     'no hay sumatorio, la medicion del descompuesto = 0
     'actualizar valor total del descompuesto.
     tmpvo.medicion = 0
-    incremento = - tmpvo.total
+    incremento = -tmpvo.total
     tmpvo.total = 0
 
   Endif
