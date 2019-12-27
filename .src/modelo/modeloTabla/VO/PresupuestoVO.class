@@ -252,6 +252,7 @@ End
 Public Function ConvertirVOaColeccion(dato As PresupuestoVO) As Collection
 
   Dim colecciontmp As New Collection
+
   colecciontmp.add(dato.idpresupuesto, "idpresupuesto")
   colecciontmp.add(dato.idcliente, "idcliente")
   colecciontmp.add(dato.idestado, "idestado")
@@ -271,17 +272,19 @@ End
 Public Function ConvertirColeccionaVO(dato As Collection) As PresupuestoVO
 
   Dim datoVOtmp As New PresupuestoVO
+
   Try datoVOtmp.idpresupuesto = dato["idpresupuesto"]
   Try datoVOtmp.idcliente = dato["idcliente"]
   Try datoVOtmp.idestado = dato["idestado"]
   Try datoVOtmp.claveasignada = dato["claveasignada"]
   Try datoVOtmp.valorcalculado = dato["valorcalculado"]
   Try datoVOtmp.valorasignado = dato["valorasignado"]
-Try datoVOtmp.fecha = dato["fecha"]
-Try datoVOtmp.descripcioncorta = dato["descripcioncorta"]
-Try datoVOtmp.comentario = dato["comentario"]
-Try datoVOtmp.descripciongeneral = dato["descripciongeneral"]
-Try datoVOtmp.textogarantia = dato["textogarantia"]
-Try datoVOtmp.actualizarprecios = dato["actualizarprecios"]
-Return datoVOtmp
+  Try datoVOtmp.fecha = dato["fecha"]
+  Try datoVOtmp.descripcioncorta = dato["descripcioncorta"]
+  Try datoVOtmp.comentario = dato["comentario"]
+  Try datoVOtmp.descripciongeneral = dato["descripciongeneral"]
+  Try datoVOtmp.textogarantia = dato["textogarantia"]
+  Try datoVOtmp.actualizarprecios = dato["actualizarprecios"]
+  Return datoVOtmp
+
 End

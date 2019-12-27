@@ -825,4 +825,5 @@ Public Sub ImprimirRapidoTablaVertical()
   file.Save("/tmp/informe.html", contenidofichero)
   Desktop.Open("/tmp/informe.html")
   Application.Busy = 0
+
 End

@@ -108,6 +108,7 @@ End
 Public Function ConvertirVOaColeccion(dato As SubcategoriaVO) As Collection
 
   Dim colecciontmp As New Collection
+
   colecciontmp.add(dato.idsubcategoria, "idsubcategoria")
   colecciontmp.add(dato.idcapitulo, "idcapitulo")
   colecciontmp.add(dato.textosubcategoria, "textosubcategoria")
@@ -118,8 +119,10 @@ End
 Public Function ConvertirColeccionaVO(dato As Collection) As SubcategoriaVO
 
   Dim datoVOtmp As New SubcategoriaVO
-Try datoVOtmp.idsubcategoria = dato["idsubcategoria"]
-Try datoVOtmp.idcapitulo = dato["idcapitulo"]
-Try datoVOtmp.textosubcategoria = dato["textosubcategoria"]
-Return datoVOtmp
+
+  Try datoVOtmp.idsubcategoria = dato["idsubcategoria"]
+  Try datoVOtmp.idcapitulo = dato["idcapitulo"]
+  Try datoVOtmp.textosubcategoria = dato["textosubcategoria"]
+  Return datoVOtmp
+
 End

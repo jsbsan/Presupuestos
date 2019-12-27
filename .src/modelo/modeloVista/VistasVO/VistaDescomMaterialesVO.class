@@ -168,6 +168,7 @@ End
 Public Function ConvertirVOaColeccion(dato As VistaDescomMaterialesVO) As Collection
 
   Dim colecciontmp As New Collection
+
   colecciontmp.add(dato.iddescompuestomaterial, "iddescompuestomaterial")
   colecciontmp.add(dato.idpresupuesto, "idpresupuesto")
   colecciontmp.add(dato.idmaterial, "idmaterial")
@@ -183,13 +184,15 @@ End
 Public Function ConvertirColeccionaVO(dato As Collection) As VistaDescomMaterialesVO
 
   Dim datoVOtmp As New VistaDescomMaterialesVO
+
   Try datoVOtmp.iddescompuestomaterial = dato["iddescompuestomaterial"]
-Try datoVOtmp.idpresupuesto = dato["idpresupuesto"]
-Try datoVOtmp.idmaterial = dato["idmaterial"]
-Try datoVOtmp.tipo = dato["tipo"]
-Try datoVOtmp.textocorto = dato["textocorto"]
-Try datoVOtmp.precio = dato["precio"]
-Try datoVOtmp.medicion = dato["medicion"]
-Try datoVOtmp.total = dato["total"]
-Return datoVOtmp
+  Try datoVOtmp.idpresupuesto = dato["idpresupuesto"]
+  Try datoVOtmp.idmaterial = dato["idmaterial"]
+  Try datoVOtmp.tipo = dato["tipo"]
+  Try datoVOtmp.textocorto = dato["textocorto"]
+  Try datoVOtmp.precio = dato["precio"]
+  Try datoVOtmp.medicion = dato["medicion"]
+  Try datoVOtmp.total = dato["total"]
+  Return datoVOtmp
+
 End
