@@ -370,8 +370,11 @@ End
 Public Sub TextBoxBusquedaContenido_KeyPress()
 
   'cada vez que se escriba una letra, carga el contenido del listbox
+  'aumento el numero de carcteres neesarios para hacer busquedas.
+  If Len(TextBoxBusquedaContenido.text) > 3 Then
 
-  If Len(TextBoxBusquedaContenido.text) > 2 Then
+    Try Print Key.Text
+    If Error Then Return 'no hacer nada
 
     If IsLetter(Key.text) Then
       cargaRegillaFiltrada(TextBoxBusquedaContenido.text & Key.Text)
@@ -383,7 +386,8 @@ Public Sub TextBoxBusquedaContenido_KeyPress()
       Endif
     Endif
   Else
-    rellenarGridBusqueda()
+    'para mejorar la velocidad no relleno
+    ' rellenarGridBusqueda()
   Endif
 
 End
@@ -437,5 +441,14 @@ Public Sub EditarBusqueda_Click()
     manejarBusquedaLabores.FormularioModificarRegistroIdlabor(tmpVO.idlabor, tmpTablaVO, 1)
     cargaRegillaFiltrada(TextBoxBusquedaContenido.text)
   Endif
+
+End
+
+Public Sub ButtonTodos_Click()
+
+  Me.mouse = Mouse.Wait
+  Wait 0.01
+  rellenarGridBusqueda()
+  Me.mouse = Mouse.Default
 
 End

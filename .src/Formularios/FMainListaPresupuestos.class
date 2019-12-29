@@ -378,3 +378,19 @@ Public Sub MenuBorrarPresupuesto_Click()
   Endif
 
 End
+
+Public Sub Buttonbc3_Click()
+
+  Dim tmpVO As New VistaPresupuestoVO 'datos de un registro de vista
+
+  tmpVO = ManejadorVistaPrespuesto.filaSeleccionadaVO()
+  If Not IsNull(tmpVO) Then
+    'recalcular el presupuesto elegido... 0.1.16
+    MenuRecalculo_Click()
+    'inicio elformulario de conversion a BCE
+    'FormInforme.idpresupuesto = tmpVO.idpresupuesto
+    '    FormInforme.Show()
+    Message.Info("Este función no esta terminada....")
+  Endif
+
+End

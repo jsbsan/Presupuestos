@@ -30,15 +30,16 @@
   { HBox1 HBox
     MoveScaled(1,1,81,5)
     { Label1 Label
-      MoveScaled(1,1,21,3)
+      MoveScaled(1,1,19,3)
       Text = ("Filtro de Materiales:")
     }
     { TextBoxBusquedaMateriales TextBox
       MoveScaled(21,1,40,3)
     }
     { ButtonQuitarFiltro Button
-      MoveScaled(64,0,8,5)
+      MoveScaled(62,0,16,5)
       ToolTip = ("quitar filtro de materiales")
+      Text = ("Mostrar todos")
       Picture = Picture["icon:/22/cancel"]
     }
   }

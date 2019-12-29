@@ -79,7 +79,8 @@ Public Sub TextBoxBusquedaMateriales_KeyPress()
   'cada vez que se escriba una letra, carga el contenido del listbox
 
   If Len(TextBoxBusquedaMateriales.text) > 1 Then
-
+    Try Print Key.Text
+    If Error Then Return 'no hacer nada
     If IsLetter(Key.text) Then
       cargaRegillaFiltrada(TextBoxBusquedaMateriales.text & Key.Text)
     Else
@@ -90,7 +91,8 @@ Public Sub TextBoxBusquedaMateriales_KeyPress()
       Endif
     Endif
   Else
-    rellenarGrid()
+    'Para mejorar la velociidad no relleno
+    'rellenarGrid()
   Endif
 
 End
@@ -104,7 +106,10 @@ End
 Public Sub ButtonQuitarFiltro_Click()
 
   TextBoxBusquedaMateriales.text = ""
+  Me.mouse = Mouse.Wait
+  Wait 0.01
   rellenarGrid()
+  Me.mouse = Mouse.Default
 
 End
 
