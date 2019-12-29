@@ -383,6 +383,8 @@ Public Sub Buttonbc3_Click()
 
   Dim tmpVO As New VistaPresupuestoVO 'datos de un registro de vista
 
+  Dim EnTest As Boolean = False
+
   tmpVO = ManejadorVistaPrespuesto.filaSeleccionadaVO()
   If Not IsNull(tmpVO) Then
     'recalcular el presupuesto elegido... 0.1.16
@@ -390,7 +392,17 @@ Public Sub Buttonbc3_Click()
     'inicio elformulario de conversion a BCE
     'FormInforme.idpresupuesto = tmpVO.idpresupuesto
     '    FormInforme.Show()
-    Message.Info("Este función no esta terminada....")
+
+    If EnTest = True Then
+      Message.Info("Este función no esta terminada....")
+      Return
+    Endif
+    'no estamos en Test
+
+    BC3.tmpVO = tmpVO
+
+    BC3.GenerarBC3()
+
   Endif
 
 End

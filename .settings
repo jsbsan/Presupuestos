@@ -4,10 +4,11 @@ AdaptadaPresupuestoDAO=[138]
 FormLabores=[365]
 
 [Breakpoints]
-Count=3
-Breakpoint[1]="FormConfigurar.120"
-Breakpoint[2]="FormConfigurar.147"
-Breakpoint[3]="FormConfigurar.152"
+Count=4
+Breakpoint[1]="BC3.22"
+Breakpoint[2]="FormConfigurar.120"
+Breakpoint[3]="FormConfigurar.147"
+Breakpoint[4]="FormConfigurar.152"
 
 [DebugWindow]
 Count=0
@@ -262,7 +263,7 @@ Escape="\""
 File[1]="imagenes/pintor.jpg"
 File[2]="imagenes/pintoreconomico.jpg"
 File[3]=".src/Formularios/FMainListaPresupuestos.form"
-File[4]=".src/Formularios/FMainListaPresupuestos.class:44.392"
+File[4]=".src/Formularios/FMainListaPresupuestos.class:0.400"
 File[5]=".src/Formularios/Formulario BD materiales y labores/FormLabores.class:0.448"
 File[6]=".src/modelo/conexion/ConexionMapBDvistas.class:22.4"
 File[7]=".src/modelo/modeloTabla/DAO/MaterialesDAO.class:70.734"
@@ -289,8 +290,8 @@ File[27]=".src/Adaptadas/AdaptadoClienteDAO.class:0.7"
 File[28]=".src/modelo/modeloTabla/DAO/ClienteDAO.class:70.654"
 File[29]=".src/Adaptadas/AdaptadaMaterialesDAO.class:0.28"
 File[30]=".src/Adaptadas/AdaptadaPresupuestoDAO.class:0.21"
-File[31]=".src/Formularios/Formulario Descompuestos/FormDescompuesto.class:45.971"
-File[32]=".src/Formularios/FormGaleriaImagenes.class:19.0"
+File[31]=".src/Formularios/Formulario Descompuestos/FormDescompuesto.class:2.74"
+File[32]=".src/Formularios/FormGaleriaImagenes.class:21.260"
 File[33]=".src/modelo/modeloVista/VistasDAO/VistaDescomMaterialesDAO.class:70.491"
 File[34]=".src/Transito.module:5.0"
 File[35]=".src/modelo/modeloVista/VistasDAO/VistaDescomLaboresDAO.class:70.555"
@@ -348,12 +349,13 @@ File[85]=".src/ClassEstadosYTiposPrecios.class:0.44"
 File[86]=".src/Adaptadas/VistaPrespuestoAdaptadaDAO.class:12.74"
 File[87]=".src/Formularios/FormGaleriaImagenes.form"
 File[88]=".src/ClassNumLetras.class:58.97"
-Count=93
-File[89]=".src/Formularios/FormInforme.class:74.95"
+Count=94
+File[89]=".src/Formularios/FormInforme.class:0.550"
 File[90]="imagenes/BUSCAR.png"
 File[91]="imagenes/VERTODOS.png"
-File[92]=".src/BC3.module:0.2"
+File[92]=".src/BC3.module:16.26"
 File[93]="imagenes/bc3Icono40.png"
+File[94]=".src/modelo/modeloVista/VistasVO/VistaPresupuestoVO.class:26.100"
 
 [Watches]
 Count=5

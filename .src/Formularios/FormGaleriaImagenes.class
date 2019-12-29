@@ -242,7 +242,7 @@ Public Sub ButtonAddFicheros_Click()
 End
 
 Public Sub ButtonCrearDirectorio_Click()
-  ''TODO: realizar copia de ficheros de imagen del presupuesto
+  '''TODO: realizar copia de ficheros de imagen del presupuesto
   'seleccionar una carpeta o crear una nueva
 
   Dialog.Title = Me.Title & " " & (("Selecciones una carpeta o creala"))

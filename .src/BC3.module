@@ -2,3 +2,82 @@
 
 'MODULO PARA CONVERSION BC3. SEGÚN
 'http://www.fiebdc.es/fiebdc-32012/
+
+Public tmpVO As VistaPresupuestoVO
+
+Private BarraInvertida As String = "\\"
+
+Public Sub GenerarBC3()
+
+  Dim contenido As String
+
+  Dialog.Title = "Conversion a BC3"
+  Dialog.Filter = ["*.bc3", "Ficheros bc3"]
+  If Dialog.SaveFile() Then
+    Return 'cancelo creación de fichero bc3
+    'no generar nada
+  Else
+    'generar
+    'crear:
+    'linea de version
+    contenido = version()
+    ' linea del nombre del presupuesto
+    contenido &= NombrePresupuesto()
+    ''guardar fichero de datos....
+    If File.Ext(Dialog.Path) = "" Then
+      Dialog.path &= ".bc3" 'añado la extension
+    Endif
+
+    contenido = ConversionCaracteres(contenido)
+    File.Save(Dialog.path, contenido)
+
+    'si todo ha ido bien
+    Message.Info("Conversion Hecha")
+  Endif
+
+End
+
+Public Function ConversionCaracteres(texto As String) As String
+
+  texto = Conv$(texto, "UTF-8", "ISO-8859-1") 'conversion a caracteres SO Windows
+
+  Return texto
+
+End
+
+Public Function version() As String
+
+  Dim inicial As String
+
+  inicial = "~V|GambasSoftware|FIEBDC-3/2012|Lince " & Application.version & "||ANSI||2|" & gb.CrLf 'version del programa que genera el BC3
+  inicial &= "~K|" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "3" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "EUR" & BarraInvertida & "|0|3" & BarraInvertida & "2" & BarraInvertida & "" & BarraInvertida & "3" & BarraInvertida & "3" & BarraInvertida & "" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "2" & BarraInvertida & "EUR" & BarraInvertida & "|" & gb.CrLf 'coeficientes
+
+  Return inicial
+
+End
+
+Public Function NombrePresupuesto() As String
+
+  Dim inicial As String
+  'solo para el nombre del presupuesto
+  Dim nombre As String = tmpVO.descripcioncorta
+
+  Dim importe As String
+
+  'mirar estas subrutinas:
+  'TODO: mirar recalculo
+  ' CalcularValorPresupuesto()
+  '
+  '  actualizarPrecioPresupuesto()
+  '
+
+  inicial = "~C|0##||" & nombre & "|" & importe & "|" & Format(Now, "ddmmyy") & "|0|" & gb.CrLf
+
+  Return inicial
+
+End
+
+'Conceptos
+'Descompuestos
+'mediciones
+'textos
