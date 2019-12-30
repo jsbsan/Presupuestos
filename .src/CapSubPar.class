@@ -1,0 +1,78 @@
+' Gambas class file
+
+'Capitulo, Subcapitulo y Partida
+
+Private hcapitulo As Integer
+Private hsubcapitulo As Integer
+Private hpartida As Integer
+
+Private BarraInvertida As String = "\\"
+
+Public Sub _new()
+
+  hcapitulo = 1
+  hsubcapitulo = 0
+  hpartida = 0
+
+End
+
+Public Sub AgregaPartida()
+
+  hpartida += 1
+
+End
+
+Public Sub AgregaSubcapitulo()
+
+  hpartida = 0
+  hsubcapitulo += 1
+
+End
+
+Public Sub AgregaCapitulo()
+
+  hpartida = 0
+  hsubcapitulo = 0
+  hcapitulo += 1
+
+End
+
+Public Function Posicion() As String
+
+  Dim pos As String
+
+  pos = Str$(hcapitulo) & BarraInvertida
+  pos &= Str$(hsubcapitulo) & BarraInvertida
+  If hpartida <> 0 Then
+    pos &= Str$(hpartida)
+  Endif
+  Return pos
+
+End
+
+Public Function idcap() As String
+
+  Dim pos As String
+
+  pos = "C" & Str$(hcapitulo)
+  Return pos
+
+End
+
+Public Function idSubcap() As String
+
+  Dim pos As String
+
+  pos = idcap() & "S" & Str$(hsubcapitulo)
+  Return pos
+
+End
+
+Public Function idPartida() As String
+
+  Dim pos As String
+
+  pos = idSubcap() & "P" & Str$(hpartida)
+  Return pos
+
+End

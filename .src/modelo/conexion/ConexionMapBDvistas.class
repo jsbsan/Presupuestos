@@ -1,6 +1,6 @@
 ' Gambas class file
 
-''NOTE: Realizado con MapBd-Vistas. version 0.2.99  Fecha: 2015-02-22 21:26:41
+''NO TE: Realizado con MapBd-Vistas. version 0.2.99  Fecha: 2015-02-22 21:26:41
 Public hconn As New Connection
 Public NombreBaseDatos As String = user.home & "/PresupuestosTrabajosPinturas/PresupuestosPintura.sqlite"
 

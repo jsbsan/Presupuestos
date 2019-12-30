@@ -2,16 +2,18 @@
 FormDescompuesto=[126,796]
 AdaptadaPresupuestoDAO=[138]
 FormLabores=[365]
+BC3=[91]
 
 [Breakpoints]
-Count=4
-Breakpoint[1]="BC3.22"
-Breakpoint[2]="FormConfigurar.120"
-Breakpoint[3]="FormConfigurar.147"
-Breakpoint[4]="FormConfigurar.152"
+Count=3
+Breakpoint[1]="FormConfigurar.120"
+Breakpoint[2]="FormConfigurar.147"
+Breakpoint[3]="FormConfigurar.152"
 
 [DebugWindow]
-Count=0
+Count=2
+DebugWindow[1]="tmpVO"
+DebugWindow[2]="datosPresupuesto"
 
 [DebugWindow/AdaptadaSubcategoriaDAO]
 Geometry=[0,28,210,210]
@@ -111,6 +113,9 @@ Geometry=[0,1,210,210]
 
 [DebugWindow/datosEditar]
 Geometry=[0,28,262,430]
+
+[DebugWindow/datosPresupuesto]
+Geometry=[1280,0,224,570]
 
 [DebugWindow/datotemp]
 Geometry=[94,395,210,210]
@@ -233,7 +238,7 @@ Geometry=[2,33,401,532]
 Geometry=[0,1,215,613]
 
 [DebugWindow/tmpVO]
-Geometry=[560,521,518,210]
+Geometry=[560,521,518,280]
 
 [DebugWindow/tmpVO1]
 Geometry=[0,28,210,210]
@@ -264,22 +269,22 @@ File[1]="imagenes/pintor.jpg"
 File[2]="imagenes/pintoreconomico.jpg"
 File[3]=".src/Formularios/FMainListaPresupuestos.form"
 File[4]=".src/Formularios/FMainListaPresupuestos.class:0.400"
-File[5]=".src/Formularios/Formulario BD materiales y labores/FormLabores.class:0.448"
-File[6]=".src/modelo/conexion/ConexionMapBDvistas.class:22.4"
+File[5]=".src/Formularios/Formulario BD materiales y labores/FormLabores.class:58.363"
+File[6]=".src/modelo/conexion/ConexionMapBDvistas.class:5.2"
 File[7]=".src/modelo/modeloTabla/DAO/MaterialesDAO.class:70.734"
-File[8]=".src/modelo/modeloTabla/DAO/PresupuestoDAO.class:70.936"
+File[8]=".src/modelo/modeloTabla/DAO/PresupuestoDAO.class:6.1283"
 File[9]=".src/FormAutomaticoDinamico.form"
 File[10]=".src/modelo/modeloTabla/DAO/CategoriaDAO.class:70.422"
 File[11]=".src/modelo/modeloTabla/DAO/SubcategoriaDAO.class:70.458"
 File[12]=".src/modelo/modeloVista/VistasDAO/VistaSubcategoriaDAO.class:70.331"
 File[13]=".src/Adaptadas/AdaptadaSubcategoriaDAO.class:1.0"
-File[14]=".src/comun.module:47.41"
+File[14]=".src/comun.module:7.48"
 File[15]=".src/FormAutomaticoDinamico.class:0.72"
 File[16]=".src/modelo/modeloTabla/VO/SubcategoriaVO.class:0.34"
 File[17]=".src/Adaptadas/AdaptadaLaborDAO.class:13.0"
 File[18]=".src/modelo/modeloTabla/DAO/LaborDAO.class:70.624"
 File[19]=".src/Formularios/Formulario BD materiales y labores/FormMateriales.form"
-File[20]=".src/Formularios/Formulario BD materiales y labores/FormMateriales.class:26.111"
+File[20]=".src/Formularios/Formulario BD materiales y labores/FormMateriales.class:65.131"
 File[21]=".src/modelo/modeloVista/VistasDAO/VistaPresupuestoDAO.class:70.523"
 File[22]="imagenes/casco.png"
 File[23]="imagenes/bote-de-pintura.png"
@@ -290,7 +295,7 @@ File[27]=".src/Adaptadas/AdaptadoClienteDAO.class:0.7"
 File[28]=".src/modelo/modeloTabla/DAO/ClienteDAO.class:70.654"
 File[29]=".src/Adaptadas/AdaptadaMaterialesDAO.class:0.28"
 File[30]=".src/Adaptadas/AdaptadaPresupuestoDAO.class:0.21"
-File[31]=".src/Formularios/Formulario Descompuestos/FormDescompuesto.class:2.74"
+File[31]=".src/Formularios/Formulario Descompuestos/FormDescompuesto.class:9.503"
 File[32]=".src/Formularios/FormGaleriaImagenes.class:21.260"
 File[33]=".src/modelo/modeloVista/VistasDAO/VistaDescomMaterialesDAO.class:70.491"
 File[34]=".src/Transito.module:5.0"
@@ -310,13 +315,13 @@ File[47]=".src/modelo/modeloTabla/VO/DescompuestomaterialesVO.class:0.44"
 File[48]=".src/Formularios/Formulario BD materiales y labores/FormLabores.form"
 File[49]="imagenes/config64.png"
 File[50]=".src/Formularios/FormConfigurar.form"
-File[51]=".src/Formularios/FormConfigurar.class:2.106"
+File[51]=".src/Formularios/FormConfigurar.class:7.56"
 File[52]="imagenes/gambasupdate.png"
 File[53]="imagenes/configurar.png"
 File[54]="imagenes/bote-de-pinturapeque.png"
 File[55]="imagenes/arbol.png"
-File[56]=".src/modelo/modeloTabla/VO/PresupuestoVO.class:33.3"
-Active=92
+File[56]=".src/modelo/modeloTabla/VO/PresupuestoVO.class:3.57"
+Active=91
 File[57]=".src/modelo/modeloTabla/DAO/EstadoDAO.class:70.422"
 File[58]=".src/modelo/modeloTabla/VO/EstadoVO.class:16.49"
 File[59]=".src/modelo/modeloTabla/DAO/TipoDAO.class:70.422"
@@ -325,7 +330,7 @@ File[61]=".src/Formularios/FormInforme.form"
 File[62]="imagenes/CandadoCerrado.png"
 File[63]="imagenes/CandadoAbierto.png"
 File[64]=".src/modelo/modeloTabla/DAO/DescompuestomaterialesDAO.class:70.638"
-File[65]=".src/Adaptadas/Conexion.class:30.7"
+File[65]=".src/Adaptadas/Conexion.class:8.32"
 File[66]="ramdisk.sh:74.1"
 File[67]="Nota Latex.txt:5.0"
 File[68]="estructura.html:0.0"
@@ -346,16 +351,17 @@ File[82]=".src/ModuloPresupuesto.module:0.29"
 File[83]=".src/modelo/modeloVista/VistasDAO/VistaLaborDAO.class:70.491"
 File[84]=".src/Formularios/Formulario Descompuestos/FormDescompuesto.form"
 File[85]=".src/ClassEstadosYTiposPrecios.class:0.44"
-File[86]=".src/Adaptadas/VistaPrespuestoAdaptadaDAO.class:12.74"
+File[86]=".src/Adaptadas/VistaPrespuestoAdaptadaDAO.class:14.79"
 File[87]=".src/Formularios/FormGaleriaImagenes.form"
 File[88]=".src/ClassNumLetras.class:58.97"
-Count=94
-File[89]=".src/Formularios/FormInforme.class:0.550"
-File[90]="imagenes/BUSCAR.png"
-File[91]="imagenes/VERTODOS.png"
-File[92]=".src/BC3.module:16.26"
-File[93]="imagenes/bc3Icono40.png"
-File[94]=".src/modelo/modeloVista/VistasVO/VistaPresupuestoVO.class:26.100"
+Count=95
+File[89]="imagenes/BUSCAR.png"
+File[90]="imagenes/VERTODOS.png"
+File[91]=".src/BC3.module:9.134"
+File[92]="imagenes/bc3Icono40.png"
+File[93]=".src/modelo/modeloVista/VistasVO/VistaPresupuestoVO.class:26.100"
+File[94]=".src/CapSubPar.class:25.24"
+File[95]=".src/Formularios/FormInforme.class:0.173"
 
 [Watches]
 Count=5

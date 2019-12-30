@@ -129,7 +129,7 @@ Public Sub GridViewMateriales_MouseDrag()
 
   If Not IsNull(tmpVO) Then
     Transito.MaterialCogido = tmpVO
-    GridViewMateriales.Drag("material|" & tmpVO.idmaterial) ''NOTE: coger datos de materiales
+    GridViewMateriales.Drag("material|" & tmpVO.idmaterial) ''NO TE: coger datos de materiales
 
   Endif
 

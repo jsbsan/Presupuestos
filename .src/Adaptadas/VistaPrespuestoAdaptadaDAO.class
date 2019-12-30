@@ -77,7 +77,7 @@ Public Sub Observar_Data(row As Integer, column As Integer)
         Endif
       Else
 
-        ''FIXME: APADRIDO PARA poner clave asignada como texto
+        ''FIX ME: APADRIDO PARA poner clave asignada como texto
         If Me.GridViewPropio.tag[column] = "claveasignada" Or Me.GridViewPropio.tag[column] = "descripcioncorta" Then
           Me.gridviewPropio.Data.text = datocontenido
 

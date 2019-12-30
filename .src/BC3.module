@@ -7,9 +7,32 @@ Public tmpVO As VistaPresupuestoVO
 
 Private BarraInvertida As String = "\\"
 
+Private CSP As CapSubPar
+
+'Manejadores de informacion
+Private datosPresupuesto As PresupuestoVO
+Private manejadorPresupuesto As New PresupuestoDAO
+
+Private manejadorDescompuestolabores As New DescompuestolaboresDAO
+Private ArrayDatosDescompuestoLabores As DescompuestolaboresVO[]
+
+Private manejadorCategoria As New CategoriaDAO
+Private datoCategoria As CategoriaVO
+
+Private datotmpLabor As LaborVO
+Private misql As String
+
+Private manejadorLaboral As New LaborDAO
+Private manejadorSubcategoria As New SubcategoriaDAO
+Private datoSubcategoria As SubcategoriaVO
+
+Private idpresupuesto As String
+
 Public Sub GenerarBC3()
 
   Dim contenido As String
+
+  idpresupuesto = tmpVO.idpresupuesto
 
   Dialog.Title = "Conversion a BC3"
   Dialog.Filter = ["*.bc3", "Ficheros bc3"]
@@ -17,12 +40,27 @@ Public Sub GenerarBC3()
     Return 'cancelo creación de fichero bc3
     'no generar nada
   Else
-    'generar
+
     'crear:
     'linea de version
     contenido = version()
     ' linea del nombre del presupuesto
-    contenido &= NombrePresupuesto()
+    datosPresupuesto = manejadorPresupuesto.ExtraerRegistro("idpresupuesto", idpresupuesto)
+    'FIXME: se exporta el valor calculado... QUE ES LO QUE TIENE SENTIDO
+    contenido &= NombrePresupuesto(datosPresupuesto.valorcalculado)
+
+    'por cada Capitulo
+
+    'por cada Subcapitulo dentro del Capitulo
+
+    'por cada PARTIDA dentro del subcapitulo
+
+    ''GENERO las labores segun el orden indicado en el descompuesto.
+
+    contenido &= GenerarLabores()
+
+    '' Genero Materiales (habria que crear un capitulo especial dedicado a materiales)
+
     ''guardar fichero de datos....
     If File.Ext(Dialog.Path) = "" Then
       Dialog.path &= ".bc3" 'añado la extension
@@ -36,6 +74,73 @@ Public Sub GenerarBC3()
   Endif
 
 End
+
+Public Sub GenerarLabores()
+
+  Dim datoDescompuestosLaboral As DescompuestolaboresVO
+  Dim subcategoriaActual As String
+  Dim CapituloActual As Integer
+  Dim SumaParcialCapitulo As Float = 0
+  Dim Codigo As String
+  'generar
+  Csp = New CapSubPar 'genero el sistema de id y control de posicion
+
+  misql = "select * from Descompuestolabores where idpresupuesto=" & idpresupuesto & " order by idorden"
+
+  ArrayDatosDescompuestoLabores = manejadorDescompuestolabores.ConvertirResult(manejadorDescompuestolabores.sql(misql))
+
+  'POR CADA DESCOMPUESTO EXISTENTE....
+  For Each datoDescompuestosLaboral In ArrayDatosDescompuestoLabores
+    'necesito el texto largo del idlabor
+
+    datotmpLabor = manejadorLaboral.ExtraerRegistro("idlabor", datoDescompuestosLaboral.idlabor)
+
+    If datotmpLabor.IDSUBCATEGORIA = subcategoriaActual Then
+      'no escribo nada, estoy en la misma subcategoria
+      'estoy en el mismo subcaptitulo
+
+    Else
+      'comprueba categoria
+      Try datoSubcategoria = manejadorSubcategoria.ExtraerRegistro("idsubcategoria", datotmpLabor.IDSUBCATEGORIA)
+      If Error Then
+        Print "Error en informe al intentar ver una subcategoria"
+      Else
+        'textos de categoria y subcategoria
+        If CapituloActual <> datoSubcategoria.IDCAPITULO Then
+          'salto a un nuevo capitulo / categoria
+          If CapituloActual <> 0 Then
+            'es distinto a la 1º partida
+            'poner sumas parciales
+            'reemplazamos datos del importe
+            codigo = Replace(codigo, "Importe" & CSP.idcap & "#", FormInforme.Formato(SumaParcialCapitulo, ",0.#0"))
+            SumaParcialCapitulo = 0
+          Endif
+
+          CSP.AgregaCapitulo()
+
+          datoCategoria = manejadorCategoria.ExtraerRegistro("idcategoria", datoSubcategoria.IDCAPITULO)
+          'creo Capitulo
+          Codigo &= Conceptos(CSP.idcap & "#", "", datoCategoria.TEXTOCAPITULO, "Importe" & CSP.idcap & "#")
+
+          CSP.AgregaSubcapitulo()
+
+          Codigo &= Conceptos(CSP.idsubcategoria & "#", datoSubcategoria.TEXTOSUBCATEGORIA, "0") 'hay que indicar la suma de la subcategoria
+
+          CapituloActual = datoSubcategoria.IDCAPITULO
+          subcategoriaActual = datotmpLabor.IDSUBCATEGORIA
+          'linea 266 / form informes
+        Else
+        Endif
+      Endif
+    Endif
+
+  Next
+
+End
+
+'' ********************************************************
+'' ***         Funciones de conversion a BC3            ***
+'' ********************************************************
 
 Public Function ConversionCaracteres(texto As String) As String
 
@@ -56,21 +161,18 @@ Public Function version() As String
 
 End
 
-Public Function NombrePresupuesto() As String
+Public Function NombrePresupuesto(importe As String) As String
 
   Dim inicial As String
   'solo para el nombre del presupuesto
   Dim nombre As String = tmpVO.descripcioncorta
 
-  Dim importe As String
-
   'mirar estas subrutinas:
   'TODO: mirar recalculo
   ' CalcularValorPresupuesto()
   '
-  '  actualizarPrecioPresupuesto()
+  'actualizarPrecioPresupuesto()
   '
-
   inicial = "~C|0##||" & nombre & "|" & importe & "|" & Format(Now, "ddmmyy") & "|0|" & gb.CrLf
 
   Return inicial
@@ -78,6 +180,87 @@ Public Function NombrePresupuesto() As String
 End
 
 'Conceptos
+Public Function Conceptos(id As String, unidad As String, nombrecorto As String, importe As String, Optional tipo As String) As String
+
+  Dim inicial As String
+
+  If tipo = "" Then
+    tipo = "0"
+  Endif
+
+  inicial = "~C|" & id & "|" & unidad & "|" & nombrecorto & "|" & importe & "|" & Format(Now, "ddmmyy") & "|" & tipo & "|" & gb.CrLf
+
+  ''nota:
+  ' 0 Sin clasificar
+  '
+  ' 1 Mano de obra
+  '
+  ' 2 Maquinaria y medios auxiliares
+  '
+  ' 3 Materiales
+  '
+  ' 4 Componentes adicionales de residuo
+  '
+  ' 5 Clasificaci ón de residuo
+
+  Return inicial
+
+End
+
 'Descompuestos
+Public Function Descompuesto(padre As String, hijo As String) As String
+
+  Dim inicial As String
+
+  inicial = "~D|" & padre & "|" & hijo & BarraInvertida & "1" & BarraInvertida & "1" & "|" & gb.CrLf
+  'el 1º  uno es factor que es 1.0
+  'el 2º uno es el rendimiento que es 1.0
+  Return inicial
+
+End
+
+'Agregar Descompuesto
+
+Public Function AgregarDescompuesto(padre As String, hijo As String) As String
+
+  Dim inicial As String
+
+  inicial = "~Y|" & padre & "|" & hijo & BarraInvertida & "1" & BarraInvertida & "1" & "|" & gb.CrLf
+  'el 1º  uno es factor que es 1.0
+  'el 2º uno es el rendimiento que es 1.0
+  Return inicial
+
+End
+
 'mediciones
+Public Function Medicion(idruta As String, posicion As String, MedicionTotal As String, Comentario As String, unidades As String, longitud As String, latitud As String, altura As String) As String
+
+  Dim inicial As String
+
+  inicial = "~M|" & idruta & "|" & posicion & "|" & MedicionTotal & "|" & BarraInvertida & Comentario & BarraInvertida & unidades & BarraInvertida & longitud & BarraInvertida & latitud & BarraInvertida & altura & "|" & gb.CrLf
+
+  Return inicial
+
+End
+
+'agregar medicion... a unidades que tenga ya mediciones...
+Public Function AgregarMedicion(idruta As String, posicion As String, MedicionTotal As String, Comentario As String, unidades As String, longitud As String, latitud As String, altura As String) As String
+
+  Dim inicial As String
+
+  inicial = "~N|" & idruta & "|" & posicion & "|" & MedicionTotal & "|" & BarraInvertida & Comentario & BarraInvertida & unidades & BarraInvertida & longitud & BarraInvertida & latitud & BarraInvertida & altura & "|" & gb.CrLf
+
+  Return inicial
+
+End
 'textos
+
+Public Function Texto(id As String, texto As String) As String
+
+  Dim inicial As String
+
+  inicial = "~T|" & id & "|" & Replace(texto, "\n", gb.crlf) & "|" & gb.CrLf
+
+  Return inicial
+
+End

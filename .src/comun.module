@@ -46,7 +46,7 @@ Public Sub cambiarFecha(f As String) As String
   Dim dia As String
   Dim mes As String
 
-  ''NOTE: Cuidado con el formato de datos que tiene segun el pais
+  ''NO TE: Cuidado con el formato de datos que tiene segun el pais
   mes = Mid$(f, 1, 2)
   dia = Mid$(f, 4, 2)
   anno = Mid$(f, 7, 4)

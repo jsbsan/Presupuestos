@@ -54,7 +54,7 @@ Public Sub ButtonGuardarRamDisk_Click()
   '  settings["contrasena"] = TextBoxClaveSuperUsuario.text
   ' settings["RamDisk"] = CheckBoxActivarModoRamDisk.value
 
-  ''TODO: comprobar el tamaño del archivo de base de datos, multiplicar x2 el tamaño, redondeo hacia arriba
+  ''TO DO: comprobar el tamaño del archivo de base de datos, multiplicar x2 el tamaño, redondeo hacia arriba
   ' valorminimo = sizeFichero()
   ' If valorminimo > ValueBoxMemoriaMB.Value Then
   '   '  Message.Info(("El tamaño del disco Ram es menor al recomendado. Lo creare con " & Str$(valorminimo) & " mb de tamaño"))

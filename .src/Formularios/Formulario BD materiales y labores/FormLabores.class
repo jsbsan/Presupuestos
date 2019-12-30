@@ -52,7 +52,7 @@ Public Sub TabStrip1_Arrange()
 
   Dim tmpCategoriaVO As CategoriaVO
   Dim ArrayCategoriavo As CategoriaVO[]
-  ''NOTE: Hacer click en una pestaña del tabscript
+  ''NO TE: Hacer click en una pestaña del tabscript
 
   Select Case TabStrip1.index
     Case 1 'Paso a la  Pestaña Subcategoria
@@ -361,7 +361,7 @@ Public Sub GridViewLabores_MouseDrag()
 
   If Not IsNull(tmpVO) Then
     Transito.laborCogido = tmpVO
-    GridViewLabores.Drag("labores|" & tmpVO.idlabor) ''NOTE: coger datos de labores
+    GridViewLabores.Drag("labores|" & tmpVO.idlabor) ''NO TE: coger datos de labores
 
   Endif
 
@@ -420,7 +420,7 @@ Public Sub GridViewBusquedaContenido_MouseDrag()
     tmpTablaVO = manejadorLabores.ExtraerRegistro("idlabor", tmpVO.idlabor)
 
     Transito.laborCogido = tmptablaVO
-    GridViewBusquedaContenido.Drag("labores|" & tmpVO.idlabor) ''NOTE: coger datos de labores
+    GridViewBusquedaContenido.Drag("labores|" & tmpVO.idlabor) ''NO TE: coger datos de labores
 
   Endif
 

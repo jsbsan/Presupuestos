@@ -99,7 +99,7 @@ End
 
 Public Sub actualizarPrecioPresupuesto()
 
-  ''TODO: Cambiar el valor del presupuesto principal cuando cambia algun valor del total de algun descompuesto
+  ''TO DO: Cambiar el valor del presupuesto principal cuando cambia algun valor del total de algun descompuesto
   'editar el registro del presupuesto, y cambiarle el valor del
   Dim manejadorpresupuesto As New PresupuestoDAO
   Dim datosPresupuesto As New PresupuestoVO
@@ -122,7 +122,7 @@ End
 Public Sub rellenarGridLabor()
 
   Dim sql As String
-  ''FIXME: ordenar por el campo idorden
+  ''FIX ME: ordenar por el campo idorden
   sql = "select * from VistaDescomLabores where idpresupuesto=" & idpresupuesto & " order by idorden"
 
   manejadorVistaDescompuestoLabor.MostrarGridView(GridViewLabores, sql)
@@ -332,7 +332,7 @@ Public Sub GridViewMateriales_Drop()
 End
 
 Public Sub EditarMaterial_Click()
-  ''TODO: Ejemplo como editar un precio/medicion de un material de un descompuesto.
+  ''TO DO: Ejemplo como editar un precio/medicion de un material de un descompuesto.
 
   Dim diff As Float
   Dim respuesta As Float[]
@@ -501,7 +501,7 @@ Public Sub EditarLabores_Click()
 
     Endif
 
-    ''TODO: asignar precio a labor (editor)
+    ''TO DO: asignar precio a labor (editor)
     asignarPrecioAlabor(tmptablaVO, respuesta)
   Endif
 
@@ -1007,14 +1007,14 @@ Public Sub GridViewMedicion_MouseDrag()
   ArrayMedicionesVO = manejadorMedicionesTabla.ConvertirResult(manejadorMedicionesTabla.sql(misql))
 
   Transito.MedicionesArray = ArrayMedicionesVO
-  GridViewMedicion.Drag("Mediciones") ''NOTE: coger datos de mediciones
+  GridViewMedicion.Drag("Mediciones") ''NO TE: coger datos de mediciones
 
 End
 
 Public Sub GridViewLabores_MouseDrag()
 
   'coger datos de un Descompuesto...
-  GridViewMedicion.Drag("Descompuesto|" & Str$(descompuestoLaborElegido)) ''NOTE: coger datos del descompuesto"
+  GridViewMedicion.Drag("Descompuesto|" & Str$(descompuestoLaborElegido)) ''NO TE: coger datos del descompuesto"
 
 End
 
@@ -1105,7 +1105,7 @@ Public Sub GridViewMateriales_MouseDrag()
   tmpVistaVO = manejadorVistaDescompuestoMaterial.filaSeleccionadaVO()
   'aqui obtengo los datos del registro de la vista...
   If Not IsNull(tmpVistaVO) Then
-    GridViewMateriales.Drag("DescompuestoMaterial|" & Str$(tmpVistaVO.iddescompuestomaterial)) ''NOTE: coger datos del descompuesto"
+    GridViewMateriales.Drag("DescompuestoMaterial|" & Str$(tmpVistaVO.iddescompuestomaterial)) ''NO TE: coger datos del descompuesto"
   Endif
 
 End
