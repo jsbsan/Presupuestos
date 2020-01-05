@@ -11,7 +11,8 @@ Breakpoint[2]="FormConfigurar.147"
 Breakpoint[3]="FormConfigurar.152"
 
 [DebugWindow]
-Count=0
+Count=1
+DebugWindow[1]="lineas"
 
 [DebugWindow/AdaptadaSubcategoriaDAO]
 Geometry=[0,28,210,210]
@@ -21,6 +22,13 @@ Geometry=[1263,347,344,512]
 
 [DebugWindow/ArrayDatosMedicion]
 Geometry=[0,1,210,210]
+
+[DebugWindow/CSP]
+Geometry=[644,471,224,280]
+ShowHidden=True
+
+[DebugWindow/Csp]
+Geometry=[1280,0,224,280]
 
 [DebugWindow/FileChooserFicheros]
 Geometry=[0,1,692,673]
@@ -161,6 +169,9 @@ Geometry=[0,1,210,210]
 
 [DebugWindow/i]
 Geometry=[0,1,218,210]
+
+[DebugWindow/lineas]
+Geometry=[-3,0,1280,967]
 
 [DebugWindow/listadeficheros]
 Geometry=[312,206,698,210]
@@ -372,14 +383,13 @@ File[85]=".src/ClassEstadosYTiposPrecios.class:0.44"
 File[86]=".src/Adaptadas/VistaPrespuestoAdaptadaDAO.class:14.79"
 File[87]=".src/Formularios/FormGaleriaImagenes.form"
 File[88]=".src/ClassNumLetras.class:58.97"
-Count=95
+Count=94
 File[89]="imagenes/BUSCAR.png"
 File[90]="imagenes/VERTODOS.png"
-File[91]=".src/BC3.module:0.167"
+File[91]=".src/BC3.module:9.201"
 File[92]="imagenes/bc3Icono40.png"
 File[93]=".src/modelo/modeloVista/VistasVO/VistaPresupuestoVO.class:26.100"
-File[94]=".src/CapSubPar.class:25.24"
-File[95]=".src/Formularios/FormInforme.class:0.173"
+File[94]=".src/CapSubPar.class:15.12"
 
 [Watches]
 Count=5

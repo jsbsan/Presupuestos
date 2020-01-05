@@ -8,9 +8,9 @@ Private hpartida As Integer
 
 Private BarraInvertida As String = "\\"
 
-Public Sub _new()
+Public Sub iniciar()
 
-  hcapitulo = 1
+  hcapitulo = 0
   hsubcapitulo = 0
   hpartida = 0
 
