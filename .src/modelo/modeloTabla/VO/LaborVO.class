@@ -1,148 +1,200 @@
-PROPERTY idlabor AS Integer 
-PRIVATE hidlabor AS Integer
+' Gambas class file
 
-PROPERTY textocorto AS String 
-PRIVATE htextocorto AS String
+Property idlabor As Integer
+Private hidlabor As Integer
 
-PROPERTY precioportrabajo AS FLOAT 
-PRIVATE hprecioportrabajo AS FLOAT
+Property textocorto As String
+Private htextocorto As String
 
-PROPERTY preciopordia AS FLOAT 
-PRIVATE hpreciopordia AS FLOAT
+Property precioportrabajo As Float
+Private hprecioportrabajo As Float
 
-PROPERTY precioporhora AS FLOAT 
-PRIVATE hprecioporhora AS FLOAT
+Property preciopordia As Float
+Private hpreciopordia As Float
 
-PROPERTY idsubcategoria AS INTEGER 
-PRIVATE hidsubcategoria AS INTEGER
+Property precioporhora As Float
+Private hprecioporhora As Float
 
-PROPERTY descripcion AS String 
-PRIVATE hdescripcion AS String
+Property idsubcategoria As Integer
+Private hidsubcategoria As Integer
 
-PROPERTY campo AS string[] 
-PRIVATE hcampo AS new string[]
+Property descripcion As String
+Private hdescripcion As String
 
-PROPERTY campotipo AS string[] 
-PRIVATE hcampotipo AS new string[]
+Property campo As String[]
+Private hcampo As New String[]
 
-PROPERTY campovisible AS string[] 
-PRIVATE hcampovisible AS new string[]
+Property campotipo As String[]
+Private hcampotipo As New String[]
 
-PRIVATE FUNCTION idlabor_read() AS Integer
- RETURN hidlabor 
-END 
- 
-PRIVATE SUB idlabor_write(Valor AS Integer)
- hidlabor= Valor 
-END  
- 
-PRIVATE FUNCTION textocorto_read() AS String
- RETURN htextocorto 
-END 
- 
-PRIVATE SUB textocorto_write(Valor AS String)
- htextocorto= Valor 
-END  
- 
-PRIVATE FUNCTION precioportrabajo_read() AS FLOAT
- RETURN hprecioportrabajo 
-END 
- 
-PRIVATE SUB precioportrabajo_write(Valor AS FLOAT)
- hprecioportrabajo= Valor 
-END  
- 
-PRIVATE FUNCTION preciopordia_read() AS FLOAT
- RETURN hpreciopordia 
-END 
- 
-PRIVATE SUB preciopordia_write(Valor AS FLOAT)
- hpreciopordia= Valor 
-END  
- 
-PRIVATE FUNCTION precioporhora_read() AS FLOAT
- RETURN hprecioporhora 
-END 
- 
-PRIVATE SUB precioporhora_write(Valor AS FLOAT)
- hprecioporhora= Valor 
-END  
- 
-PRIVATE FUNCTION idsubcategoria_read() AS INTEGER
- RETURN hidsubcategoria 
-END 
- 
-PRIVATE SUB idsubcategoria_write(Valor AS INTEGER)
- hidsubcategoria= Valor 
-END  
- 
-PRIVATE FUNCTION descripcion_read() AS String
- RETURN hdescripcion 
-END 
- 
-PRIVATE SUB descripcion_write(Valor AS String)
- hdescripcion= Valor 
-END  
- 
-PRIVATE FUNCTION campo_read() AS string[]
- RETURN hcampo 
-END 
- 
-PRIVATE SUB campo_write(Valor AS string[])
- hcampo= Valor 
-END  
- 
-PRIVATE FUNCTION campotipo_read() AS string[]
- RETURN hcampotipo 
-END 
- 
-PRIVATE SUB campotipo_write(Valor AS string[])
- hcampotipo= Valor 
-END  
- 
-PRIVATE FUNCTION campovisible_read() AS string[]
- RETURN hcampovisible 
-END 
- 
-PRIVATE SUB campovisible_write(Valor AS string[])
- hcampovisible= Valor 
-END  
- 
-PUBLIC FUNCTION Copia(Optional dato as LaborVO) AS LaborVO
-Dim datoVOtmp as new LaborVO
-Dim datoVOtmpOriginal as LaborVO
-If isnull(dato) then
-dato=me 'se copia a si mismo
-endif
-datoVOtmp.idlabor=dato.idlabor
-datoVOtmp.textocorto=dato.textocorto
-datoVOtmp.precioportrabajo=dato.precioportrabajo
-datoVOtmp.preciopordia=dato.preciopordia
-datoVOtmp.precioporhora=dato.precioporhora
-datoVOtmp.idsubcategoria=dato.idsubcategoria
-datoVOtmp.descripcion=dato.descripcion
-return datoVOtmp
-end
+Property campovisible As String[]
+Private hcampovisible As New String[]
 
-PUBLIC FUNCTION ConvertirVOaColeccion(dato as LaborVO) AS collection
-Dim colecciontmp as new collection
-colecciontmp.add(dato.idlabor,"idlabor")
-colecciontmp.add(dato.textocorto,"textocorto")
-colecciontmp.add(dato.precioportrabajo,"precioportrabajo")
-colecciontmp.add(dato.preciopordia,"preciopordia")
-colecciontmp.add(dato.precioporhora,"precioporhora")
-colecciontmp.add(dato.idsubcategoria,"idsubcategoria")
-colecciontmp.add(dato.descripcion,"descripcion")
-return colecciontmp
-end
-PUBLIC FUNCTION ConvertirColeccionaVO(dato as collection) AS LaborVO
-Dim datoVOtmp as new LaborVO
-try datoVOtmp.idlabor=dato["idlabor"]
-try datoVOtmp.textocorto=dato["textocorto"]
-try datoVOtmp.precioportrabajo=dato["precioportrabajo"]
-try datoVOtmp.preciopordia=dato["preciopordia"]
-try datoVOtmp.precioporhora=dato["precioporhora"]
-try datoVOtmp.idsubcategoria=dato["idsubcategoria"]
-try datoVOtmp.descripcion=dato["descripcion"]
-return datoVOtmp
-end
+Private Function idlabor_read() As Integer
+
+  Return hidlabor
+
+End
+
+Private Sub idlabor_write(Valor As Integer)
+
+  hidlabor = Valor
+
+End
+
+Private Function textocorto_read() As String
+
+  Return htextocorto
+
+End
+
+Private Sub textocorto_write(Valor As String)
+
+  htextocorto = Valor
+
+End
+
+Private Function precioportrabajo_read() As Float
+
+  Return hprecioportrabajo
+
+End
+
+Private Sub precioportrabajo_write(Valor As Float)
+
+  hprecioportrabajo = Valor
+
+End
+
+Private Function preciopordia_read() As Float
+
+  Return hpreciopordia
+
+End
+
+Private Sub preciopordia_write(Valor As Float)
+
+  hpreciopordia = Valor
+
+End
+
+Private Function precioporhora_read() As Float
+
+  Return hprecioporhora
+
+End
+
+Private Sub precioporhora_write(Valor As Float)
+
+  hprecioporhora = Valor
+
+End
+
+Private Function idsubcategoria_read() As Integer
+
+  Return hidsubcategoria
+
+End
+
+Private Sub idsubcategoria_write(Valor As Integer)
+
+  hidsubcategoria = Valor
+
+End
+
+Private Function descripcion_read() As String
+
+  Return hdescripcion
+
+End
+
+Private Sub descripcion_write(Valor As String)
+
+  hdescripcion = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function Copia(Optional dato As LaborVO) As LaborVO
+
+  Dim datoVOtmp As New LaborVO
+  Dim datoVOtmpOriginal As LaborVO
+
+  If IsNull(dato) Then
+    dato = Me 'se copia a si mismo
+  Endif
+  datoVOtmp.idlabor = dato.idlabor
+  datoVOtmp.textocorto = dato.textocorto
+  datoVOtmp.precioportrabajo = dato.precioportrabajo
+  datoVOtmp.preciopordia = dato.preciopordia
+  datoVOtmp.precioporhora = dato.precioporhora
+  datoVOtmp.idsubcategoria = dato.idsubcategoria
+  datoVOtmp.descripcion = dato.descripcion
+  Return datoVOtmp
+
+End
+
+Public Function ConvertirVOaColeccion(dato As LaborVO) As Collection
+
+  Dim colecciontmp As New Collection
+
+  colecciontmp.add(dato.idlabor, "idlabor")
+  colecciontmp.add(dato.textocorto, "textocorto")
+  colecciontmp.add(dato.precioportrabajo, "precioportrabajo")
+  colecciontmp.add(dato.preciopordia, "preciopordia")
+  colecciontmp.add(dato.precioporhora, "precioporhora")
+  colecciontmp.add(dato.idsubcategoria, "idsubcategoria")
+  colecciontmp.add(dato.descripcion, "descripcion")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As LaborVO
+
+  Dim datoVOtmp As New LaborVO
+
+  Try datoVOtmp.idlabor = dato["idlabor"]
+  Try datoVOtmp.textocorto = dato["textocorto"]
+  Try datoVOtmp.precioportrabajo = dato["precioportrabajo"]
+  Try datoVOtmp.preciopordia = dato["preciopordia"]
+  Try datoVOtmp.precioporhora = dato["precioporhora"]
+  Try datoVOtmp.idsubcategoria = dato["idsubcategoria"]
+  Try datoVOtmp.descripcion = dato["descripcion"]
+  Return datoVOtmp
+
+End

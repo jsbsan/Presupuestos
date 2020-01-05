@@ -2,7 +2,7 @@
 FormDescompuesto=[126,796]
 AdaptadaPresupuestoDAO=[138]
 FormLabores=[365]
-BC3=[91]
+BC3=[95,106,288]
 
 [Breakpoints]
 Count=3
@@ -11,12 +11,13 @@ Breakpoint[2]="FormConfigurar.147"
 Breakpoint[3]="FormConfigurar.152"
 
 [DebugWindow]
-Count=2
-DebugWindow[1]="tmpVO"
-DebugWindow[2]="datosPresupuesto"
+Count=0
 
 [DebugWindow/AdaptadaSubcategoriaDAO]
 Geometry=[0,28,210,210]
+
+[DebugWindow/ArrayDatosDescompuestoLabores]
+Geometry=[1263,347,344,512]
 
 [DebugWindow/ArrayDatosMedicion]
 Geometry=[0,1,210,210]
@@ -102,6 +103,9 @@ Geometry=[168,419,210,210]
 [DebugWindow/ccombobox.tag]
 Geometry=[0,28,210,210]
 
+[DebugWindow/datoDescompuestosLaboral]
+Geometry=[90,644,1151,280]
+
 [DebugWindow/datoMedicionVO]
 Geometry=[19,314,274,434]
 
@@ -119,6 +123,20 @@ Geometry=[1280,0,224,570]
 
 [DebugWindow/datotemp]
 Geometry=[94,395,210,210]
+
+[DebugWindow/datotmpLabor]
+Geometry=[116,142,909,280]
+
+[DebugWindow/datotmpLabor.campo]
+Geometry=[56,143,983,293]
+
+[DebugWindow/datotmpLabor.campotipo]
+ShowHidden=True
+Geometry=[56,143,983,293]
+
+[DebugWindow/datotmpLabor.campovisible]
+ShowHidden=True
+Geometry=[56,143,983,293]
 
 [DebugWindow/estado]
 Geometry=[0,1,210,210]
@@ -238,7 +256,7 @@ Geometry=[2,33,401,532]
 Geometry=[0,1,215,613]
 
 [DebugWindow/tmpVO]
-Geometry=[560,521,518,280]
+Geometry=[585,263,518,309]
 
 [DebugWindow/tmpVO1]
 Geometry=[0,28,210,210]
@@ -357,7 +375,7 @@ File[88]=".src/ClassNumLetras.class:58.97"
 Count=95
 File[89]="imagenes/BUSCAR.png"
 File[90]="imagenes/VERTODOS.png"
-File[91]=".src/BC3.module:9.134"
+File[91]=".src/BC3.module:0.167"
 File[92]="imagenes/bc3Icono40.png"
 File[93]=".src/modelo/modeloVista/VistasVO/VistaPresupuestoVO.class:26.100"
 File[94]=".src/CapSubPar.class:25.24"

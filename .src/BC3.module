@@ -28,6 +28,8 @@ Private datoSubcategoria As SubcategoriaVO
 
 Private idpresupuesto As String
 
+Private listaConceptos As String[]
+
 Public Sub GenerarBC3()
 
   Dim contenido As String
@@ -43,11 +45,11 @@ Public Sub GenerarBC3()
 
     'crear:
     'linea de version
-    contenido = version()
+    contenido = BC3version()
     ' linea del nombre del presupuesto
     datosPresupuesto = manejadorPresupuesto.ExtraerRegistro("idpresupuesto", idpresupuesto)
     'FIXME: se exporta el valor calculado... QUE ES LO QUE TIENE SENTIDO
-    contenido &= NombrePresupuesto(datosPresupuesto.valorcalculado)
+    contenido &= BC3NombrePresupuesto(datosPresupuesto.valorcalculado)
 
     'por cada Capitulo
 
@@ -75,66 +77,96 @@ Public Sub GenerarBC3()
 
 End
 
-Public Sub GenerarLabores()
+Public Function GenerarLabores() As String
 
   Dim datoDescompuestosLaboral As DescompuestolaboresVO
   Dim subcategoriaActual As String
   Dim CapituloActual As Integer
   Dim SumaParcialCapitulo As Float = 0
   Dim Codigo As String
+  Dim unidad As String 'unidad de medida del concepto
+  
   'generar
   Csp = New CapSubPar 'genero el sistema de id y control de posicion
 
   misql = "select * from Descompuestolabores where idpresupuesto=" & idpresupuesto & " order by idorden"
 
+  listaConceptos = [] 'empiezo con la lista sin ningun concepto
+
   ArrayDatosDescompuestoLabores = manejadorDescompuestolabores.ConvertirResult(manejadorDescompuestolabores.sql(misql))
 
-  'POR CADA DESCOMPUESTO EXISTENTE....
+'FASE I: CONCEPTOS
+  'POR CADA concepto, lo defino y pongo su texto largo
   For Each datoDescompuestosLaboral In ArrayDatosDescompuestoLabores
     'necesito el texto largo del idlabor
 
     datotmpLabor = manejadorLaboral.ExtraerRegistro("idlabor", datoDescompuestosLaboral.idlabor)
 
-    If datotmpLabor.IDSUBCATEGORIA = subcategoriaActual Then
-      'no escribo nada, estoy en la misma subcategoria
-      'estoy en el mismo subcaptitulo
-
-    Else
-      'comprueba categoria
-      Try datoSubcategoria = manejadorSubcategoria.ExtraerRegistro("idsubcategoria", datotmpLabor.IDSUBCATEGORIA)
-      If Error Then
-        Print "Error en informe al intentar ver una subcategoria"
-      Else
-        'textos de categoria y subcategoria
-        If CapituloActual <> datoSubcategoria.IDCAPITULO Then
-          'salto a un nuevo capitulo / categoria
-          If CapituloActual <> 0 Then
-            'es distinto a la 1º partida
-            'poner sumas parciales
-            'reemplazamos datos del importe
-            codigo = Replace(codigo, "Importe" & CSP.idcap & "#", FormInforme.Formato(SumaParcialCapitulo, ",0.#0"))
-            SumaParcialCapitulo = 0
-          Endif
-
-          CSP.AgregaCapitulo()
-
-          datoCategoria = manejadorCategoria.ExtraerRegistro("idcategoria", datoSubcategoria.IDCAPITULO)
-          'creo Capitulo
-          Codigo &= Conceptos(CSP.idcap & "#", "", datoCategoria.TEXTOCAPITULO, "Importe" & CSP.idcap & "#")
-
-          CSP.AgregaSubcapitulo()
-
-          Codigo &= Conceptos(CSP.idsubcategoria & "#", datoSubcategoria.TEXTOSUBCATEGORIA, "0") 'hay que indicar la suma de la subcategoria
-
-          CapituloActual = datoSubcategoria.IDCAPITULO
-          subcategoriaActual = datotmpLabor.IDSUBCATEGORIA
-          'linea 266 / form informes
-        Else
-        Endif
-      Endif
+    'conceptos...
+    ' Comprobar que no existe ese concepto dentro de los ya introducido
+    If comprobarConceptos("PAR" & datotmpLabor.idlabor) = False Then
+      'lo puedo añadir
+      unidad = Mid$(datotmpLabor.textocorto, 1, 3)
+      codigo &= BC3conceptos("PAR" & datotmpLabor.idlabor, unidad, datotmpLabor.textocorto, "0")
+      codigo &= BC3Texto("PAR" & datotmpLabor.idlabor, datotmpLabor.descripcion)
+      listaConceptos.Add("PAR" & datotmpLabor.idlabor)
     Endif
+    'Nota: puede que un concepto se use varias veces en diversos capitulos y por eso se puede repetir.
 
-  Next
+
+Next
+
+
+'FASE II: CAPITULOS
+'FASE III: SUBCAPITULOS
+'FASE IV: A) DESCOMPUESTOS (CAPITULO)
+'FASE IV: B) DESCOMPUESTOS (SUBCAPITULO)
+'FASE V: MEDICIONES DE CONCEPCTOS
+'FASE VI: MATERIALES
+
+
+  '   If datotmpLabor.IDSUBCATEGORIA = subcategoriaActual Then
+  '     'no escribo nada, estoy en la misma subcategoria
+  '     'estoy en el mismo subcaptitulo
+  '
+  '   Else
+  '     'comprueba categoria
+  '     Try datoSubcategoria = manejadorSubcategoria.ExtraerRegistro("idsubcategoria", datotmpLabor.IDSUBCATEGORIA)
+  '     If Error Then
+  '       Print "Error en informe al intentar ver una subcategoria"
+  '     Else
+  '       'textos de categoria y subcategoria
+  '       If CapituloActual <> datoSubcategoria.IDCAPITULO Then
+  '         'salto a un nuevo capitulo / categoria
+  '         If CapituloActual <> 0 Then
+  '           'es distinto a la 1º partida
+  '           'poner sumas parciales
+  '           'reemplazamos datos del importe
+  '           codigo = Replace(codigo, "Importe" & CSP.idcap() & "#", FormInforme.Formato(SumaParcialCapitulo, ",0.#0"))
+  '           SumaParcialCapitulo = 0
+  '         Endif
+  '
+  '         CSP.AgregaCapitulo()
+  '
+  '         datoCategoria = manejadorCategoria.ExtraerRegistro("idcategoria", datoSubcategoria.IDCAPITULO)
+  '         'creo Capitulo
+  '         Codigo &= BC3Conceptos(CSP.idcap() & "#", "", datoCategoria.TEXTOCAPITULO, "Importe" & CSP.idcap() & "#")
+  '
+  '         CSP.AgregaSubcapitulo()
+  '
+  '         Codigo &= Bc3Conceptos(CSP.idSubcap() & "#", "", datoSubcategoria.TEXTOSUBCATEGORIA, "0") 'hay que indicar la suma de la subcategoria
+  '
+  '         CapituloActual = datoSubcategoria.IDCAPITULO
+  '         subcategoriaActual = datotmpLabor.IDSUBCATEGORIA
+  '         'linea 266 / form informes
+  '       Else
+  '       Endif
+  '     Endif
+  '   Endif
+  '
+  ' Next
+
+  Return codigo
 
 End
 
@@ -150,7 +182,7 @@ Public Function ConversionCaracteres(texto As String) As String
 
 End
 
-Public Function version() As String
+Public Function BC3version() As String
 
   Dim inicial As String
 
@@ -161,7 +193,7 @@ Public Function version() As String
 
 End
 
-Public Function NombrePresupuesto(importe As String) As String
+Public Function BC3NombrePresupuesto(importe As String) As String
 
   Dim inicial As String
   'solo para el nombre del presupuesto
@@ -180,7 +212,7 @@ Public Function NombrePresupuesto(importe As String) As String
 End
 
 'Conceptos
-Public Function Conceptos(id As String, unidad As String, nombrecorto As String, importe As String, Optional tipo As String) As String
+Public Function BC3Conceptos(id As String, unidad As String, nombrecorto As String, importe As String, Optional tipo As String) As String
 
   Dim inicial As String
 
@@ -208,7 +240,7 @@ Public Function Conceptos(id As String, unidad As String, nombrecorto As String,
 End
 
 'Descompuestos
-Public Function Descompuesto(padre As String, hijo As String) As String
+Public Function BC3Descompuesto(padre As String, hijo As String) As String
 
   Dim inicial As String
 
@@ -221,7 +253,7 @@ End
 
 'Agregar Descompuesto
 
-Public Function AgregarDescompuesto(padre As String, hijo As String) As String
+Public Function BC3AgregarDescompuesto(padre As String, hijo As String) As String
 
   Dim inicial As String
 
@@ -233,7 +265,7 @@ Public Function AgregarDescompuesto(padre As String, hijo As String) As String
 End
 
 'mediciones
-Public Function Medicion(idruta As String, posicion As String, MedicionTotal As String, Comentario As String, unidades As String, longitud As String, latitud As String, altura As String) As String
+Public Function BC3Medicion(idruta As String, posicion As String, MedicionTotal As String, Comentario As String, unidades As String, longitud As String, latitud As String, altura As String) As String
 
   Dim inicial As String
 
@@ -244,7 +276,7 @@ Public Function Medicion(idruta As String, posicion As String, MedicionTotal As 
 End
 
 'agregar medicion... a unidades que tenga ya mediciones...
-Public Function AgregarMedicion(idruta As String, posicion As String, MedicionTotal As String, Comentario As String, unidades As String, longitud As String, latitud As String, altura As String) As String
+Public Function BC3AgregarMedicion(idruta As String, posicion As String, MedicionTotal As String, Comentario As String, unidades As String, longitud As String, latitud As String, altura As String) As String
 
   Dim inicial As String
 
@@ -255,12 +287,23 @@ Public Function AgregarMedicion(idruta As String, posicion As String, MedicionTo
 End
 'textos
 
-Public Function Texto(id As String, texto As String) As String
+Public Function BC3Texto(id As String, texto As String) As String
 
   Dim inicial As String
 
   inicial = "~T|" & id & "|" & Replace(texto, "\n", gb.crlf) & "|" & gb.CrLf
 
   Return inicial
+
+End
+
+Private Function comprobarConceptos(id As String) As Boolean
+
+  If listaConceptos.Exist(id) Then
+    Return True
+  Else
+
+    Return False
+  Endif
 
 End
