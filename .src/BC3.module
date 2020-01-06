@@ -109,6 +109,7 @@ Public Function GenerarLabores() As String
   listaConceptos = [] 'empiezo con la lista sin ningun concepto
   listaCapitulos = []
   listaSubcapitulos = []
+  codigo = ""
 
   ListaCapitulosRenombrados = New Collection
   ListaSubCapitulosRenombrados = New Collection
