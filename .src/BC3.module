@@ -124,6 +124,12 @@ Public Function GenerarLabores() As String
     datotmpLabor = manejadorLaboral.ExtraerRegistro("idlabor", datoDescompuestosLaboral.idlabor)
 
     'conceptos...
+    '***********************************************
+    'forzar que los id sean los del descompuesto
+    '***********************************************
+    ''NOTE: 'Codigos usados por el presupuesto y no por sistema de unidades de labores
+    datotmpLabor.idlabor = datoDescompuestosLaboral.iddescompuesto
+
     ' Comprobar que no existe ese concepto dentro de los ya introducido
     If comprobarConceptos("PAR" & datotmpLabor.idlabor) = False Then
       'lo puedo añadir
@@ -148,9 +154,17 @@ Public Function GenerarLabores() As String
   'FASE II: CAPITULOS y  SUBCAPITULOS
   'FASE III: A) DESCOMPUESTOS (CAPITULO)
   For Each datoDescompuestosLaboral In ArrayDatosDescompuestoLabores
+
     'necesito el texto largo del idlabor
 
     datotmpLabor = manejadorLaboral.ExtraerRegistro("idlabor", datoDescompuestosLaboral.idlabor)
+
+    '***********************************************
+    'forzar que los id sean los del descompuesto
+    '***********************************************
+    ''NOTE: 'Codigos usados por el presupuesto y no por sistema de unidades de labores.
+
+    datotmpLabor.idlabor = datoDescompuestosLaboral.iddescompuesto
 
     If datotmpLabor.IDSUBCATEGORIA = subcategoriaActual Then
       'no escribo nada, estoy en la misma subcategoria
@@ -224,7 +238,7 @@ Public Function GenerarLabores() As String
 
     'FASE IV: MEDICIONES DE CONCEpTOS
     'lineas: 303 de FormInforme
-    generaMedicion(CSP.idSubcap() & BarraInvertida & "PAR" & datotmpLabor.idlabor, datoDescompuestosLaboral.iddescompuesto, CSP)
+    generaMedicion(CSP.idSubcap() & BarraInvertida & "PAR" & datotmpLabor.idlabor, datoDescompuestosLaboral.iddescompuesto, CSP, datoDescompuestosLaboral.medicion)
 
   Next
 
@@ -234,7 +248,7 @@ Public Function GenerarLabores() As String
 
 End
 
-Private Sub generaMedicion(idruta As String, iddescompuesto As String, cspRuta As CapSubPar)
+Private Sub generaMedicion(idruta As String, iddescompuesto As String, cspRuta As CapSubPar, mediciontotal As String)
 
   Dim misql As String
   Dim manejadorMedicionDAO As New MedicionDAO
@@ -251,12 +265,12 @@ Private Sub generaMedicion(idruta As String, iddescompuesto As String, cspRuta A
   'es mirar si existe la idruta, en medicion y si es asi, se agrega en caso contrario se mete nueva linea de medicion
   For Each datosmedicion In ArrayDatosMedicion
 
-    ' If existeMedicion(idruta) Then
-    '   BC3AgregarMedicion(idruta, cspRuta.Posicion(), datosmedicion.total, datosmedicion.descripcion, datosmedicion.numeroveces, datosmedicion.largo, datosmedicion.ancho, datosmedicion.alto)
-    ' Else
-    codigo &= BC3Medicion(idruta, cspRuta.Posicion(), datosmedicion.total, datosmedicion.descripcion, datosmedicion.numeroveces, datosmedicion.largo, datosmedicion.ancho, datosmedicion.alto)
+    If existeMedicion(idruta) Then
+      BC3AgregarMedicion(idruta, cspRuta.Posicion(), datosmedicion.descripcion, datosmedicion.numeroveces, datosmedicion.largo, datosmedicion.ancho, datosmedicion.alto)
+    Else
+      codigo &= BC3Medicion(idruta, cspRuta.Posicion(), mediciontotal, datosmedicion.descripcion, datosmedicion.numeroveces, datosmedicion.largo, datosmedicion.ancho, datosmedicion.alto)
 
-    ' Endif
+    Endif
 
   Next
 
@@ -365,7 +379,7 @@ Public Sub BC3AgregarDescompuesto(padre As String, hijo As String)
 
   For a = 0 To lineas.count - 1
     If InStr(lineas[a], "~D|" & padre & "|") <> 0 Then
-      lineas[a] = String.Left$(lineas[a], Len(lineas[a]) - 1) & hijo & BarraInvertida & "1" & BarraInvertida & "1" & BarraInvertida & "|"
+      lineas[a] = String.Left$(lineas[a], String.Len(lineas[a]) - 1) & hijo & BarraInvertida & "1" & BarraInvertida & "1" & BarraInvertida & "|"
       Break
     Endif
   Next
@@ -395,24 +409,30 @@ Public Function BC3Medicion(idruta As String, posicion As String, MedicionTotal 
 End
 
 'agregar medicion... a unidades que tenga ya mediciones...
-Public Sub BC3AgregarMedicion(idruta As String, posicion As String, MedicionTotal As String, Comentario As String, unidades As String, longitud As String, latitud As String, altura As String)
+Public Sub BC3AgregarMedicion(idruta As String, posicion As String, Comentario As String, unidades As String, longitud As String, latitud As String, altura As String)
 
-  ' Dim lineas As String[]
-  ' Dim a As Integer
+  Dim lineas As String[]
+  Dim a As Integer
   '
-  ' lineas = Split(codigo, gb.cr)
+  lineas = Split(codigo, gb.cr)
+
+  If unidades = "0" Then unidades = ""
+  If longitud = "0" Then longitud = ""
+  If latitud = "0" Then latitud = ""
+  If altura = "0" Then altura = ""
+
+  ' inicial = "~N|" & idruta & "|" & posicion & "|" & MedicionTotal & "|" & BarraInvertida & Comentario & BarraInvertida & unidades & BarraInvertida & longitud & BarraInvertida & latitud & BarraInvertida & altura & "|"
   '
-  ' ' inicial = "~N|" & idruta & "|" & posicion & "|" & MedicionTotal & "|" & BarraInvertida & Comentario & BarraInvertida & unidades & BarraInvertida & longitud & BarraInvertida & latitud & BarraInvertida & altura & "|"
+  For a = 0 To lineas.count - 1
+    If InStr(lineas[a], "~M|" & idruta & "|") <> 0 Then
+      lineas[a] = String.Left$(lineas[a], String.Len(lineas[a]) - 1) & BarraInvertida & BarraInvertida & Comentario & BarraInvertida & unidades & BarraInvertida & longitud & BarraInvertida & latitud & BarraInvertida & altura & "|"
+      'RECALCULAR EL VALOR TOTAL
+      Break
+    Endif
+  Next
   '
-  ' For a = 0 To lineas.count - 1
-  '   If InStr(lineas[a], "~M|" & idruta & "|") <> 0 Then
-  '     lineas[a] = String.Left$(lineas[a], Len(lineas[a]) - 1) & BarraInvertida & BarraInvertida & Comentario & BarraInvertida & unidades & BarraInvertida & longitud & BarraInvertida & latitud & BarraInvertida & altura & "|"
-  '     Break
-  '   Endif
-  ' Next
-  '
-  ' codigo = lineas.Join(gb.cr)
-  ' Return
+  codigo = lineas.Join(gb.cr)
+  Return
 
 End
 'textos
