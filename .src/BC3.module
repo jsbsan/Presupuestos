@@ -133,7 +133,7 @@ Public Function GenerarLabores() As String
     ' Comprobar que no existe ese concepto dentro de los ya introducido
     If comprobarConceptos("PAR" & datotmpLabor.idlabor) = False Then
       'lo puedo añadir
-      unidad = Mid$(datotmpLabor.textocorto, 1, 3)
+      unidad = String.Mid$(datotmpLabor.textocorto, 1, 3)
       precio = Replace$(Format(Replace$(Str$(datoDescompuestosLaboral.precio * coeficientesPrecios), ",", "."), "0.#0"), ",", ".")  'cogo el precio del datos del presupuesto y le aplico coeficiente
 
       codigo &= BC3conceptos("PAR" & datotmpLabor.idlabor, unidad, datotmpLabor.textocorto, precio)
@@ -290,9 +290,33 @@ End
 
 Public Function ConversionCaracteres(texto As String) As String
 
-  texto = Replace$(texto, gb.cr, gb.CrLf)
-  texto = Conv$(texto, "UTF-8", "ISO-8859-1") 'conversion a caracteres SO Windows
+  Dim textolinux As String = texto
 
+  texto = Replace$(texto, gb.cr, gb.CrLf)
+  Try texto = Conv$(texto, "UTF-8", "ISO-8859-1") 'conversion a caracteres SO Windows
+
+  If Error Then
+    Message.Error("Informe de error al convertir caracteres a Windows ISO-8859-1," & "\n" & Error.Text & "\n" & " pero sigo intentando la conversión...")
+    'cambio de caracteres
+    TEXTOLINUX = Replace(textolinux, "Ñ", "N")
+    TEXTOLINUX = Replace(textolinux, "ñ", "n")
+    TEXTOLINUX = Replace(textolinux, "á", "a")
+    TEXTOLINUX = Replace(textolinux, "é", "e")
+    TEXTOLINUX = Replace(textolinux, "í", "i")
+    TEXTOLINUX = Replace(textolinux, "ó", "o")
+    TEXTOLINUX = Replace(textolinux, "ú", "u")
+    TEXTOLINUX = Replace(textolinux, "Á", "A")
+    TEXTOLINUX = Replace(textolinux, "É", "E")
+    TEXTOLINUX = Replace(textolinux, "Í", "I")
+    TEXTOLINUX = Replace(textolinux, "Ó", "O")
+    TEXTOLINUX = Replace(textolinux, "Ú", "U")
+    TEXTOLINUX = Replace(textolinux, "ü", "u")
+    TEXTOLINUX = Replace(textolinux, "Ü", "U")
+    TEXTOLINUX = Replace(textolinux, "²", "2")
+
+    Return textolinux
+
+  Endif
   Return texto
 
 End

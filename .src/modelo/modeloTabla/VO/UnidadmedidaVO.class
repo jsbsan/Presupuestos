@@ -1,78 +1,110 @@
-PROPERTY idunidadmedida AS Integer 
-PRIVATE hidunidadmedida AS Integer
+' Gambas class file
 
-PROPERTY texto AS String 
-PRIVATE htexto AS String
+Property idunidadmedida As Integer
+Private hidunidadmedida As Integer
 
-PROPERTY campo AS string[] 
-PRIVATE hcampo AS new string[]
+Property texto As String
+Private htexto As String
 
-PROPERTY campotipo AS string[] 
-PRIVATE hcampotipo AS new string[]
+Property campo As String[]
+Private hcampo As New String[]
 
-PROPERTY campovisible AS string[] 
-PRIVATE hcampovisible AS new string[]
+Property campotipo As String[]
+Private hcampotipo As New String[]
 
-PRIVATE FUNCTION idunidadmedida_read() AS Integer
- RETURN hidunidadmedida 
-END 
- 
-PRIVATE SUB idunidadmedida_write(Valor AS Integer)
- hidunidadmedida= Valor 
-END  
- 
-PRIVATE FUNCTION texto_read() AS String
- RETURN htexto 
-END 
- 
-PRIVATE SUB texto_write(Valor AS String)
- htexto= Valor 
-END  
- 
-PRIVATE FUNCTION campo_read() AS string[]
- RETURN hcampo 
-END 
- 
-PRIVATE SUB campo_write(Valor AS string[])
- hcampo= Valor 
-END  
- 
-PRIVATE FUNCTION campotipo_read() AS string[]
- RETURN hcampotipo 
-END 
- 
-PRIVATE SUB campotipo_write(Valor AS string[])
- hcampotipo= Valor 
-END  
- 
-PRIVATE FUNCTION campovisible_read() AS string[]
- RETURN hcampovisible 
-END 
- 
-PRIVATE SUB campovisible_write(Valor AS string[])
- hcampovisible= Valor 
-END  
- 
-PUBLIC FUNCTION Copia(Optional dato as UnidadmedidaVO) AS UnidadmedidaVO
-Dim datoVOtmp as new UnidadmedidaVO
-Dim datoVOtmpOriginal as UnidadmedidaVO
-If isnull(dato) then
-dato=me 'se copia a si mismo
-endif
-datoVOtmp.idunidadmedida=dato.idunidadmedida
-datoVOtmp.texto=dato.texto
-return datoVOtmp
-end
+Property campovisible As String[]
+Private hcampovisible As New String[]
 
-PUBLIC FUNCTION ConvertirVOaColeccion(dato as UnidadmedidaVO) AS collection
-Dim colecciontmp as new collection
-colecciontmp.add(dato.idunidadmedida,"idunidadmedida")
-colecciontmp.add(dato.texto,"texto")
-return colecciontmp
-end
-PUBLIC FUNCTION ConvertirColeccionaVO(dato as collection) AS UnidadmedidaVO
-Dim datoVOtmp as new UnidadmedidaVO
-try datoVOtmp.idunidadmedida=dato["idunidadmedida"]
-try datoVOtmp.texto=dato["texto"]
-return datoVOtmp
-end
+Private Function idunidadmedida_read() As Integer
+
+  Return hidunidadmedida
+
+End
+
+Private Sub idunidadmedida_write(Valor As Integer)
+
+  hidunidadmedida = Valor
+
+End
+
+Private Function texto_read() As String
+
+  Return htexto
+
+End
+
+Private Sub texto_write(Valor As String)
+
+  htexto = Valor
+
+End
+
+Private Function campo_read() As String[]
+
+  Return hcampo
+
+End
+
+Private Sub campo_write(Valor As String[])
+
+  hcampo = Valor
+
+End
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo
+
+End
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor
+
+End
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible
+
+End
+
+Private Sub campovisible_write(Valor As String[])
+
+  hcampovisible = Valor
+
+End
+
+Public Function Copia(Optional dato As UnidadmedidaVO) As UnidadmedidaVO
+
+  Dim datoVOtmp As New UnidadmedidaVO
+  Dim datoVOtmpOriginal As UnidadmedidaVO
+
+  If IsNull(dato) Then
+    dato = Me 'se copia a si mismo
+  Endif
+  datoVOtmp.idunidadmedida = dato.idunidadmedida
+  datoVOtmp.texto = dato.texto
+  Return datoVOtmp
+
+End
+
+Public Function ConvertirVOaColeccion(dato As UnidadmedidaVO) As Collection
+
+  Dim colecciontmp As New Collection
+
+  colecciontmp.add(dato.idunidadmedida, "idunidadmedida")
+  colecciontmp.add(dato.texto, "texto")
+  Return colecciontmp
+
+End
+
+Public Function ConvertirColeccionaVO(dato As Collection) As UnidadmedidaVO
+
+  Dim datoVOtmp As New UnidadmedidaVO
+
+  Try datoVOtmp.idunidadmedida = dato["idunidadmedida"]
+  Try datoVOtmp.texto = dato["texto"]
+  Return datoVOtmp
+
+End
