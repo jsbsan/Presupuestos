@@ -37,11 +37,15 @@ Private ListaSubCapitulosRenombrados As Collection
 
 Private Codigo As String
 
+Private coeficientesPrecios As Float
+
 Public Sub GenerarBC3()
 
   Dim contenido As String
 
   idpresupuesto = tmpVO.idpresupuesto
+
+  coeficientesPrecios = Settings["CoeficientePrecios", 1]
 
   Dialog.Title = "Conversion a BC3"
   Dialog.Filter = ["*.bc3", "Ficheros bc3"]
@@ -95,6 +99,7 @@ Public Function GenerarLabores() As String
   Dim precio As String
 
   Dim existeDescompuestoInicial As Boolean = False
+  Dim ExisteDescompuestoSubcapitulo As Boolean = False
   'generar
   Csp = New CapSubPar 'genero el sistema de id y control de posicion
 
@@ -122,9 +127,17 @@ Public Function GenerarLabores() As String
     If comprobarConceptos("PAR" & datotmpLabor.idlabor) = False Then
       'lo puedo añadir
       unidad = Mid$(datotmpLabor.textocorto, 1, 3)
-      precio = Replace$(Str$(datotmpLabor.precioportrabajo), ",", ".") 'cogo el precio por trabajo, pero habria que estudiar cuando se usa  otro precio
+      precio = Replace$(Format(Replace$(Str$(datoDescompuestosLaboral.precio * coeficientesPrecios), ",", "."), "0.#0"), ",", ".")  'cogo el precio del datos del presupuesto y le aplico coeficiente
+
       codigo &= BC3conceptos("PAR" & datotmpLabor.idlabor, unidad, datotmpLabor.textocorto, precio)
-      codigo &= BC3Texto("PAR" & datotmpLabor.idlabor, datotmpLabor.descripcion)
+
+      'si hay comentario en el presupuesto, añadirlo al texto de la unidad....
+      If datoDescompuestosLaboral.comentario <> "" Then
+        codigo &= BC3Texto("PAR" & datotmpLabor.idlabor, datotmpLabor.descripcion & gb.cr & datoDescompuestosLaboral.comentario)
+      Else
+        codigo &= BC3Texto("PAR" & datotmpLabor.idlabor, datotmpLabor.descripcion)
+      Endif
+
       listaConceptos.Add("PAR" & datotmpLabor.idlabor)
     Endif
     'Nota: puede que un concepto se use varias veces en diversos capitulos y por eso se puede repetir.
@@ -143,6 +156,8 @@ Public Function GenerarLabores() As String
       'estoy en el mismo subcaptitulo
       'son conceptos que estan en el mismo capitulo y subcapitulo.
     Else
+      ExisteDescompuestoSubcapitulo = False 'nuevo capitulo o subcapitulo
+
       'comprueba categoria
       Try datoSubcategoria = manejadorSubcategoria.ExtraerRegistro("idsubcategoria", datotmpLabor.IDSUBCATEGORIA)
       If Error Then
@@ -151,7 +166,6 @@ Public Function GenerarLabores() As String
         'textos de categoria y subcategoria
         If CapituloActual <> datoSubcategoria.IDCAPITULO Then
           'salto a un nuevo capitulo / categoria
-
           CSP.AgregaCapitulo()
 
           datoCategoria = manejadorCategoria.ExtraerRegistro("idcategoria", datoSubcategoria.IDCAPITULO)
@@ -182,7 +196,7 @@ Public Function GenerarLabores() As String
           'salto de subcatgoria
           CSP.AgregaSubcapitulo()
 
-          Codigo &= Bc3Conceptos(CSP.idSubcap() & "#", "", datoSubcategoria.TEXTOSUBCATEGORIA, "0") 'hay que indicar la suma de la subcategoria
+          Codigo &= Bc3Conceptos(CSP.idSubcap() & "#", "", datoSubcategoria.textosubcategoria, "0") 'hay que indicar la suma de la subcategoria
 
           CapituloActual = datoSubcategoria.IDCAPITULO
           subcategoriaActual = datotmpLabor.IDSUBCATEGORIA
@@ -195,13 +209,63 @@ Public Function GenerarLabores() As String
       Endif
     Endif
 
+    'FASE III: B)DESCOMPUESTOS(SUBCAPITULO y sus conceptos)
+    CSP.AgregaPartida()
+
+    If ExisteDescompuestoSubcapitulo Then
+      'como existe lo agrego
+      BC3AgregarDescompuesto(CSP.idSubcap() & "#", "PAR" & datotmpLabor.idlabor)
+      '
+    Else
+      codigo &= BC3Descompuesto(CSP.idSubcap() & "#", "PAR" & datotmpLabor.idlabor)
+      ExisteDescompuestoSubcapitulo = True
+    Endif
+
+    'FASE IV: MEDICIONES DE CONCEpTOS
+    'lineas: 303 de FormInforme
+    generaMedicion(CSP.idSubcap() & BarraInvertida & "PAR" & datotmpLabor.idlabor, datoDescompuestosLaboral.iddescompuesto, CSP)
+
   Next
 
-  'FASE III: B) DESCOMPUESTOS (SUBCAPITULO)
-  'FASE IV: MEDICIONES DE CONCEPCTOS
   'FASE V: MATERIALES
 
   Return codigo
+
+End
+
+Private Sub generaMedicion(idruta As String, iddescompuesto As String, cspRuta As CapSubPar)
+
+  Dim misql As String
+  Dim manejadorMedicionDAO As New MedicionDAO
+  Dim ArrayDatosMedicion As MedicionVO[]
+  Dim datosmedicion As MedicionVO
+
+  misql = "select * from medicion where iddescompuesto='" & iddescompuesto & "'"
+
+  ArrayDatosMedicion = manejadorMedicionDAO.ConvertirResult(manejadorMedicionDAO.sql(misql))
+
+  'no existes arrayde datos de medicion, solo hay una medicion...
+
+  'no tienen sentido ver existeMedicion, lo que hay que hacer
+  'es mirar si existe la idruta, en medicion y si es asi, se agrega en caso contrario se mete nueva linea de medicion
+  For Each datosmedicion In ArrayDatosMedicion
+
+    ' If existeMedicion(idruta) Then
+    '   BC3AgregarMedicion(idruta, cspRuta.Posicion(), datosmedicion.total, datosmedicion.descripcion, datosmedicion.numeroveces, datosmedicion.largo, datosmedicion.ancho, datosmedicion.alto)
+    ' Else
+    codigo &= BC3Medicion(idruta, cspRuta.Posicion(), datosmedicion.total, datosmedicion.descripcion, datosmedicion.numeroveces, datosmedicion.largo, datosmedicion.ancho, datosmedicion.alto)
+
+    ' Endif
+
+  Next
+
+End
+
+Private Function existeMedicion(id As String) As Boolean
+
+  If InStr(codigo, id) <> 0 Then Return True
+
+  Return False
 
 End
 
@@ -300,7 +364,7 @@ Public Sub BC3AgregarDescompuesto(padre As String, hijo As String)
 
   For a = 0 To lineas.count - 1
     If InStr(lineas[a], "~D|" & padre & "|") <> 0 Then
-      lineas[a] = Left(lineas[a], Len(lineas[a]) - 1) & hijo & BarraInvertida & "1" & BarraInvertida & "1" & BarraInvertida & "|"
+      lineas[a] = String.Left$(lineas[a], Len(lineas[a]) - 1) & hijo & BarraInvertida & "1" & BarraInvertida & "1" & BarraInvertida & "|"
       Break
     Endif
   Next
@@ -318,6 +382,11 @@ Public Function BC3Medicion(idruta As String, posicion As String, MedicionTotal 
 
   Dim inicial As String
 
+  If unidades = "0" Then unidades = ""
+  If longitud = "0" Then longitud = ""
+  If latitud = "0" Then latitud = ""
+  If altura = "0" Then altura = ""
+
   inicial = "~M|" & idruta & "|" & posicion & "|" & MedicionTotal & "|" & BarraInvertida & Comentario & BarraInvertida & unidades & BarraInvertida & longitud & BarraInvertida & latitud & BarraInvertida & altura & "|" & gb.Cr
 
   Return inicial
@@ -325,13 +394,24 @@ Public Function BC3Medicion(idruta As String, posicion As String, MedicionTotal 
 End
 
 'agregar medicion... a unidades que tenga ya mediciones...
-Public Function BC3AgregarMedicion(idruta As String, posicion As String, MedicionTotal As String, Comentario As String, unidades As String, longitud As String, latitud As String, altura As String) As String
+Public Sub BC3AgregarMedicion(idruta As String, posicion As String, MedicionTotal As String, Comentario As String, unidades As String, longitud As String, latitud As String, altura As String)
 
-  Dim inicial As String
-
-  inicial = "~N|" & idruta & "|" & posicion & "|" & MedicionTotal & "|" & BarraInvertida & Comentario & BarraInvertida & unidades & BarraInvertida & longitud & BarraInvertida & latitud & BarraInvertida & altura & "|" & gb.Cr
-
-  Return inicial
+  ' Dim lineas As String[]
+  ' Dim a As Integer
+  '
+  ' lineas = Split(codigo, gb.cr)
+  '
+  ' ' inicial = "~N|" & idruta & "|" & posicion & "|" & MedicionTotal & "|" & BarraInvertida & Comentario & BarraInvertida & unidades & BarraInvertida & longitud & BarraInvertida & latitud & BarraInvertida & altura & "|"
+  '
+  ' For a = 0 To lineas.count - 1
+  '   If InStr(lineas[a], "~M|" & idruta & "|") <> 0 Then
+  '     lineas[a] = String.Left$(lineas[a], Len(lineas[a]) - 1) & BarraInvertida & BarraInvertida & Comentario & BarraInvertida & unidades & BarraInvertida & longitud & BarraInvertida & latitud & BarraInvertida & altura & "|"
+  '     Break
+  '   Endif
+  ' Next
+  '
+  ' codigo = lineas.Join(gb.cr)
+  ' Return
 
 End
 'textos
@@ -340,7 +420,7 @@ Public Function BC3Texto(id As String, texto As String) As String
 
   Dim inicial As String
 
-  inicial = "~T|" & id & "|" & Replace(texto, "\n", gb.cr) & "|" & gb.Cr
+  inicial = "~T|" & id & "|" & Replace$(texto, "\n", gb.cr) & "|" & gb.Cr
 
   Return inicial
 

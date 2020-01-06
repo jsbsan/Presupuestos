@@ -11,8 +11,7 @@ Breakpoint[2]="FormConfigurar.147"
 Breakpoint[3]="FormConfigurar.152"
 
 [DebugWindow]
-Count=1
-DebugWindow[1]="lineas"
+Count=0
 
 [DebugWindow/AdaptadaSubcategoriaDAO]
 Geometry=[0,28,210,210]
@@ -21,7 +20,7 @@ Geometry=[0,28,210,210]
 Geometry=[1263,347,344,512]
 
 [DebugWindow/ArrayDatosMedicion]
-Geometry=[0,1,210,210]
+Geometry=[0,1,224,280]
 
 [DebugWindow/CSP]
 Geometry=[644,471,224,280]
@@ -128,6 +127,9 @@ Geometry=[0,28,262,430]
 
 [DebugWindow/datosPresupuesto]
 Geometry=[1280,0,224,570]
+
+[DebugWindow/datosmedicion]
+Geometry=[157,144,833,280]
 
 [DebugWindow/datotemp]
 Geometry=[94,395,210,210]
@@ -311,7 +313,7 @@ File[14]=".src/comun.module:7.48"
 File[15]=".src/FormAutomaticoDinamico.class:0.72"
 File[16]=".src/modelo/modeloTabla/VO/SubcategoriaVO.class:0.34"
 File[17]=".src/Adaptadas/AdaptadaLaborDAO.class:13.0"
-File[18]=".src/modelo/modeloTabla/DAO/LaborDAO.class:70.624"
+File[18]=".src/modelo/modeloTabla/DAO/LaborDAO.class:70.951"
 File[19]=".src/Formularios/Formulario BD materiales y labores/FormMateriales.form"
 File[20]=".src/Formularios/Formulario BD materiales y labores/FormMateriales.class:65.131"
 File[21]=".src/modelo/modeloVista/VistasDAO/VistaPresupuestoDAO.class:70.523"
@@ -336,7 +338,7 @@ File[39]=".src/Formularios/Formulario Descompuestos/FormOpcionPrecioMaterial.cla
 File[40]="imagenes/cascopeque.png"
 File[41]=".src/modelo/modeloTabla/VO/DescompuestolaboresVO.class:17.67"
 File[42]=".src/modelo/modeloTabla/DAO/MedicionDAO.class:70.638"
-File[43]=".src/modelo/modeloTabla/VO/MedicionVO.class:0.50"
+File[43]=".src/modelo/modeloTabla/VO/MedicionVO.class:0.61"
 File[44]=".src/modelo/modeloTabla/DAO/DescompuestolaboresDAO.class:70.710"
 File[45]=".src/Adaptadas/AdaptadaMedicionDAO.class:0.30"
 File[46]="Notas RamDisk.txt:63.29"
@@ -383,13 +385,14 @@ File[85]=".src/ClassEstadosYTiposPrecios.class:0.44"
 File[86]=".src/Adaptadas/VistaPrespuestoAdaptadaDAO.class:14.79"
 File[87]=".src/Formularios/FormGaleriaImagenes.form"
 File[88]=".src/ClassNumLetras.class:58.97"
-Count=94
+Count=95
 File[89]="imagenes/BUSCAR.png"
 File[90]="imagenes/VERTODOS.png"
-File[91]=".src/BC3.module:9.201"
+File[91]=".src/BC3.module:119.129"
 File[92]="imagenes/bc3Icono40.png"
 File[93]=".src/modelo/modeloVista/VistasVO/VistaPresupuestoVO.class:26.100"
-File[94]=".src/CapSubPar.class:15.12"
+File[94]=".src/CapSubPar.class:0.55"
+File[95]=".src/Formularios/FormInforme.class:27.97"
 
 [Watches]
 Count=5
