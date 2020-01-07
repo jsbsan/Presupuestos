@@ -47,7 +47,11 @@ Public Sub GenerarBC3()
 
   coeficientesPrecios = Settings["CoeficientePrecios", 1]
 
-  Dialog.Title = "Conversion a BC3"
+  ' linea del nombre del presupuesto
+  datosPresupuesto = manejadorPresupuesto.ExtraerRegistro("idpresupuesto", idpresupuesto)
+
+  Dialog.Title = "Conversion a BC3 " & "Presupuesto: " & datosPresupuesto.descripcioncorta
+
   Dialog.Filter = ["*.bc3", "Ficheros bc3"]
   If Dialog.SaveFile() Then
     Return 'cancelo creación de fichero bc3
@@ -57,8 +61,7 @@ Public Sub GenerarBC3()
     'crear:
     'linea de version
     contenido = BC3version()
-    ' linea del nombre del presupuesto
-    datosPresupuesto = manejadorPresupuesto.ExtraerRegistro("idpresupuesto", idpresupuesto)
+
     'FIXME: se exporta el valor calculado... QUE ES LO QUE TIENE SENTIDO
     contenido &= BC3NombrePresupuesto(datosPresupuesto.valorcalculado)
 
@@ -73,7 +76,6 @@ Public Sub GenerarBC3()
     contenido &= GenerarLabores()
 
     '' Genero Materiales (habria que crear un capitulo especial dedicado a materiales)
-
     ''guardar fichero de datos....
     If File.Ext(Dialog.Path) = "" Then
       Dialog.path &= ".bc3" 'añado la extension
@@ -131,21 +133,21 @@ Public Function GenerarLabores() As String
     datotmpLabor.idlabor = datoDescompuestosLaboral.iddescompuesto
 
     ' Comprobar que no existe ese concepto dentro de los ya introducido
-    If comprobarConceptos("PAR" & datotmpLabor.idlabor) = False Then
+    If comprobarConceptos("par" & datotmpLabor.idlabor) = False Then
       'lo puedo añadir
       unidad = String.Mid$(datotmpLabor.textocorto, 1, 3)
       precio = Replace$(Format(Replace$(Str$(datoDescompuestosLaboral.precio * coeficientesPrecios), ",", "."), "0.#0"), ",", ".")  'cogo el precio del datos del presupuesto y le aplico coeficiente
 
-      codigo &= BC3conceptos("PAR" & datotmpLabor.idlabor, unidad, datotmpLabor.textocorto, precio)
+      codigo &= BC3conceptos("par" & datotmpLabor.idlabor, unidad, datotmpLabor.textocorto, precio)
 
       'si hay comentario en el presupuesto, añadirlo al texto de la unidad....
       If datoDescompuestosLaboral.comentario <> "" Then
-        codigo &= BC3Texto("PAR" & datotmpLabor.idlabor, datotmpLabor.descripcion & gb.cr & datoDescompuestosLaboral.comentario)
+        codigo &= BC3Texto("par" & datotmpLabor.idlabor, datotmpLabor.descripcion & gb.cr & datoDescompuestosLaboral.comentario)
       Else
-        codigo &= BC3Texto("PAR" & datotmpLabor.idlabor, datotmpLabor.descripcion)
+        codigo &= BC3Texto("par" & datotmpLabor.idlabor, datotmpLabor.descripcion)
       Endif
 
-      listaConceptos.Add("PAR" & datotmpLabor.idlabor)
+      listaConceptos.Add("par" & datotmpLabor.idlabor)
     Endif
     'Nota: puede que un concepto se use varias veces en diversos capitulos y por eso se puede repetir.
 
@@ -198,13 +200,13 @@ Public Function GenerarLabores() As String
           ListaSubCapitulosRenombrados.Add(CSP.idSubcap(), datotmpLabor.IDSUBCATEGORIA)
           'descompuesto (padre/hijo del capitulo)
           If existeDescompuestoInicial Then
-            BC3AgregarDescompuesto("0##", CSP.idcap() & "#")
+            BC3AgregarDescompuesto("0##", CSP.idcap(), "1")
           Else
-            codigo &= BC3Descompuesto("0##", CSP.idcap() & "#")
+            codigo &= BC3Descompuesto("0##", CSP.idcap(), "1")
             existeDescompuestoInicial = True
           Endif
 
-          codigo &= BC3Descompuesto(CSP.idcap() & "#", CSP.idSubcap() & "#")
+          codigo &= BC3Descompuesto(CSP.idcap() & "#", CSP.idSubcap(), "1")
 
           'linea 266 / form informes
         Else If subcategoriaActual <> datotmpLabor.IDSUBCATEGORIA Then
@@ -219,7 +221,7 @@ Public Function GenerarLabores() As String
           ListaSubCapitulosRenombrados.Add(CSP.idSubcap(), datotmpLabor.IDSUBCATEGORIA)
           'agrego descompuesto (padre/hijo del capitulo)
 
-          BC3AgregarDescompuesto(CSP.idcap() & "#", CSP.idSubcap() & "#")
+          BC3AgregarDescompuesto(CSP.idcap() & "#", CSP.idSubcap(), "1")
         Endif
       Endif
     Endif
@@ -229,16 +231,16 @@ Public Function GenerarLabores() As String
 
     If ExisteDescompuestoSubcapitulo Then
       'como existe lo agrego
-      BC3AgregarDescompuesto(CSP.idSubcap() & "#", "PAR" & datotmpLabor.idlabor)
+      BC3AgregarDescompuesto(CSP.idSubcap() & "#", "par" & datotmpLabor.idlabor, datoDescompuestosLaboral.medicion)
       '
     Else
-      codigo &= BC3Descompuesto(CSP.idSubcap() & "#", "PAR" & datotmpLabor.idlabor)
+      codigo &= BC3Descompuesto(CSP.idSubcap() & "#", "par" & datotmpLabor.idlabor, datoDescompuestosLaboral.medicion)
       ExisteDescompuestoSubcapitulo = True
     Endif
 
     'FASE IV: MEDICIONES DE CONCEpTOS
     'lineas: 303 de FormInforme
-    generaMedicion(CSP.idSubcap() & BarraInvertida & "PAR" & datotmpLabor.idlabor, datoDescompuestosLaboral.iddescompuesto, CSP, datoDescompuestosLaboral.medicion)
+    generaMedicion(CSP.idSubcap() & BarraInvertida & "par" & datotmpLabor.idlabor, datoDescompuestosLaboral.iddescompuesto, CSP, datoDescompuestosLaboral.medicion)
 
   Next
 
@@ -379,11 +381,11 @@ Public Function BC3Conceptos(id As String, unidad As String, nombrecorto As Stri
 End
 
 'Descompuestos
-Public Function BC3Descompuesto(padre As String, hijo As String) As String
+Public Function BC3Descompuesto(padre As String, hijo As String, mediciontotal As String) As String
 
   Dim inicial As String
 
-  inicial = "~D|" & padre & "|" & hijo & BarraInvertida & "1" & BarraInvertida & "1" & BarraInvertida & "|" & gb.Cr
+  inicial = "~D|" & padre & "|" & hijo & BarraInvertida & "1" & BarraInvertida & mediciontotal & BarraInvertida & "|" & gb.Cr
   'el 1º  uno es factor que es 1.0
   'el 2º uno es el rendimiento que es 1.0
   Return inicial
@@ -392,7 +394,7 @@ End
 
 'Agregar Descompuesto
 
-Public Sub BC3AgregarDescompuesto(padre As String, hijo As String)
+Public Sub BC3AgregarDescompuesto(padre As String, hijo As String, mediciontotal As String)
 
   Dim lineas As String[]
   Dim a As Integer
@@ -403,7 +405,7 @@ Public Sub BC3AgregarDescompuesto(padre As String, hijo As String)
 
   For a = 0 To lineas.count - 1
     If InStr(lineas[a], "~D|" & padre & "|") <> 0 Then
-      lineas[a] = String.Left$(lineas[a], String.Len(lineas[a]) - 1) & hijo & BarraInvertida & "1" & BarraInvertida & "1" & BarraInvertida & "|"
+      lineas[a] = String.Left$(lineas[a], String.Len(lineas[a]) - 1) & hijo & BarraInvertida & "1" & BarraInvertida & mediciontotal & BarraInvertida & "|"
       Break
     Endif
   Next
