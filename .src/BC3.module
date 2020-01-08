@@ -315,9 +315,15 @@ Public Function ConversionCaracteres(texto As String) As String
     TEXTOLINUX = Replace(textolinux, "ü", "u")
     TEXTOLINUX = Replace(textolinux, "Ü", "U")
     TEXTOLINUX = Replace(textolinux, "²", "2")
+    TEXTOLINUX = Replace(textolinux, "“", "-")
+    TEXTOLINUX = Replace(textolinux, "”", "-")
+    TEXTOLINUX = Replace(textolinux, "Ø", "diametro")
+  Endif
 
-    Return textolinux
+  Try texto = Conv$(textolinux, "UTF-8", "ISO-8859-1") 'conversion a caracteres SO Windows
 
+  If Error Then
+    Message.Error("Informe de error al convertir caracteres a Windows ISO-8859-1," & "\n" & Error.Text & "\n" & " 2º intengo....")
   Endif
   Return texto
 
