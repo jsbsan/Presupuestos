@@ -292,7 +292,7 @@ End
 
 Public Function ConversionCaracteres(texto As String) As String
 
-  Dim textolinux As String = texto
+  Dim textolinux As String
 
   texto = Replace$(texto, gb.cr, gb.CrLf)
   Try texto = Conv$(texto, "UTF-8", "ISO-8859-1") 'conversion a caracteres SO Windows
@@ -300,6 +300,7 @@ Public Function ConversionCaracteres(texto As String) As String
   If Error Then
     Message.Error("Informe de error al convertir caracteres a Windows ISO-8859-1," & "\n" & Error.Text & "\n" & " pero sigo intentando la conversión...")
     'cambio de caracteres
+    TEXTOLINUX = Replace$(texto, gb.cr, gb.CrLf)
     TEXTOLINUX = Replace(textolinux, "Ñ", "N")
     TEXTOLINUX = Replace(textolinux, "ñ", "n")
     TEXTOLINUX = Replace(textolinux, "á", "a")
@@ -318,14 +319,19 @@ Public Function ConversionCaracteres(texto As String) As String
     TEXTOLINUX = Replace(textolinux, "“", "-")
     TEXTOLINUX = Replace(textolinux, "”", "-")
     TEXTOLINUX = Replace(textolinux, "Ø", "diametro")
-  Endif
 
-  Try texto = Conv$(textolinux, "UTF-8", "ISO-8859-1") 'conversion a caracteres SO Windows
+    Try texto = Conv$(textolinux, "UTF-8", "ISO-8859-1") 'conversion a caracteres SO Windows
 
-  If Error Then
-    Message.Error("Informe de error al convertir caracteres a Windows ISO-8859-1," & "\n" & Error.Text & "\n" & " 2º intengo....")
+    If Error Then
+      Message.ErRor("Informe de error al convertir caracteres a Windows ISO-8859-1," & "\n" & Error.Text & "\n" & " 2º intengo....")
+      Return "" 'devuelvo vacio para que no se guarde ninguna informacion
+    Else
+      Return texto ' no ha habido errores en el 2º intengo.
+    Endif
+  Else
+    'no ha habido errores en la 1º conversion
+    Return texto
   Endif
-  Return texto
 
 End
 
