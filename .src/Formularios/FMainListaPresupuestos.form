@@ -121,7 +121,7 @@
       ToolTip = ("Acceder listado de materiales")
       Expand = True
       AutoResize = True
-      Text = ("Materiales")
+      Text = ("Materiales/Maquinaria")
       Picture = Picture["imagenes/bote-de-pintura.png"]
     }
     { HBox2 HBox

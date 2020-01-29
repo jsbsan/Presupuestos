@@ -485,6 +485,8 @@ Public Function rellenarMateriales(idpresupuesto As Integer) As String
   Dim ArrayDatosDescompuestoMateriales As DescompuestomaterialesVO[]
   Dim datoDescompuestosMateriales As DescompuestomaterialesVO
 
+  Dim documentoDesgloce As String
+
   misql = "select * from Descompuestomateriales where idpresupuesto=" & idpresupuesto
 
   ArrayDatosDescompuestoMateriales = manejadorDescompuestoMateriales.ConvertirResult(manejadorDescompuestoMateriales.sql(misql))
@@ -499,6 +501,35 @@ Public Function rellenarMateriales(idpresupuesto As Integer) As String
 
       documento &= Replace(datotmpMaterial.textolargo, "\n", "<br>") & fl
     Endif
+
+    'INDICAR PRECIO Y MEDICION MATERIALES
+
+    documento &= "<table>"
+    documento &= "<tr>"
+    documento &= "<td> <u>" & ("      ") & "</u></td>"
+
+    documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("     ") & "</u></td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("     ") & "</u></td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("     ") & "</u></td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("     ") & "</u></td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("      ") & "</u></td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Medición") & "</u></td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Precio") & "(" & moneda & ")" & "</u></td>"
+    documento &= "<td>" & repiterCaracter("&nbsp", 5) & "<u>" & ("Total") & "(" & moneda & ")" & "</u></td>"
+    documento &= "</tr>"
+    documentoDesgloce = ""
+    documentoDesgloce &= "<tr>"
+    documentoDesgloce &= "<td> " & "</td>"
+    documentoDesgloce &= "<td>" & "</td>"
+    documentoDesgloce &= "<td>" & "</td>"
+    documentoDesgloce &= "<td>" & "</td>"
+    documentoDesgloce &= "<td>" & "</td>"
+    documentoDesgloce &= "<td>" & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datoDescompuestosMateriales.medicion, ",0.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datoDescompuestosMateriales.precio * coeficientesPrecios, ",0.#0") & "</td>"
+    documentoDesgloce &= "<td>" & Formato(datoDescompuestosMateriales.total * coeficientesPrecios, ",0.#0") & "</td>"
+    documentoDesgloce &= "</tr>"
+    documento &= documentoDesgloce & "</table>"
 
     If CheckBoxResumenMedicionPrecioTotal.value = True Then
 

@@ -246,7 +246,61 @@ Public Function GenerarLabores() As String
 
   'FASE V: MATERIALES
 
+  ''TODO: MATERIALES Y MAQUINARIAS EXPORTACION  A BC3
+  CSP.AgregaCapitulo()
+  'creo Capitulo
+  Codigo &= BC3Conceptos(CSP.idcap() & "#", "", "OTROS", "0") '' otros-> configurar a Materiales o Maquinaria segun configuracion?¿
+
+  BC3AgregarDescompuesto("0##", CSP.idcap(), "1")
+
+  'agregar todos los conceptos
+  generarMateriales(CSP.idcap() & "#")
   Return codigo
+
+End
+
+Private Sub generarMateriales(codigoCapMat As String)
+
+  Dim misql As String
+  Dim miresultado As Result
+  Dim miconexion As New Conexion
+  Dim documento As String
+  Dim manejadorDescompuestoMateriales As New DescompuestomaterialesDAO
+  Dim manejadorMaterial As New MaterialesDAO
+  Dim datotmpMaterial As MaterialesVO
+  Dim ArrayDatosDescompuestoMateriales As DescompuestomaterialesVO[]
+  Dim datoDescompuestosMateriales As DescompuestomaterialesVO
+  Dim unidad As String
+  Dim ExisteDescompuestoSubcapitulo As Boolean = False
+
+  misql = "select * from Descompuestomateriales where idpresupuesto=" & idpresupuesto
+  '
+  ArrayDatosDescompuestoMateriales = manejadorDescompuestoMateriales.ConvertirResult(manejadorDescompuestoMateriales.sql(misql))
+  '
+  For Each datoDescompuestosMateriales In ArrayDatosDescompuestoMateriales
+    datotmpMaterial = manejadorMaterial.ExtraerRegistro("idmaterial", datoDescompuestosMateriales.idmaterial)
+    '
+    unidad = ""
+    codigo &= BC3conceptos("parm" & datoDescompuestosMateriales.idmaterial, unidad, datotmpMaterial.textocorto, datoDescompuestosMateriales.precio * coeficientesPrecios)
+    '
+    If datotmpMaterial.textolargo <> "" Then
+      codigo &= BC3Texto("parm" & datoDescompuestosMateriales.idmaterial, datotmpMaterial.textocorto & gb.cr & datotmpMaterial.textolargo)
+    Else
+      codigo &= BC3Texto("parm" & datoDescompuestosMateriales.idmaterial, datotmpMaterial.textocorto)
+    Endif
+
+    If ExisteDescompuestoSubcapitulo Then
+      'como existe lo agrego
+
+      BC3AgregarDescompuesto(codigoCapMat, "parm" & datoDescompuestosMateriales.idmaterial, datoDescompuestosMateriales.medicion)
+    Else
+      codigo &= BC3Descompuesto(codigoCapMat, "parm" & datoDescompuestosMateriales.idmaterial, datoDescompuestosMateriales.medicion)
+      ExisteDescompuestoSubcapitulo = True
+    Endif
+
+  Next
+
+  Return
 
 End
 
