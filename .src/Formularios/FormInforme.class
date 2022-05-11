@@ -30,7 +30,7 @@ Public Sub Generar()
 
   Dim num As New ClassNumLetras 'clases para pasar de Numero a Letras
 
-  Application.Busy = +1
+  Application.Busy = 1
 
   datosPresupuesto = manejadorPresupuesto.ExtraerRegistro("idpresupuesto", idpresupuesto)
 
