@@ -4,6 +4,9 @@ AdaptadaPresupuestoDAO=[138]
 FormLabores=[365]
 BC3=[95,106,288]
 
+[Debug]
+Breakpoints={}
+
 [DebugWindow]
 Count=0
 

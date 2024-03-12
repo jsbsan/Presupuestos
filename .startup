@@ -2,10 +2,10 @@ FMainListaPresupuestos
 Presupuestos
 0
 0
-0.1.34
+0.1.35
 
 gb.image
-gb.qt4
+gb.qt5
 gb.form
 gb.db
 gb.db.sqlite3
@@ -14,5 +14,5 @@ gb.settings
 gb.form.mdi
 gb.net
 gb.net.curl
-gb.qt4.ext
+gb.qt5.ext
 
