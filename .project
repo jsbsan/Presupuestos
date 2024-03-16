@@ -26,6 +26,7 @@ Url=http://jsbsan.blogspot.com.es/
 License=General Public License
 PackageName=presupuestos-0.1.35
 CreateEachDirectory=1
+RuntimeVersion="3.18"
 Packager=1
 Systems=debian
 Menus=debian:"Applications/Office"

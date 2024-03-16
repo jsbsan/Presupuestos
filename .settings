@@ -290,6 +290,13 @@ Geometry=[0,29,240,508]
 FieldNames=True
 Selection=False
 
+[FImageProperty/Grid]
+Resolution=4
+Snap=0
+SnapResolution=1
+Diagonals=0
+Lock=False
+
 [FImportTable]
 Path="/home/minino/esquema DOS"
 Delim=","
@@ -387,7 +394,7 @@ File[87]=".src/ClassNumLetras.class:58.97"
 File[88]="imagenes/BUSCAR.png"
 Count=95
 File[89]="imagenes/VERTODOS.png"
-File[90]=".src/BC3.module:0.299"
+File[90]=".src/BC3.module:0.293"
 File[91]="imagenes/bc3Icono40.png"
 File[92]=".src/modelo/modeloVista/VistasVO/VistaPresupuestoVO.class:26.100"
 File[93]=".src/CapSubPar.class:0.55"
